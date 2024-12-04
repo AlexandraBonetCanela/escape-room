@@ -8,9 +8,9 @@ INSERT INTO escaperoom (name, status) VALUES
 
 -- Insert into room
 INSERT INTO room (name, theme, difficulty_level, element_quantity, escape_room_id, status) VALUES
-('Library of Secrets', 'Mystery', 'Medium', 10, 1, 'ACTIVE'),
-('Temple Chamber', 'Adventure', 'Hard', 15, 2, 'ACTIVE'),
-('The Curse Room', 'Horror', 'Easy', 8, 3, 'INACTIVE');
+('Library of Secrets', 'Mystery', 'MEDIUM', 10, 1, 'ACTIVE'),
+('Temple Chamber', 'Adventure', 'DIFFICULT', 15, 2, 'ACTIVE'),
+('The Curse Room', 'Horror', 'EASY', 8, 3, 'INACTIVE');
 
 -- Insert into element (props)
 INSERT INTO element (room_id, type, name, price, status) VALUES

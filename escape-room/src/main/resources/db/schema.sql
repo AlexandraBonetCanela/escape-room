@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS room (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45) NOT NULL,
     theme VARCHAR(45) NOT NULL,
-    difficulty_level VARCHAR(45) NOT NULL,
+    difficulty_level ENUM('EASY', 'MEDIUM', 'DIFFICULT') NOT NULL,
     element_quantity INT UNSIGNED NOT NULL,
     escape_room_id INT UNSIGNED NOT NULL,
     status ENUM('ACTIVE', 'INACTIVE') DEFAULT 'ACTIVE' NOT NULL,
