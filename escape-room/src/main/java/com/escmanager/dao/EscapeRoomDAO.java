@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface EscapeRoomDAO {
 
-    void save(EscapeRoom escapeRoom);
-    EscapeRoom getById(int id);
-    List<EscapeRoom> getAll();
+    void createEscapeRoom(EscapeRoom escapeRoom);
     void update(EscapeRoom escapeRoom);
     void delete(int id);
+
+    List<EscapeRoom> getAll();
+    EscapeRoom getById(int id);
+
 
 }
