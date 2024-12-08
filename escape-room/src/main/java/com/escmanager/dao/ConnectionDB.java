@@ -7,9 +7,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class DatabaseDAO {
+public class ConnectionDB {
 
-    private static DatabaseDAO instance;
+    private static ConnectionDB instance;
 
     private String dbUrl;
     private String dbUsername;
@@ -17,7 +17,7 @@ public class DatabaseDAO {
 
     private Connection connection;
 
-    public DatabaseDAO() {
+    public ConnectionDB() {
         Properties properties = new Properties();
         try (FileInputStream fis = new FileInputStream("escape-room/src/main/resources/database.properties")) {
             properties.load(fis);
@@ -29,9 +29,9 @@ public class DatabaseDAO {
         }
     }
 
-    public static synchronized DatabaseDAO getInstance() {
+    public static synchronized ConnectionDB getInstance() {
         if (instance == null) {
-            instance = new DatabaseDAO();
+            instance = new ConnectionDB();
         }
         return instance;
     }

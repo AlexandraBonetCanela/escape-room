@@ -6,28 +6,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EscapeRoomImpl implements EscapeRoomDAO{
+public class EscapeRoomImpl implements EscapeRoomDAO {
 
-//    private String dbUrl;
-//    private String dbUsername;
-//    private String dbPassword;
-//
-//    public EscapeRoomImpl() {
-//        Properties properties = new Properties();
-//        try (FileInputStream fis = new FileInputStream("escape-room/src/main/resources/database.properties")) {
-//            properties.load(fis);
-//            this.dbUrl = properties.getProperty("db.url");
-//            this.dbUsername = properties.getProperty("db.username");
-//            this.dbPassword = properties.getProperty("db.password");
-//        } catch (IOException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
-//    }
-
-    DatabaseDAO dao = DatabaseDAO.getInstance();
+    ConnectionDB dao = ConnectionDB.getInstance();
 
     @Override
-    public void createEscapeRoom(EscapeRoom escapeRoom) {
+    public void create(EscapeRoom escapeRoom) {
         String query = "INSERT INTO escaperoom (name, status) VALUES (?, ?)";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -39,6 +23,35 @@ public class EscapeRoomImpl implements EscapeRoomDAO{
         } catch (SQLException e) {
             System.out.println("EscapeRoomImpl - save: " + e.getMessage());
             System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(EscapeRoom escapeRoom) {
+        String query = "UPDATE escaperoom SET name = ?, status = ? WHERE id = ?";
+        try (Connection connection = dao.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, escapeRoom.getName());
+            statement.setString(2, escapeRoom.getStatus());
+            statement.setInt(3, escapeRoom.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("EscapeRoomImpl - update: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        String query = "DELETE FROM escaperoom WHERE id = ?";
+        try (Connection connection = dao.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("EscapeRoomImpl - delete: " + e.getMessage());
         }
     }
 
@@ -87,33 +100,4 @@ public class EscapeRoomImpl implements EscapeRoomDAO{
         return users;
     }
 
-    @Override
-    public void update(EscapeRoom escapeRoom) {
-        String query = "UPDATE escaperoom SET name = ?, status = ? WHERE id = ?";
-        try (Connection connection = dao.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setString(1, escapeRoom.getName());
-            statement.setString(2, escapeRoom.getStatus());
-            statement.setInt(3, escapeRoom.getId());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - update: " + e.getMessage());
-        }
-    }
-
-
-    @Override
-    public void delete(int id) {
-        String query = "DELETE FROM escaperoom WHERE id = ?";
-        try (Connection connection = dao.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - delete: " + e.getMessage());
-        }
-    }
 }
