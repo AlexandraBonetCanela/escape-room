@@ -12,7 +12,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
     @Override
     public EscapeRoom create(EscapeRoom escapeRoom) {
-        String query = "INSERT INTO escaperoom (name, price,status) VALUES (?, ?, ?)";
+        String query = "INSERT INTO escaperoom (name, price, status) VALUES (?, ?, ?)";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -30,7 +30,8 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
     @Override
     public EscapeRoom update(EscapeRoom escapeRoom) {
-        String query = "UPDATE escaperoom SET name = ?, SET price = ?, status = ? WHERE id = ?";
+        String query = "UPDATE escaperoom SET name = ?, price = ?, status = ? WHERE id = ?";
+
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
