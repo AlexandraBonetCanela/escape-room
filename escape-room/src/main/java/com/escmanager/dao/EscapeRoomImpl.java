@@ -21,7 +21,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - save: " + e.getMessage());
+            System.out.println("EscapeRoomImpl - create: " + e.getMessage());
             System.out.println(e.getMessage());
         }
     }
@@ -43,19 +43,6 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
     }
 
     @Override
-    public void delete(int id) {
-        String query = "DELETE FROM escaperoom WHERE id = ?";
-        try (Connection connection = dao.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - delete: " + e.getMessage());
-        }
-    }
-
-    @Override
     public EscapeRoom getById(int id) {
         String query = "SELECT * FROM escaperoom WHERE id = ?";
         try (Connection connection = dao.getConnection();
@@ -68,6 +55,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
                 return new EscapeRoom(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
+                        resultSet.getInt("price"),
                         resultSet.getString("status")
                 );
             }
@@ -90,6 +78,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
                 users.add(new EscapeRoom(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
+                        resultSet.getInt("price"),
                         resultSet.getString("status")
                 ));
             }

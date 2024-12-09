@@ -6,6 +6,5 @@ public interface EscapeRoomDAO extends DAO{
 
     void create(EscapeRoom escapeRoom);
     void update(EscapeRoom escapeRoom);
-    void delete(int id);
 
 }
