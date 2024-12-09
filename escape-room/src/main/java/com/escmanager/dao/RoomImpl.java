@@ -78,12 +78,12 @@ public class RoomImpl implements RoomDAO {
             if (resultSet.next()) {
                 return new Room(
                     resultSet.getInt("id"),
-                    resultSet.getString("name");
-                    resultSet.getString("theme");
-                    resultSet.getString("difficulty_level");
-                    resultSet.getInt("element_quantity");
-                    resultSet.getInt("escape_room_id");
-                    resultSet.getString("status");
+                    resultSet.getString("name"),
+                    resultSet.getString("theme"),
+                    resultSet.getString("difficulty_level"),
+                    resultSet.getInt("element_quantity"),
+                    resultSet.getInt("escape_room_id"),
+                    resultSet.getString("status")
                 );
             }
 
@@ -94,26 +94,29 @@ public class RoomImpl implements RoomDAO {
     }
 
     @Override
-    public List<EscapeRoom> getAll() {
-        List<EscapeRoom> users = new ArrayList<>();
-        String query = "SELECT * FROM escaperoom";
-        try (Connection connection = dao.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            while (resultSet.next()) {
-                users.add(new EscapeRoom(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getInt("price"),
-                        resultSet.getString("status")
-                ));
-            }
-
-        } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - getAll: " + e.getMessage());
-        }
-        return users;
+    public List<Room> getAll() {
+        List<Room> rooms = new ArrayList<>();
+//        String query = "SELECT * FROM room";
+//        try (Connection connection = dao.getConnection();
+//             Statement statement = connection.createStatement();
+//             ResultSet resultSet = statement.executeQuery(query)) {
+//
+//            while (resultSet.next()) {
+//                rooms.add(new EscapeRoom(
+//                        resultSet.getInt("id"),
+//                        resultSet.getString("name"),
+//                        resultSet.getString("theme"),
+//                        resultSet.getString("difficulty_level"),
+//                        resultSet.getInt("element_quantity"),
+//                        resultSet.getInt("escape_room_id"),
+//                        resultSet.getString("status")
+//                ));
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println("EscapeRoomImpl - getAll: " + e.getMessage());
+//        }
+        return rooms;
     }
 
 }

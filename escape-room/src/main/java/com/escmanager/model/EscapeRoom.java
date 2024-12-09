@@ -4,10 +4,10 @@ public class EscapeRoom {
 
     private int id;
     private String name;
-    private int price;
+    private double price;
     private String status;
 
-    public EscapeRoom(int id, String name, int price, String status) {
+    public EscapeRoom(int id, String name, double price, String status) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -30,11 +30,11 @@ public class EscapeRoom {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

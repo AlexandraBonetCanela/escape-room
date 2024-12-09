@@ -4,9 +4,9 @@ import com.escmanager.model.EscapeRoom;
 
 import java.util.List;
 
-public interface DAO {
+public interface DAO<T> {
 
-    List<EscapeRoom> getAll();
-    EscapeRoom getById(int id);
+    List<T> getAll();
+    T getById(int id);
 
 }

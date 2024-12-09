@@ -11,19 +11,20 @@ public class TestDao {
 
         EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
 
-        EscapeRoom newEscapeRoom = new EscapeRoom(0,"Metro 2048", 22,"INACTIVE");
+        EscapeRoom newEscapeRoom = new EscapeRoom(0,"IT Academy", 100,"ACTIVE");
         escapeRoomDAO.create(newEscapeRoom);
 
-        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
-        for (EscapeRoom escapeRoom : escapeRooms) {
-            System.out.println(escapeRoom);
-        }
+//        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
+//        for (EscapeRoom escapeRoom : escapeRooms) {
+//            System.out.println(escapeRoom);
+//        }
 
-        EscapeRoom escapeRoom = escapeRoomDAO.getById(5);
-        System.out.println(escapeRoom);
+//        EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(2);
+//        System.out.println(escapeRoom);
 
-        escapeRoom.setName("Metro 2048");
-        escapeRoom.setStatus("ACTIVE");
-        escapeRoomDAO.update(escapeRoom);
+//        escapeRoom.setName("Metro 2048");
+//        escapeRoom.setPrice(20);
+//        escapeRoom.setStatus("ACTIVE");
+//        escapeRoomDAO.update(escapeRoom);
     }
 }

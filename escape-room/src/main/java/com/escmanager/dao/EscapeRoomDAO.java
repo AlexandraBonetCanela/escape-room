@@ -4,7 +4,7 @@ import com.escmanager.model.EscapeRoom;
 
 public interface EscapeRoomDAO extends DAO{
 
-    void create(EscapeRoom escapeRoom);
-    void update(EscapeRoom escapeRoom);
+    EscapeRoom create(EscapeRoom escapeRoom);
+    EscapeRoom update(EscapeRoom escapeRoom);
 
 }
