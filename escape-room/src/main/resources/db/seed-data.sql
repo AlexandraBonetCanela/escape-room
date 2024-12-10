@@ -1,10 +1,10 @@
 -- Insert into escaperoom
 USE escaperoomdb;
 
-INSERT INTO escaperoom (name, status) VALUES
-('Mystery Mansion', 'ACTIVE'),
-('The Lost Temple', 'ACTIVE'),
-('Haunted House', 'INACTIVE');
+INSERT INTO escaperoom (name, status, price) VALUES
+('Mystery Mansion', 'ACTIVE', 20.45),
+('The Lost Temple', 'ACTIVE', 34.56),
+('Haunted House', 'INACTIVE', 45.35);
 
 -- Insert into room
 INSERT INTO room (name, theme, difficulty_level, element_quantity, escape_room_id, status) VALUES
@@ -38,10 +38,10 @@ INSERT INTO user (name, email, is_registered, notifications) VALUES
 (NULL, 'pitufo@gmail.com', 0, 1);
 
 -- Insert into ticket
-INSERT INTO ticket (user_id, unit_price, quantity, total_price) VALUES
-(1, 25.00, 2, 50.00),
-(2, 30.00, 1, 30.00),
-(3, 20.00, 3, 60.00);
+INSERT INTO ticket (user_id, unit_price, quantity, total_price, date_reservation, escape_room_id) VALUES
+(1, 25.00, 2, 50.00, '2025-01-02 16:00:00', 1),
+(2, 30.00, 1, 30.00, '2025-01-02 18:00:00', 1),
+(3, 20.00, 3, 60.00, '2025-01-03 12:00:00', 1);
 
 -- Insert into certificate
 INSERT INTO certificate (name, description, escape_room_id) VALUES

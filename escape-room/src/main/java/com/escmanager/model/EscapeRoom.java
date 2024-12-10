@@ -1,18 +1,24 @@
 package com.escmanager.model;
 
+import com.escmanager.enums.Status;
+
+import java.math.BigDecimal;
+
 public class EscapeRoom {
 
     private int id;
     private String name;
-    private double price;
-    private String status;
+    private BigDecimal price;
+    private Status status;
 
-    public EscapeRoom(int id, String name, double price, String status) {
+    public EscapeRoom(int id, String name, BigDecimal price, Status status) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.status = status;
     }
+
+    public EscapeRoom(){};
 
     public int getId() {
         return id;
@@ -30,19 +36,19 @@ public class EscapeRoom {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
