@@ -1,5 +1,6 @@
 package com.escmanager.dao;
 
+import com.escmanager.enums.Status;
 import com.escmanager.model.EscapeRoom;
 
 import java.sql.*;
@@ -17,8 +18,8 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, escapeRoom.getName());
-            statement.setDouble(2, escapeRoom.getPrice());
-            statement.setString(3, escapeRoom.getStatus());
+            statement.setBigDecimal(2, escapeRoom.getPrice());
+            statement.setString(3, String.valueOf(escapeRoom.getStatus()));
             statement.executeUpdate();
             
             return escapeRoom;
@@ -36,14 +37,39 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, escapeRoom.getName());
-            statement.setDouble(2, escapeRoom.getPrice());
-            statement.setString(3, escapeRoom.getStatus());
+            statement.setBigDecimal(2, escapeRoom.getPrice());
+            statement.setString(3, String.valueOf(escapeRoom.getStatus()));
             statement.setInt(4, escapeRoom.getId());
             statement.executeUpdate();
 
             return escapeRoom;
         } catch (SQLException e) {
             System.out.println("EscapeRoomImpl - update: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public EscapeRoom findByName(String name) {
+        String query = "SELECT * FROM escaperoom WHERE name = ?";
+        try (Connection connection = dao.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new EscapeRoom(
+
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getBigDecimal("price"),
+                        Status.valueOf(resultSet.getString("status"))
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("EscapeRoomImpl - getById: " + e.getMessage());
         }
         return null;
     }
@@ -59,10 +85,11 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
             if (resultSet.next()) {
                 return new EscapeRoom(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getInt("price"),
-                        resultSet.getString("status")
+
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getBigDecimal("price"),
+                    Status.valueOf(resultSet.getString("status"))
                 );
             }
 
@@ -84,8 +111,8 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
                 escapeRooms.add(new EscapeRoom(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getInt("price"),
-                        resultSet.getString("status")
+                        resultSet.getBigDecimal("price"),
+                        Status.valueOf(resultSet.getString("status"))
                 ));
             }
 
