@@ -3,8 +3,8 @@ package com.escmanager.service;
 import com.escmanager.dao.EscapeRoomDAO;
 import com.escmanager.dao.EscapeRoomImpl;
 import com.escmanager.enums.Status;
-import com.escmanager.exceptions.EscapeRoomAlreadyExistException;
-import com.escmanager.exceptions.EscapeRoomDoesNotExistException;
+import com.escmanager.exceptions.escaperoom.EscapeRoomAlreadyExistException;
+import com.escmanager.exceptions.escaperoom.EscapeRoomDoesNotExistException;
 import com.escmanager.model.EscapeRoom;
 
 import java.math.BigDecimal;

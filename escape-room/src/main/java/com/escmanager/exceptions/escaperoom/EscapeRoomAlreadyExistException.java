@@ -1,4 +1,4 @@
-package com.escmanager.exceptions;
+package com.escmanager.exceptions.escaperoom;
 
 public class EscapeRoomAlreadyExistException extends Exception {
     public EscapeRoomAlreadyExistException() {
