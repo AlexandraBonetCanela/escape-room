@@ -1,6 +1,7 @@
 package com.escmanager.service;
 
 import com.escmanager.dao.EscapeRoomDAO;
+import com.escmanager.dao.EscapeRoomImpl;
 import com.escmanager.enums.Status;
 import com.escmanager.exceptions.EscapeRoomAlreadyExistException;
 import com.escmanager.exceptions.EscapeRoomDoesNotExistException;
@@ -11,13 +12,11 @@ import java.util.List;
 
 public class EscapeRoomService {
 
-    EscapeRoomDAO escapeRoomDAO;
+    EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
 
     public EscapeRoom addEscapeRoom(String name, BigDecimal price) throws EscapeRoomAlreadyExistException {
 
-        EscapeRoom escapeRoom;
-
-        escapeRoom = escapeRoomDAO.findByName(name);
+        EscapeRoom escapeRoom = escapeRoomDAO.findByName(name);
 
         if(escapeRoom != null){
             throw new EscapeRoomAlreadyExistException();
@@ -35,7 +34,7 @@ public class EscapeRoomService {
 
     public boolean deleteEscapeRoom(int id) throws EscapeRoomDoesNotExistException {
 
-        EscapeRoom escapeRoom = escapeRoomDAO.findById(id);
+        EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
 
         if(escapeRoom == null){
             throw new EscapeRoomDoesNotExistException();
@@ -48,8 +47,19 @@ public class EscapeRoomService {
 
     public List<EscapeRoom> getAllEscapeRooms() {
 
-        List<EscapeRoom> escapeRooms = escapeRoomDAO.findAll();
-        
+        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
+
         return escapeRooms;
     }
 }
+
+//class TestService {
+//    public static void main(String[] args) throws EscapeRoomAlreadyExistException, EscapeRoomDoesNotExistException {
+//
+//        EscapeRoomService service = new EscapeRoomService();
+////        service.addEscapeRoom("Bar manolo", new BigDecimal(10));
+////        service.deleteEscapeRoom(6);
+//        service.getAllEscapeRooms();
+//
+//    }
+//}
