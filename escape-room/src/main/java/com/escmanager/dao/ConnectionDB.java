@@ -37,7 +37,7 @@ public class ConnectionDB {
     }
 
     public Connection getConnection() throws SQLException {
-        if (connection == null) {
+        if (connection == null || connection.isClosed()) {
             try {
                 connection = DriverManager.getConnection(this.dbUrl, this.dbUsername, this.dbPassword);
                 System.out.println("Connection established.");
