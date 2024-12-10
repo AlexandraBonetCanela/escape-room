@@ -5,8 +5,7 @@ import com.escmanager.model.Room;
 
 public interface RoomDAO extends DAO{
 
-    void createRoom(Room room);
-    void updateRoom(Room room);
-    void updateRoomStatus(Room room);
+    void create(Room room);
+    void update(Room room);
 
 }
