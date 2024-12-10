@@ -1,23 +1,30 @@
 package com.escmanager.model;
 
+import com.escmanager.enums.DifficultyLevel;
+import com.escmanager.enums.Status;
+
 public class Room {
 
     private int id;
     private String name;
     private String theme;
-    private String difficulty;
-    private int element_quantity;
-    private int escape_room_id;
-    private String status;
+    private DifficultyLevel difficulty;
+    private Integer elementQuantity;
+    private int escaperoomId;
+    private Status status;
 
-    public Room(int id, String name, String theme, String difficulty, int element_quantity, int escape_room_id, String status) {
+    public Room(int id, String name, String theme, DifficultyLevel difficulty, Integer elementQuantity, int escaperoomId, Status status) {
         this.id = id;
         this.name = name;
         this.theme = theme;
         this.difficulty = difficulty;
-        this.element_quantity = element_quantity;
-        this.escape_room_id = escape_room_id;
+        this.elementQuantity = elementQuantity;
+        this.escaperoomId = escaperoomId;
         this.status = status;
+    }
+
+    public Room(){
+
     }
 
     public int getId() {
@@ -44,41 +51,41 @@ public class Room {
         this.theme = theme;
     }
 
-    public String getDifficulty() {
+    public DifficultyLevel getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(DifficultyLevel difficulty) {
         this.difficulty = difficulty;
     }
 
-    public int getElement_quantity() {
-        return element_quantity;
+    public Integer getElementQuantity() {
+        return elementQuantity;
     }
 
-    public void setElement_quantity(int element_quantity) {
-        this.element_quantity = element_quantity;
+    public void setElementQuantity(Integer elementQuantity) {
+        this.elementQuantity = elementQuantity;
     }
 
-    public int getEscape_room_id() {
-        return escape_room_id;
+    public int getEscaperoomId() {
+        return escaperoomId;
     }
 
-    public void setEscape_room_id(int escape_room_id) {
-        this.escape_room_id = escape_room_id;
+    public void setEscaperoomId(int escaperoomId) {
+        this.escaperoomId = escaperoomId;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return "Room - id: " + id + ", escape_room_id: " + escape_room_id + ", name: " + name + ", theme: " + theme + ", difficulty: " + difficulty
-                + ", status=" + status+ ", element_quantity=" + element_quantity;
+        return "Room - id: " + id + ", escape_room_id: " + escaperoomId + ", name: " + name + ", theme: " + theme + ", difficulty: " + difficulty
+                + ", status=" + status+ ", element_quantity=" + elementQuantity;
     }
 }
