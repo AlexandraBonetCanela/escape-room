@@ -51,6 +51,7 @@ public class RoomService {
     }
 
     public List<Room> getAllRooms(){
+
         return roomDAO.getAll();
     }
 }
