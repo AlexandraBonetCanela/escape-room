@@ -11,6 +11,16 @@ public class User {
     private Date lastUpdated;
     private boolean notifications;
 
+    public User(int id, String name, String email, boolean isRegistered, boolean notifications) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.isRegistered = isRegistered;
+        this.notifications = notifications;
+    }
+
+    public User() {
+    }
 
     public int getId() {
         return id;
