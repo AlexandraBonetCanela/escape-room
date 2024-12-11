@@ -4,7 +4,7 @@ import com.escmanager.dao.ConnectionDB;
 import com.escmanager.dao.RoomDAO;
 import com.escmanager.enums.DifficultyLevel;
 import com.escmanager.enums.Status;
-import com.escmanager.exceptions.DatabaseException;
+import com.escmanager.exceptions.DaoException;
 import com.escmanager.model.Room;
 
 import java.sql.*;
@@ -16,7 +16,7 @@ public class RoomImpl implements RoomDAO {
     ConnectionDB dao = ConnectionDB.getInstance();
 
     @Override
-    public Room create(Room room) throws DatabaseException, IllegalArgumentException {
+    public Room create(Room room) throws DaoException, IllegalArgumentException {
         String query = "INSERT INTO room (name, theme, difficulty_level, element_quantity, escape_room_id, status) " +
                         "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dao.getConnection();
@@ -37,12 +37,12 @@ public class RoomImpl implements RoomDAO {
 
             return room;
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to create room in database", e);
+            throw new DaoException("Failed to create room in database", e);
         }
     }
 
     @Override
-    public Room update(Room room) throws DatabaseException {
+    public Room update(Room room) throws DaoException {
         String query = "UPDATE room SET name = ?, theme = ?, difficulty_level = ?, element_quantity = ?," +
                         " escape_room_id = ?, status = ? WHERE id = ?";
         try (Connection connection = dao.getConnection();
@@ -59,7 +59,7 @@ public class RoomImpl implements RoomDAO {
 
             return room;
         } catch (SQLException e) {
-            throw new DatabaseException("Failed at updating room in database", e);
+            throw new DaoException("Failed at updating room in database", e);
         }
     }
 
@@ -89,13 +89,13 @@ public class RoomImpl implements RoomDAO {
                 );
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Failed at retrieving room in database", e);
+            throw new DaoException("Failed at retrieving room in database", e);
         }
         return null;
     }
 
     @Override
-    public List<Room> getAll() throws DatabaseException {
+    public List<Room> getAll() throws DaoException {
         List<Room> rooms = new ArrayList<>();
         String query = "SELECT * FROM room";
         try (Connection connection = dao.getConnection();
@@ -115,7 +115,7 @@ public class RoomImpl implements RoomDAO {
             }
 
         } catch (SQLException e) {
-            throw new DatabaseException("Failed at retrieving rooms in database", e);
+            throw new DaoException("Failed at retrieving rooms in database", e);
         }
         return rooms;
     }
