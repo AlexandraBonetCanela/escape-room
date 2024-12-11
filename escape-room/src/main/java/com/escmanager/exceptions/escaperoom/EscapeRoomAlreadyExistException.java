@@ -1,7 +1,7 @@
 package com.escmanager.exceptions.escaperoom;
 
 public class EscapeRoomAlreadyExistException extends Exception {
-    public EscapeRoomAlreadyExistException() {
-        super("Escape Room already exists");
+    public EscapeRoomAlreadyExistException(String message) {
+        super(message);
     }
 }
