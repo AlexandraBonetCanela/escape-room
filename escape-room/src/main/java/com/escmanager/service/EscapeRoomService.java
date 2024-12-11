@@ -25,7 +25,6 @@ public class EscapeRoomService {
         escapeRoom = new EscapeRoom();
         escapeRoom.setName(name);
         escapeRoom.setPrice(price);
-        escapeRoom.setStatus(Status.ACTIVE);
 
         escapeRoom = escapeRoomDAO.create(escapeRoom);
 
