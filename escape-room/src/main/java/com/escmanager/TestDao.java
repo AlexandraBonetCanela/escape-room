@@ -13,10 +13,10 @@ import java.util.List;
 public class TestDao {
     public static void main(String[] args) {
 
-//        EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
+        EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
 
-//        EscapeRoom newEscapeRoom = new EscapeRoom(0,"IT Academy", new BigDecimal(112) , Status.ACTIVE);
-//        escapeRoomDAO.create(newEscapeRoom);
+        EscapeRoom newEscapeRoom = new EscapeRoom(0,"IT Academy", new BigDecimal(112) , Status.ACTIVE);
+        escapeRoomDAO.create(newEscapeRoom);
 
 //        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
 //        for (EscapeRoom escapeRoom : escapeRooms) {
