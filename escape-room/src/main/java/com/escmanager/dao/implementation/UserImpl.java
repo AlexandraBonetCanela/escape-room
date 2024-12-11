@@ -1,12 +1,15 @@
-package com.escmanager.dao;
+package com.escmanager.dao.implementation;
 
+import com.escmanager.dao.ConnectionDB;
+import com.escmanager.dao.UserDAO;
+import com.escmanager.exceptions.DaoException;
 import com.escmanager.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserImpl implements UserDAO{
+public class UserImpl implements UserDAO {
 
     ConnectionDB dao = ConnectionDB.getInstance();
 
@@ -26,13 +29,11 @@ public class UserImpl implements UserDAO{
         } catch (SQLException e) {
             throw new DaoException("Failed at retrieving rooms in database", e);
         }
-        return null;
     }
 
     @Override
     public User update(User user) {
         String query = "UPDATE user SET name = ?, email = ?, is_registered = ?, notifications = ? WHERE id = ?";
-
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -41,12 +42,11 @@ public class UserImpl implements UserDAO{
             statement.setBoolean(3, user.isRegistered());
             statement.setBoolean(4, user.isNotifications());
             statement.executeUpdate();
-
             return user;
+
         } catch (SQLException e) {
             throw new DaoException("Failed at retrieving rooms in database", e);
         }
-        return null;
     }
 
     @Override
@@ -122,5 +122,5 @@ public class UserImpl implements UserDAO{
         }
         return user;
     }
-
 }
+

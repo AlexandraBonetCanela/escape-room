@@ -1,5 +1,7 @@
-package com.escmanager.dao;
+package com.escmanager.dao.implementation;
 
+import com.escmanager.dao.ConnectionDB;
+import com.escmanager.dao.RoomDAO;
 import com.escmanager.model.Room;
 
 import java.sql.*;
