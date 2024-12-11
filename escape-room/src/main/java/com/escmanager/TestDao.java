@@ -1,15 +1,5 @@
 package com.escmanager;
 
-import com.escmanager.dao.EscapeRoomDAO;
-import com.escmanager.dao.EscapeRoomImpl;
-import com.escmanager.dao.RoomDAO;
-import com.escmanager.enums.Status;
-import com.escmanager.model.EscapeRoom;
-import com.escmanager.model.Room;
-
-import java.math.BigDecimal;
-import java.util.List;
-
 public class TestDao {
     public static void main(String[] args) {
 

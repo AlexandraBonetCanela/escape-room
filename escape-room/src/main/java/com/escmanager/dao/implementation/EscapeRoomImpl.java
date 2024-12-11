@@ -1,5 +1,7 @@
-package com.escmanager.dao;
+package com.escmanager.dao.implementation;
 
+import com.escmanager.dao.ConnectionDB;
+import com.escmanager.dao.EscapeRoomDAO;
 import com.escmanager.enums.Status;
 import com.escmanager.model.EscapeRoom;
 

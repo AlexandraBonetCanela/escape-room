@@ -1,7 +1,7 @@
 package com.escmanager.service;
 
 import com.escmanager.dao.EscapeRoomDAO;
-import com.escmanager.dao.EscapeRoomImpl;
+import com.escmanager.dao.implementation.EscapeRoomImpl;
 import com.escmanager.enums.Status;
 import com.escmanager.exceptions.escaperoom.EscapeRoomAlreadyExistException;
 import com.escmanager.exceptions.escaperoom.EscapeRoomDoesNotExistException;
