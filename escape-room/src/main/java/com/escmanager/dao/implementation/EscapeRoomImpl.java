@@ -1,5 +1,7 @@
-package com.escmanager.dao;
+package com.escmanager.dao.implementation;
 
+import com.escmanager.dao.ConnectionDB;
+import com.escmanager.dao.EscapeRoomDAO;
 import com.escmanager.enums.Status;
 import com.escmanager.model.EscapeRoom;
 
@@ -60,11 +62,10 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
             if (resultSet.next()) {
                 return new EscapeRoom(
-
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getBigDecimal("price"),
-                        Status.valueOf(resultSet.getString("status"))
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getBigDecimal("price"),
+                    Status.valueOf(resultSet.getString("status"))
                 );
             }
 
