@@ -104,5 +104,4 @@ public class RoomImpl implements RoomDAO {
         }
         return rooms;
     }
-
 }

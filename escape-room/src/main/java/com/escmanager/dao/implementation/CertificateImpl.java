@@ -50,6 +50,30 @@ public class CertificateImpl implements CertificateDAO {
     }
 
     @Override
+    public Certificate getByName(String name) {
+        String query = "SELECT * FROM certificate WHERE name = ?";
+        try (Connection connection = dao.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Certificate(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getInt("escape_room_id")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("CertificateRoomImpl - getById: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
     public Certificate getById(int id) {
         String query = "SELECT * FROM certificate WHERE id = ?";
         try (Connection connection = dao.getConnection();
@@ -63,7 +87,7 @@ public class CertificateImpl implements CertificateDAO {
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("description"),
-                        resultSet.getInt("escape_room_id")
+                    resultSet.getInt("escape_room_id")
                 );
             }
 

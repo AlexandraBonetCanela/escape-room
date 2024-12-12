@@ -16,7 +16,7 @@ public class EscapeRoomService {
 
     public EscapeRoom addEscapeRoom(String name, BigDecimal price) throws EscapeRoomAlreadyExistException {
 
-        EscapeRoom escapeRoom = escapeRoomDAO.findByName(name);
+        EscapeRoom escapeRoom = escapeRoomDAO.getByName(name);
 
         if(escapeRoom != null){
             throw new EscapeRoomAlreadyExistException();
@@ -25,7 +25,6 @@ public class EscapeRoomService {
         escapeRoom = new EscapeRoom();
         escapeRoom.setName(name);
         escapeRoom.setPrice(price);
-        escapeRoom.setStatus(Status.ACTIVE);
 
         escapeRoom = escapeRoomDAO.create(escapeRoom);
 
@@ -52,14 +51,3 @@ public class EscapeRoomService {
         return escapeRooms;
     }
 }
-
-//class TestService {
-//    public static void main(String[] args) throws EscapeRoomAlreadyExistException, EscapeRoomDoesNotExistException {
-//
-//        EscapeRoomService service = new EscapeRoomService();
-////        service.addEscapeRoom("Bar manolo", new BigDecimal(10));
-////        service.deleteEscapeRoom(6);
-//        service.getAllEscapeRooms();
-//
-//    }
-//}

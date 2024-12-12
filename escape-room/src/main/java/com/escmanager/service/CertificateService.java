@@ -1,59 +1,70 @@
 package com.escmanager.service;
 
 import com.escmanager.dao.CertificateDAO;
-import com.escmanager.dao.EscapeRoomDAO;
 import com.escmanager.dao.implementation.CertificateImpl;
-import com.escmanager.dao.implementation.EscapeRoomImpl;
-import com.escmanager.enums.Status;
-import com.escmanager.exceptions.EscapeRoomAlreadyExistException;
-import com.escmanager.exceptions.EscapeRoomDoesNotExistException;
+import com.escmanager.exceptions.CertificateAlreadyExistException;
+import com.escmanager.exceptions.CertificateDoesNotExistException;
 import com.escmanager.model.Certificate;
-import com.escmanager.model.EscapeRoom;
 
-
-import java.math.BigDecimal;
 import java.util.List;
 
 public class CertificateService {
 
     CertificateDAO certificateDAO = new CertificateImpl();
 
-    public Certificate generateCertificate(User user, EscapeRoom escapeRoom, String description) throws EscapeRoomAlreadyExistException, EscapeRoomDoesNotExistException {
+    public Certificate generateCertificate(String name, String description, int escape_room_id)
+            throws CertificateAlreadyExistException {
 
-        Certificate certificate = certificateDAO.getById(id);
+        Certificate certificate = certificateDAO.getByName(name);
 
-        // UserDoesntExist must be integrated
-        if(escapeRoom == null || user == null){
-            throw new EscapeRoomDoesNotExistException();
+        if (certificate != null) {
+            throw new CertificateAlreadyExistException();
         }
 
         certificate = new Certificate();
-        certificate.setName(User.getName());
+        certificate.setName(name);
         certificate.setDescription(description);
-        certificate.setEscape_room_id(escapeRoomId);
-        certificate = certificateDAO.create(certificate);
+        certificate.setEscape_room_id(escape_room_id);
+        certificateDAO.create(certificate);
 
         return certificate;
     }
 
-    public boolean deleteEscapeRoom(int id) throws EscapeRoomDoesNotExistException {
+    public Certificate updateCertificate(int id, String name, String description, int escape_room_id)
+            throws CertificateDoesNotExistException {
 
-        EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
+        Certificate certificate = (Certificate) certificateDAO.getById(id);
 
-        if(escapeRoom == null){
-            throw new EscapeRoomDoesNotExistException();
+        if(certificate == null){
+            throw new CertificateDoesNotExistException();
         }
-        escapeRoom.setStatus(Status.INACTIVE);
-        escapeRoomDAO.update(escapeRoom);
 
-        return true;
+        certificate.setId(1);
+        certificate.setName("name");
+        certificate.setDescription("description");
+        certificate.setEscape_room_id(1);
+        certificateDAO.update(certificate);
+
+        return certificate;
     }
 
-    public List<EscapeRoom> getAllEscapeRooms() {
-
-        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
-
-        return escapeRooms;
+    public List<Certificate> getAllCertificates() {
+        return certificateDAO.getAll();
     }
 
+}
+
+class TestCertificateService {
+    public static void main(String[] args) throws CertificateDoesNotExistException, CertificateAlreadyExistException {
+
+        CertificateService service = new CertificateService();
+
+        service.generateCertificate("Survivor","You have escaped alive from horrors of atlantis", 1);
+
+//        List<Certificate> certificateList = service.getAllCertificates();
+//        for (Certificate certificate : certificateList){
+//            System.out.println(certificate);
+//        }
+
+    }
 }
