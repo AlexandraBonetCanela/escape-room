@@ -1,10 +1,10 @@
 package com.escmanager.service;
 
 import com.escmanager.dao.EscapeRoomDAO;
-import com.escmanager.dao.EscapeRoomImpl;
+import com.escmanager.dao.implementation.EscapeRoomImpl;
 import com.escmanager.enums.Status;
-import com.escmanager.exceptions.EscapeRoomAlreadyExistException;
-import com.escmanager.exceptions.EscapeRoomDoesNotExistException;
+import com.escmanager.exceptions.escaperoom.EscapeRoomAlreadyExistException;
+import com.escmanager.exceptions.escaperoom.EscapeRoomDoesNotExistException;
 import com.escmanager.model.EscapeRoom;
 
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ public class EscapeRoomService {
         EscapeRoom escapeRoom = escapeRoomDAO.findByName(name);
 
         if(escapeRoom != null){
-            throw new EscapeRoomAlreadyExistException();
+            throw new EscapeRoomAlreadyExistException("Escaperoom with name " + name + " already exists");
         }
 
         escapeRoom = new EscapeRoom();
@@ -37,7 +37,7 @@ public class EscapeRoomService {
         EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
 
         if(escapeRoom == null){
-            throw new EscapeRoomDoesNotExistException();
+            throw new EscapeRoomDoesNotExistException("Escapeoom with id " + id + " does not exists");
         }
         escapeRoom.setStatus(Status.INACTIVE);
         escapeRoomDAO.update(escapeRoom);

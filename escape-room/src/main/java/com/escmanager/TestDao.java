@@ -1,22 +1,43 @@
 package com.escmanager;
 
-import com.escmanager.dao.EscapeRoomDAO;
-import com.escmanager.dao.EscapeRoomImpl;
 import com.escmanager.dao.RoomDAO;
-import com.escmanager.enums.Status;
-import com.escmanager.model.EscapeRoom;
+import com.escmanager.dao.implementation.RoomImpl;
+import com.escmanager.enums.DifficultyLevel;
+import com.escmanager.exceptions.DaoException;
+import com.escmanager.exceptions.room.RoomAlreadyExistsException;
+import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.model.Room;
-
-import java.math.BigDecimal;
-import java.util.List;
+import com.escmanager.service.RoomService;
 
 public class TestDao {
     public static void main(String[] args) {
 
-        EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
+    //    EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
 
-        EscapeRoom newEscapeRoom = new EscapeRoom(0,"IT Academy", new BigDecimal(112) , Status.ACTIVE);
-        escapeRoomDAO.create(newEscapeRoom);
+    //    EscapeRoom newEscapeRoom = new EscapeRoom(0,"IT Academy", new BigDecimal(112) , Status.ACTIVE);
+    //    escapeRoomDAO.create(newEscapeRoom);
+
+        RoomDAO roomDAO = new RoomImpl();
+
+  //      Room room = roomDAO.findByNameAndEscaperoomId("Library of Secrets", 2);
+  //      System.out.println(room);
+
+           RoomService roomService = new RoomService();
+
+   //         try{
+    //            Room room = roomService.addRoom(1, DifficultyLevel.EASY, "Library of Curses", "themename");
+
+   //         } catch (RoomAlreadyExistsException | DaoException e){
+    //            System.out.println(e.getMessage());
+    //        }
+
+        try {
+            boolean result = roomService.deleteRoom(4);
+            System.out.println(result);
+        } catch (RoomDoesNotExistException | DaoException e) {
+            System.out.println(e.getMessage());
+        }
+
 
 //        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
 //        for (EscapeRoom escapeRoom : escapeRooms) {
