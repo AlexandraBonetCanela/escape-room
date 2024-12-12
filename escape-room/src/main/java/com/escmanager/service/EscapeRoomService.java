@@ -19,7 +19,7 @@ public class EscapeRoomService {
         EscapeRoom escapeRoom = escapeRoomDAO.findByName(name);
 
         if(escapeRoom != null){
-            throw new EscapeRoomAlreadyExistException();
+            throw new EscapeRoomAlreadyExistException("Escaperoom with name " + name + " already exists");
         }
 
         escapeRoom = new EscapeRoom();
@@ -37,7 +37,7 @@ public class EscapeRoomService {
         EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
 
         if(escapeRoom == null){
-            throw new EscapeRoomDoesNotExistException();
+            throw new EscapeRoomDoesNotExistException("Escapeoom with id " + id + " does not exists");
         }
         escapeRoom.setStatus(Status.INACTIVE);
         escapeRoomDAO.update(escapeRoom);

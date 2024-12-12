@@ -54,6 +54,7 @@ public class RoomImpl implements RoomDAO {
             statement.setInt(4, room.getElementQuantity());
             statement.setInt(5, room.getEscaperoomId());
             statement.setString(6, String.valueOf(room.getStatus()));
+            statement.setInt(7, room.getId());
 
             statement.executeUpdate();
 
@@ -65,6 +66,28 @@ public class RoomImpl implements RoomDAO {
 
     @Override
     public Room findByNameAndEscaperoomId(String name, int escaperoomId) {
+        String query = "SELECT * FROM room WHERE name = ? AND escape_room_id = ?";
+        try (Connection connection = dao.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+
+            statement.setString(1, name);
+            statement.setInt(2, escaperoomId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return new Room(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("theme"),
+                    DifficultyLevel.valueOf(resultSet.getString("difficulty_level")),
+                    resultSet.getInt("element_quantity"),
+                    resultSet.getInt("escape_room_id"),
+                    Status.valueOf(resultSet.getString("status"))
+                );
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Failed to find room with name " + name, e);
+        }
         return null;
     }
 
