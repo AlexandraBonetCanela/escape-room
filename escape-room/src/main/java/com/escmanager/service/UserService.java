@@ -4,6 +4,7 @@ import com.escmanager.dao.UserDAO;
 import com.escmanager.dao.implementation.UserImpl;
 import com.escmanager.exceptions.DaoException;
 import com.escmanager.exceptions.UserAlreadyExistException;
+import com.escmanager.exceptions.UserAlreadyRegisteredException;
 import com.escmanager.exceptions.UserDoesNotExistException;
 import com.escmanager.model.User;
 
@@ -17,7 +18,7 @@ public class UserService {
 
         User user = userDAO.findByEmail(email);
 
-        if(user != null) {
+        if(user == null) {
             throw new UserAlreadyExistException();
         }
         user = new User();
@@ -26,27 +27,26 @@ public class UserService {
         return userDAO.create(user);
     }
 
-    public User registerUser(String email, String name) throws UserAlreadyExistException, DaoException {
+    public User registerUser(String email, String name) throws DaoException, UserAlreadyRegisteredException {
 
         User user = userDAO.findByEmail(email);
 
-        if(user.isRegistered()){
-            throw new UserAlreadyExistException();
+        if (user != null && user.isRegistered()) {
+            throw new UserAlreadyRegisteredException();
         }
 
-        if (user == null){
+        if (user == null) {
             user = new User();
             user.setEmail(email);
             user.setName(name);
             user.setRegistered(true);
-            user = userDAO.create(user);
-            System.out.println("The user has created and registered");
+            userDAO.create(user);
         } else {
             user.setName(name);
             user.setRegistered(true);
-            user = userDAO.update(user);
-            System.out.println("The user has been registered");
+            userDAO.update(user);
         }
+
         return user;
     }
 
@@ -70,5 +70,17 @@ public class UserService {
     public List<User> getAllUsers(){
         List user = userDAO.getAll();
         return user;
+    }
+}
+
+class Test{
+    public static void main(String[] args) throws UserAlreadyExistException, UserAlreadyRegisteredException {
+        UserService service = new UserService();
+//        service.addUser("ken@gmail.com");
+//        service.registerUser("matiasm@gmail.com","mati");
+//        List<User> users = service.getAllUsers();
+//        for (User user : users){
+//            System.out.println(user);
+//        }
     }
 }
