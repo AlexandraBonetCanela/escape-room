@@ -36,11 +36,7 @@ public class RoomService {
 
     public boolean deleteRoom(int roomId) throws RoomDoesNotExistException, DaoException {
 
-        Room room = roomDAO.getById(roomId);
-
-        if(room == null){
-            throw new RoomDoesNotExistException("Room with id " + roomId + " does not exist");
-        }
+        Room room = getRoomById(roomId);
 
         room.setStatus(Status.INACTIVE);
         roomDAO.update(room);
@@ -51,5 +47,16 @@ public class RoomService {
     public List<Room> getAllRooms() throws DaoException{
 
             return roomDAO.getAll();
+    }
+
+    public Room getRoomById(int roomId) throws RoomDoesNotExistException, DaoException {
+
+        Room room = roomDAO.getById(roomId);
+
+        if(room == null){
+            throw new RoomDoesNotExistException("Room with id " + roomId + " does not exist");
+        }
+
+        return room;
     }
 }
