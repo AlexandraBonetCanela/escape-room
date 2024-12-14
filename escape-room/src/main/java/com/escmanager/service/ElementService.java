@@ -2,6 +2,7 @@ package com.escmanager.service;
 
 import com.escmanager.builder.HintBuilder;
 import com.escmanager.dao.ElementDAO;
+import com.escmanager.dao.implementation.ElementImpl;
 import com.escmanager.enums.ElementType;
 import com.escmanager.enums.Status;
 import com.escmanager.exceptions.DaoException;
@@ -16,8 +17,8 @@ import java.util.List;
 
 public class ElementService {
 
-    ElementDAO elementDAO;
-    RoomService roomService;
+    ElementDAO elementDAO = new ElementImpl();
+    RoomService roomService = new RoomService();
 
     public Element addProp(int roomId, String materialType, String name, BigDecimal price) throws RoomDoesNotExistException, DaoException, ElementAlreadyExistsException {
 
@@ -63,8 +64,12 @@ public class ElementService {
         return elementDAO.create(hint);
     }
 
+//    public boolean removeAllElementsFromRoom(int roomId) throws RoomDoesNotExistException {
+//        roomService.getRoomById(roomId);
+////        elementDAO.(roomId);
+//    }
 
-    public boolean deleteElement(int elementId) throws ElementDoesNotExistException {
+    public boolean removeElementFromRoom(int elementId) throws ElementDoesNotExistException {
 
         Element element = getElementById(elementId);
 
@@ -74,18 +79,26 @@ public class ElementService {
         return true;
     }
 
-    public List<Element> getElements(ElementType elementType, int roomId) throws RoomDoesNotExistException {
+    public boolean deleteElement(int elementId) throws ElementDoesNotExistException {
+        Element element = getElementById(elementId);
 
-        return elementDAO.findAllByTypeAndRoomId(elementType,roomId);
+        element.setStatus(Status.INACTIVE);
+        elementDAO.update(element);
+
+        return true;
     }
 
+//    public List<Element> getRoomElements(int roomId) throws RoomDoesNotExistException {
+//
+//        return;
+//    }
 
 
     public List<Element> getHints(int roomId) throws RoomDoesNotExistException {
 
         roomService.getRoomById(roomId);
 
-        return elementDAO.findAllByTypeAndRoomId(ElementType.HINT,roomId);
+        return elementDAO.findAllByTypeAndRoomId(ElementType.HINT, roomId);
     }
 
     public void checkElementDoesNotExist(ElementType elementType, String name, int roomId) throws ElementAlreadyExistsException {

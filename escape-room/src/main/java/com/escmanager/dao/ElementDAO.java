@@ -9,6 +9,6 @@ public interface ElementDAO extends DAO{
 
     Element create(Element element);
     Element update(Element element);
-    List<Element> findAllByTypeAndRoomId(ElementType type, int roomId);
+    List<Element> findAllByTypeAndRoomId(ElementType elementType, int roomId);
     Element findByTypeNameAndRoomId(ElementType type, String name, int roomId);
 }
