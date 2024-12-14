@@ -14,6 +14,6 @@ public class HintBuilder extends ElementBuilder {
 
     @Override
     public Element build() {
-        return new Hint(roomId, name, type, price, status, theme);
+        return new Hint(id, roomId, name, type, price, status, dateCreated, lastUpdated, theme);
     }
 }

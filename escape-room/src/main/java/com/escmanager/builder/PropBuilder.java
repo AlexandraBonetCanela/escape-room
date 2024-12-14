@@ -14,6 +14,6 @@ public class PropBuilder extends ElementBuilder {
 
     @Override
     public Element build() {
-        return new Prop(roomId, name, type, price, status, materialType);
+        return new Prop(id, roomId, name, type, price, status, dateCreated, lastUpdated, materialType);
     }
 }
