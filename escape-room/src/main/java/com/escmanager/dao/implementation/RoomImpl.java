@@ -35,7 +35,7 @@ public class RoomImpl implements RoomDAO {
 
             statement.executeUpdate();
 
-            return room;
+            return findByNameAndEscaperoomId(room.getName(), room.getEscaperoomId());
         } catch (SQLException e) {
             throw new DaoException("Failed to create room in database", e);
         }
@@ -58,7 +58,7 @@ public class RoomImpl implements RoomDAO {
 
             statement.executeUpdate();
 
-            return room;
+            return findByNameAndEscaperoomId(room.getName(), room.getEscaperoomId());
         } catch (SQLException e) {
             throw new DaoException("Failed at updating room in database", e);
         }
