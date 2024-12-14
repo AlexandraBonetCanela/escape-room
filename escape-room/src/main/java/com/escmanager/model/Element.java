@@ -8,7 +8,7 @@ import java.util.Date;
 
 public abstract class Element {
     protected int id;
-    protected int roomId;
+    protected Integer roomId;
     protected String name;
     protected ElementType type;
     protected BigDecimal price;
@@ -16,7 +16,7 @@ public abstract class Element {
     protected Date dateCreated;
     protected Date lastUpdated;
 
-    public Element(int id, int roomId, String name, ElementType type, BigDecimal price, Status status, Date dateCreated, Date lastUpdated) {
+    public Element(int id, Integer roomId, String name, ElementType type, BigDecimal price, Status status, Date dateCreated, Date lastUpdated) {
         this.id = id;
         this.roomId = roomId;
         this.name = name;
@@ -27,7 +27,7 @@ public abstract class Element {
         this.lastUpdated = lastUpdated;
     }
 
-    public Element(int roomId, String name, ElementType type, BigDecimal price, Status status) {
+    public Element(Integer roomId, String name, ElementType type, BigDecimal price, Status status) {
         this.roomId = roomId;
         this.name = name;
         this.type = type;
@@ -43,11 +43,11 @@ public abstract class Element {
         this.id = id;
     }
 
-    public int getRoomId() {
+    public Integer getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
 
@@ -97,5 +97,19 @@ public abstract class Element {
 
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    @Override
+    public String toString() {
+        return "Element{" +
+                "id=" + id +
+                ", roomId=" + roomId +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", price=" + price +
+                ", status=" + status +
+                ", dateCreated=" + dateCreated +
+                ", lastUpdated=" + lastUpdated +
+                '}';
     }
 }

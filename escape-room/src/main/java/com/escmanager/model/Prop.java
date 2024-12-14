@@ -26,4 +26,19 @@ public class Prop extends Element{
     public void setMaterialType(String materialType) {
         this.materialType = materialType;
     }
+
+    @Override
+    public String toString() {
+        return "Prop{" +
+                "id=" + id +
+                ", roomId=" + roomId +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", price=" + price +
+                ", status=" + status +
+                ", dateCreated=" + dateCreated +
+                ", lastUpdated=" + lastUpdated +
+                " materialType='" + materialType + '\'' +
+                '}';
+    }
 }

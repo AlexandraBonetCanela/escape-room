@@ -26,4 +26,19 @@ public class Hint extends Element{
     public void setTheme(String theme) {
         this.theme = theme;
     }
+
+    @Override
+    public String toString() {
+        return "Hint{" +
+                "id=" + id +
+                ", roomId=" + roomId +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", price=" + price +
+                ", status=" + status +
+                ", dateCreated=" + dateCreated +
+                ", lastUpdated=" + lastUpdated +
+                ", theme='" + theme + '\'' +
+                '}';
+    }
 }
