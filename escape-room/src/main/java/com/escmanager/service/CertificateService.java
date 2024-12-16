@@ -53,6 +53,6 @@ public class CertificateService {
         for (Certificate certificate : certificateList){
             System.out.println(certificate);
         }
-        return certificateDAO.getAll();
+        return certificateList;
     }
 }

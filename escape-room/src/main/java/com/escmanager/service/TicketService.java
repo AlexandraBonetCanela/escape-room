@@ -60,7 +60,7 @@ public class TicketService {
         for (Ticket ticket : ticketList){
             System.out.println(ticket);
         }
-        return service.getAll();
+        return ticketList;
     }
 
 }

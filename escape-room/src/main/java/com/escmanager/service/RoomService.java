@@ -53,6 +53,6 @@ public class RoomService {
         for (Room room: roomList){
             System.out.println(room);
         }
-        return roomDAO.getAll();
+        return roomList;
     }
 }
