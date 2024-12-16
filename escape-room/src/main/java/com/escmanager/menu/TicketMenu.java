@@ -1,8 +1,8 @@
 package com.escmanager.menu;
 
 import com.escmanager.service.TicketService;
-import static com.escmanager.menu.Main.scanner;
-import static com.escmanager.menu.Main.ticketService;
+
+import static com.escmanager.menu.Main.*;
 
 public class TicketMenu {
     public static void showMenu() {
@@ -21,14 +21,12 @@ public class TicketMenu {
                 case 1 -> {
                     System.out.print("Enter User ID: ");
                     int userId = scanner.nextInt();
-                    ticketService.issueTicket(userId);
+                    escapeRoomService.getAllEscapeRooms();
+                    System.out.print("Enter Escaperoom ID: ");
+                    int userId = scanner.nextInt();
+                    ticketService.createTicket(userId);
                 }
-                case 2 -> {
-                    System.out.print("Enter Ticket ID: ");
-                    int ticketId = scanner.nextInt();
-                    ticketService.validateTicket(ticketId);
-                }
-                case 3 -> backToMain = true;
+                case 2 -> backToMain = true;
                 default -> System.out.println("Invalid choice. Returning to main menu.");
             }
         }
