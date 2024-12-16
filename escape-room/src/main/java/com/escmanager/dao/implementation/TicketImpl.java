@@ -62,7 +62,7 @@ public class TicketImpl implements TicketDAO {
     }
 
     @Override
-    public Ticket findByName(String name) {
+    public Ticket getByName(String name) {
         String query = "SELECT * FROM ticket WHERE name = ?";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){

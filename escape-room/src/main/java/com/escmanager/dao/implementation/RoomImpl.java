@@ -65,7 +65,7 @@ public class RoomImpl implements RoomDAO {
     }
 
     @Override
-    public Room findByNameAndEscaperoomId(String name, int escaperoomId) {
+    public Room getByNameAndEscaperoomId(String name, int escaperoomId) {
         String query = "SELECT * FROM room WHERE name = ? AND escape_room_id = ?";
         try (Connection connection = dao.getConnection();
         PreparedStatement statement = connection.prepareStatement(query)){
