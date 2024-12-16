@@ -45,8 +45,11 @@ public class RoomService {
     }
 
     public List<Room> getAllRooms() throws DaoException{
-
-            return roomDAO.getAll();
+        List<Room> roomList = roomDAO.getAll();
+        for (Room room: roomList){
+            System.out.println(room);
+        }
+        return roomList;
     }
 
     public Room getRoomById(int roomId) throws RoomDoesNotExistException, DaoException {

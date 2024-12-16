@@ -51,7 +51,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
     }
 
     @Override
-    public EscapeRoom findByName(String name) {
+    public EscapeRoom  getByName(String name) {
         String query = "SELECT * FROM escaperoom WHERE name = ?";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -61,11 +61,10 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
             if (resultSet.next()) {
                 return new EscapeRoom(
-
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getBigDecimal("price"),
-                        Status.valueOf(resultSet.getString("status"))
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getBigDecimal("price"),
+                    Status.valueOf(resultSet.getString("status"))
                 );
             }
 

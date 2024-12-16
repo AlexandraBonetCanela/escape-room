@@ -118,7 +118,7 @@ public class RoomImpl implements RoomDAO {
     }
 
     @Override
-    public List<Room> getAll() throws DaoException {
+    public List<Room> getAll() {
         List<Room> rooms = new ArrayList<>();
         String query = "SELECT * FROM room";
         try (Connection connection = dao.getConnection();

@@ -86,6 +86,6 @@ public class Room {
     @Override
     public String toString() {
         return "Room - id: " + id + ", escape_room_id: " + escaperoomId + ", name: " + name + ", theme: " + theme + ", difficulty: " + difficulty
-                + ", status=" + status+ ", element_quantity=" + elementQuantity;
+                + ", status: " + status + ", element_quantity: " + elementQuantity;
     }
 }
