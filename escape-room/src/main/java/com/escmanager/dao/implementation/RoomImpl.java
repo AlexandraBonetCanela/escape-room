@@ -2,6 +2,9 @@ package com.escmanager.dao.implementation;
 
 import com.escmanager.dao.ConnectionDB;
 import com.escmanager.dao.RoomDAO;
+import com.escmanager.enums.DifficultyLevel;
+import com.escmanager.enums.Status;
+import com.escmanager.exceptions.DaoException;
 import com.escmanager.model.Room;
 
 import java.sql.*;
@@ -13,27 +16,33 @@ public class RoomImpl implements RoomDAO {
     ConnectionDB dao = ConnectionDB.getInstance();
 
     @Override
-    public void create(Room room) {
+    public Room create(Room room) throws DaoException, IllegalArgumentException {
         String query = "INSERT INTO room (name, theme, difficulty_level, element_quantity, escape_room_id, status) " +
                         "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
+            if (room == null) {
+                throw new IllegalArgumentException("Room object cannot be null");
+            }
+
             statement.setString(1, room.getName());
             statement.setString(2, room.getTheme());
-            statement.setString(3, room.getDifficulty());
-            statement.setInt(4, room.getElement_quantity());
-            statement.setInt(5, room.getEscape_room_id());
-            statement.setString(6, room.getStatus());
+            statement.setString(3, String.valueOf(room.getDifficulty()));
+            statement.setInt(4, room.getElementQuantity());
+            statement.setInt(5, room.getEscaperoomId());
+            statement.setString(6, String.valueOf(room.getStatus()));
 
             statement.executeUpdate();
+
+            return room;
         } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - create: " + e.getMessage());
+            throw new DaoException("Failed to create room in database", e);
         }
     }
 
     @Override
-    public void update(Room room) {
+    public Room update(Room room) throws DaoException {
         String query = "UPDATE room SET name = ?, theme = ?, difficulty_level = ?, element_quantity = ?," +
                         " escape_room_id = ?, status = ? WHERE id = ?";
         try (Connection connection = dao.getConnection();
@@ -41,15 +50,45 @@ public class RoomImpl implements RoomDAO {
 
             statement.setString(1, room.getName());
             statement.setString(2, room.getTheme());
-            statement.setString(3, room.getDifficulty());
-            statement.setInt(4, room.getElement_quantity());
-            statement.setInt(5, room.getEscape_room_id());
-            statement.setString(6, room.getStatus());
+            statement.setString(3, String.valueOf(room.getDifficulty()));
+            statement.setInt(4, room.getElementQuantity());
+            statement.setInt(5, room.getEscaperoomId());
+            statement.setString(6, String.valueOf(room.getStatus()));
+            statement.setInt(7, room.getId());
 
             statement.executeUpdate();
+
+            return room;
         } catch (SQLException e) {
-            System.out.println("RoomImpl - update: " + e.getMessage());
+            throw new DaoException("Failed at updating room in database", e);
         }
+    }
+
+    @Override
+    public Room findByNameAndEscaperoomId(String name, int escaperoomId) {
+        String query = "SELECT * FROM room WHERE name = ? AND escape_room_id = ?";
+        try (Connection connection = dao.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+
+            statement.setString(1, name);
+            statement.setInt(2, escaperoomId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                return new Room(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("theme"),
+                    DifficultyLevel.valueOf(resultSet.getString("difficulty_level")),
+                    resultSet.getInt("element_quantity"),
+                    resultSet.getInt("escape_room_id"),
+                    Status.valueOf(resultSet.getString("status"))
+                );
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Failed to find room with name " + name, e);
+        }
+        return null;
     }
 
     @Override
@@ -66,15 +105,14 @@ public class RoomImpl implements RoomDAO {
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("theme"),
-                    resultSet.getString("difficulty_level"),
+                    DifficultyLevel.valueOf(resultSet.getString("difficulty_level")),
                     resultSet.getInt("element_quantity"),
                     resultSet.getInt("escape_room_id"),
-                    resultSet.getString("status")
+                    Status.valueOf(resultSet.getString("status"))
                 );
             }
-
         } catch (SQLException e) {
-            System.out.println("RoomImpl - getById: " + e.getMessage());
+            throw new DaoException("Failed at retrieving room in database", e);
         }
         return null;
     }
@@ -92,15 +130,15 @@ public class RoomImpl implements RoomDAO {
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("theme"),
-                        resultSet.getString("difficulty_level"),
+                        DifficultyLevel.valueOf(resultSet.getString("difficulty_level")),
                         resultSet.getInt("element_quantity"),
                         resultSet.getInt("escape_room_id"),
-                        resultSet.getString("status")
+                        Status.valueOf(resultSet.getString("status"))
                 ));
             }
 
         } catch (SQLException e) {
-            System.out.println("RoomImpl - getAll: " + e.getMessage());
+            throw new DaoException("Failed at retrieving rooms in database", e);
         }
         return rooms;
     }

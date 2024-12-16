@@ -1,8 +1,10 @@
 package com.escmanager.model;
 
+import com.escmanager.service.Observer;
+
 import java.util.Date;
 
-public class User {
+public class User implements Observer {
     private int id;
     private String name;
     private String email;
@@ -89,5 +91,10 @@ public class User {
                 ", lastUpdated=" + lastUpdated +
                 ", notifications=" + notifications +
                 '}';
+    }
+
+    @Override
+    public void update(Newsletter newsletter) {
+        System.out.println("User " + this.name + " received the newsletter! Content: " + newsletter.getName());
     }
 }
