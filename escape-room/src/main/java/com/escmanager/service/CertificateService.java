@@ -49,22 +49,10 @@ public class CertificateService {
     }
 
     public List<Certificate> getAllCertificates() {
+        List<Certificate> certificateList = certificateDAO.getAll();
+        for (Certificate certificate : certificateList){
+            System.out.println(certificate);
+        }
         return certificateDAO.getAll();
-    }
-
-}
-
-class TestCertificateService {
-    public static void main(String[] args) throws CertificateDoesNotExistException, CertificateAlreadyExistException {
-
-        CertificateService service = new CertificateService();
-
-        service.generateCertificate("Survivor","You have escaped alive from horrors of atlantis", 1);
-
-//        List<Certificate> certificateList = service.getAllCertificates();
-//        for (Certificate certificate : certificateList){
-//            System.out.println(certificate);
-//        }
-
     }
 }

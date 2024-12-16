@@ -56,6 +56,10 @@ public class TicketService {
     }
 
     public List<Ticket> getAllTickets() throws DaoException{
+        List<Ticket> ticketList = service.getAll();
+        for (Ticket ticket : ticketList){
+            System.out.println(ticket);
+        }
         return service.getAll();
     }
 

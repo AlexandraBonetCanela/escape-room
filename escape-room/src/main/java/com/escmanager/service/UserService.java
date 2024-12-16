@@ -68,7 +68,10 @@ public class UserService {
     }
 
     public List<User> getAllUsers(){
-        List user = userDAO.getAll();
-        return user;
+        List<User> userList = userDAO.getAll();
+        for (User user : userList){
+            System.out.println(user);
+        }
+        return userList;
     }
 }
