@@ -6,7 +6,7 @@ import static com.escmanager.menu.Main.scanner;
 import static com.escmanager.menu.Main.hintService;
 
 public class HintMenu {
-    public static void showMenu(HintService service) {
+    public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
             System.out.println("""
