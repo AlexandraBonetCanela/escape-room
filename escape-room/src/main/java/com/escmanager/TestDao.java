@@ -7,6 +7,8 @@ import com.escmanager.exceptions.DaoException;
 import com.escmanager.exceptions.room.RoomAlreadyExistsException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.model.Room;
+import com.escmanager.model.User;
+import com.escmanager.service.NewsletterService;
 import com.escmanager.service.RoomService;
 
 public class TestDao {
@@ -31,12 +33,12 @@ public class TestDao {
     //            System.out.println(e.getMessage());
     //        }
 
-        try {
-            boolean result = roomService.deleteRoom(4);
-            System.out.println(result);
-        } catch (RoomDoesNotExistException | DaoException e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            boolean result = roomService.deleteRoom(4);
+//            System.out.println(result);
+//        } catch (RoomDoesNotExistException | DaoException e) {
+//            System.out.println(e.getMessage());
+//        }
 
 
 //        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
@@ -57,5 +59,11 @@ public class TestDao {
 //        escapeRoom.setStatus(Status.INACTIVE);
 //        escapeRoomDAO.update(escapeRoom);
 //        System.out.println(escapeRoom);
+
+        NewsletterService newsletterService = new NewsletterService();
+        User user = new User(1, "Barbie", "barbie@gmail.com", true, true);
+        newsletterService.subscribe(user);
+        newsletterService.createNewsletter("Test 3");
+
     }
 }
