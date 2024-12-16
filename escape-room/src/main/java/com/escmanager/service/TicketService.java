@@ -7,6 +7,8 @@ import com.escmanager.exceptions.ticket.TicketDoesNotExistException;
 import com.escmanager.model.Ticket;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +68,11 @@ class test{
     public static void main(String[] args) throws TicketAlreadyExistException {
 
         TicketService service = new TicketService();
-        service.createTicket(1,1,5,20, 10, new Date());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2001, Calendar.NOVEMBER, 2, 11, 0, 0); // 16 de diciembre de 2024, 12:00:00
+        Date fecha = calendar.getTime();
+
+        service.createTicket(1,1, new BigDecimal(10),20, new BigDecimal(10), fecha);
 
     }
 }

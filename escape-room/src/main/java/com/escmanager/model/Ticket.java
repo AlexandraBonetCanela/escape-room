@@ -10,16 +10,16 @@ public class Ticket {
     private int quantity;
     private int escape_room_id;
     private BigDecimal total_price;
-    private Date reservation_date;
+    private Date date_reservation;
 
-    public Ticket(int id, int user_id, BigDecimal unit_price, int quantity, int escape_room_id, BigDecimal total_price, Date reservation_date) {
+    public Ticket(int id, int user_id, BigDecimal unit_price, int quantity, int escape_room_id, BigDecimal total_price, Date date_reservation) {
         this.id = id;
         this.user_id = user_id;
         this.unit_price = unit_price;
         this.quantity = quantity;
         this.escape_room_id = escape_room_id;
         this.total_price = total_price;
-        this.reservation_date = reservation_date;
+        this.date_reservation = date_reservation;
     }
 
     public Ticket() {

@@ -15,7 +15,7 @@ public class TicketImpl implements TicketDAO {
 
     @Override
     public Ticket create(Ticket ticket) throws DaoException, IllegalArgumentException {
-        String query = "INSERT INTO ticket (user_id, unit_price, quantity, escape_room_id, total_price, reservation_date) " +
+        String query = "INSERT INTO ticket (user_id, unit_price, quantity, escape_room_id, total_price, date_reservation) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -40,7 +40,7 @@ public class TicketImpl implements TicketDAO {
 
     @Override
     public Ticket update(Ticket ticket) throws DaoException, IllegalArgumentException {
-        String query = "UPDATE ticket SET user_id = ?, unit_price = ?, quantity = ?, escape_room_id = ?, total_price = ?, reservation_date = ? WHERE id = ?";
+        String query = "UPDATE ticket SET user_id = ?, unit_price = ?, quantity = ?, escape_room_id = ?, total_price = ?, date_reservation = ? WHERE id = ?";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -80,7 +80,7 @@ public class TicketImpl implements TicketDAO {
                         resultSet.getInt("quantity"),
                         resultSet.getInt("escape_room_id"),
                         resultSet.getBigDecimal("total_price"),
-                        resultSet.getDate("reservation_date")
+                        resultSet.getDate("date_reservation")
                 );
             }
         } catch (SQLException e) {
@@ -106,7 +106,7 @@ public class TicketImpl implements TicketDAO {
                         resultSet.getInt("quantity"),
                         resultSet.getInt("escape_room_id"),
                         resultSet.getBigDecimal("total_price"),
-                        resultSet.getDate("reservation_date")
+                        resultSet.getDate("date_reservation")
                 );
             }
         } catch (SQLException e) {
@@ -131,7 +131,7 @@ public class TicketImpl implements TicketDAO {
                         resultSet.getInt("quantity"),
                         resultSet.getInt("escape_room_id"),
                         resultSet.getBigDecimal("total_price"),
-                        resultSet.getDate("reservation_date")
+                        resultSet.getDate("date_reservation")
                 ));
             }
 
