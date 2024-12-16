@@ -8,14 +8,12 @@ import com.escmanager.dao.ElementDAO;
 import com.escmanager.enums.ElementType;
 import com.escmanager.enums.Status;
 import com.escmanager.exceptions.DaoException;
+import com.escmanager.exceptions.element.ElementDoesNotExistException;
 import com.escmanager.model.Element;
 import com.escmanager.model.Hint;
 import com.escmanager.model.Prop;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,11 +49,17 @@ public class ElementImpl implements ElementDAO {
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, element.getRoomId());
+            if(element.getRoomId() == null) {
+                statement.setNull(1, Types.INTEGER);
+            }
+            else {
+                statement.setInt(1, element.getRoomId());
+            }
             statement.setString(2, String.valueOf(element.getType()));
             statement.setString(3, element.getName());
             statement.setBigDecimal(4, element.getPrice());
             statement.setString(5, String.valueOf(element.getStatus()));
+            statement.setInt(6, element.getId());
             statement.executeUpdate();
 
             return findByTypeNameAndRoomId(element.getType(), element.getName(), element.getRoomId());
@@ -66,28 +70,41 @@ public class ElementImpl implements ElementDAO {
     }
 
     @Override
-    public Element findByTypeNameAndRoomId(ElementType type, String name, int roomId) {
-        switch (type) {
-            case PROP:
-                PropBuilder propBuilder = new PropBuilder();
-                int propId = getElementDetails(propBuilder, type, name, roomId);
-                propBuilder.setMaterialType(getPropMaterialType(propId));
-                return propBuilder.build();
-            case HINT:
-                HintBuilder hintBuilder = new HintBuilder();
-                int hintId = getElementDetails(hintBuilder, type, name, roomId);
-                hintBuilder.setTheme(getHintTheme(hintId));
-                return hintBuilder.build();
-            default:
-                throw new DaoException("Unsupported element type", null);
+    public Element findByTypeNameAndRoomId(ElementType type, String name, Integer roomId) {
+        try {
+            switch (type) {
+                case PROP:
+                    PropBuilder propBuilder = new PropBuilder();
+                    int propId = getElementDetails(propBuilder, type, name, roomId);
+                    propBuilder.setMaterialType(getPropMaterialType(propId));
+                    return propBuilder.build();
+                case HINT:
+                    HintBuilder hintBuilder = new HintBuilder();
+                    int hintId = getElementDetails(hintBuilder, type, name, roomId);
+                    hintBuilder.setTheme(getHintTheme(hintId));
+                    return hintBuilder.build();
+                default:
+                    throw new DaoException("Unsupported element type", null);
+            }
+        }
+        catch(ElementDoesNotExistException e) {
+            return null;
         }
     }
 
     @Override
-    public List<Element> findAllByTypeAndRoomId(ElementType elementType, int roomId) {
+    public List<Element> findAllByTypeAndRoomId(ElementType elementType, Integer roomId) {
 
-        String propQuery = "SELECT * FROM element e INNER JOIN prop p ON e.id = p.element_id WHERE e.type = ? AND e.room_id = ?";
-        String hintQuery = "SELECT * FROM element e INNER JOIN hint h ON e.id = h.element_id WHERE e.type = ? AND e.room_id = ?";
+        String tailQuery;
+        if(roomId != null){
+           tailQuery = "AND e.room_id = ?";
+        } else {
+            tailQuery = "AND e.room_id IS ?";}
+
+        String propQuery = "SELECT * FROM element e INNER JOIN prop p ON e.id = p.element_id WHERE e.status = 'ACTIVE' AND e.type = ? " + tailQuery;
+        String hintQuery = "SELECT * FROM element e INNER JOIN hint h ON e.id = h.element_id WHERE e.status = 'ACTIVE' AND e.type = ? " + tailQuery;
+
+
 
         List<Element> elements = new ArrayList<>();
 
@@ -98,13 +115,13 @@ public class ElementImpl implements ElementDAO {
             switch (elementType) {
                 case PROP:
                     propStatement.setString(1, String.valueOf(elementType));
-                    propStatement.setInt(2, roomId);
+                    propStatement.setObject(2, roomId);
                     ResultSet propResultSet = propStatement.executeQuery();
 
                     while (propResultSet.next()){
                         PropBuilder propBuilder = new PropBuilder();
                         propBuilder.setId(propResultSet.getInt("id"));
-                        propBuilder.setRoomId(propResultSet.getInt("room_id"));
+                        propBuilder.setRoomId(propResultSet.getObject("room_id", Integer.class));
                         propBuilder.setType(ElementType.valueOf(propResultSet.getString("type")));
                         propBuilder.setName(propResultSet.getString("name"));
                         propBuilder.setPrice(propResultSet.getBigDecimal("price"));
@@ -117,7 +134,7 @@ public class ElementImpl implements ElementDAO {
                     return elements;
                 case HINT:
                     hintStatement.setString(1, String.valueOf(elementType));
-                    hintStatement.setInt(2, roomId);
+                    hintStatement.setObject(2, roomId);
                     hintStatement.executeQuery();
                     ResultSet hintResultSet = hintStatement.executeQuery();
 
@@ -173,7 +190,7 @@ public class ElementImpl implements ElementDAO {
                 }
 
                 elementBuilder.setId(resultSet.getInt("id"));
-                elementBuilder.setRoomId(resultSet.getInt("room_id"));
+                elementBuilder.setRoomId(resultSet.getObject("room_id", Integer.class));
                 elementBuilder.setType(ElementType.valueOf(resultSet.getString("type")));
                 elementBuilder.setName(resultSet.getString("name"));
                 elementBuilder.setPrice(resultSet.getBigDecimal("price"));
@@ -215,7 +232,7 @@ public class ElementImpl implements ElementDAO {
 
             return getElementDetails(elementBuilder, element.getType(), element.getName(), element.getRoomId());
 
-        } catch (SQLException e){
+        } catch (SQLException | ElementDoesNotExistException e){
             throw new DaoException("Failed to create Element in database", e);
         }
     }
@@ -254,21 +271,28 @@ public class ElementImpl implements ElementDAO {
         }
     }
 
-    private Integer getElementDetails(ElementBuilder elementBuilder, ElementType type, String name, int roomId){
-        String query = "SELECT * FROM element WHERE type = ? AND name = ? AND room_id = ?";
+    private int getElementDetails(ElementBuilder elementBuilder, ElementType type, String name, Integer roomId) throws ElementDoesNotExistException {
+
+        String tailQuery;
+        if(roomId != null){
+            tailQuery = "AND room_id = ?";
+        } else {
+            tailQuery = "AND room_id IS ?";}
+
+        String query = "SELECT * FROM element WHERE type = ? AND name = ? " + tailQuery;
         int elementId;
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, type.name());
             statement.setString(2, name);
-            statement.setInt(3, roomId);
+            statement.setObject(3, roomId, Types.INTEGER);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 elementId = resultSet.getInt("id");
                 elementBuilder.setId(resultSet.getInt("id"));
-                elementBuilder.setRoomId(resultSet.getInt("room_id"));
+                elementBuilder.setRoomId(resultSet.getObject("room_id", Integer.class));
                 elementBuilder.setType(type);
                 elementBuilder.setName(resultSet.getString("name"));
                 elementBuilder.setPrice(resultSet.getBigDecimal("price"));
@@ -277,10 +301,12 @@ public class ElementImpl implements ElementDAO {
                 elementBuilder.setLastUpdated(resultSet.getTimestamp("last_updated"));
                 return elementId;
             }
+            else {
+                throw new ElementDoesNotExistException("Type: " + type + " name: " + name + " roomId: " + roomId);
+            }
         } catch (SQLException e) {
             throw new DaoException("Failed to find element by type and name and roomId", e);
         }
-        return null;
     }
 
     private String getPropMaterialType(int elementId){

@@ -11,7 +11,7 @@ import java.util.Date;
 public abstract class ElementBuilder {
 
     protected int id;
-    protected int roomId;
+    protected Integer roomId;
     protected String name;
     protected BigDecimal price;
     protected ElementType type;
@@ -24,7 +24,7 @@ public abstract class ElementBuilder {
         return this;
     }
 
-    public ElementBuilder setRoomId(int roomId) {
+    public ElementBuilder setRoomId(Integer roomId) {
         this.roomId = roomId;
         return this;
     }

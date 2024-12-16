@@ -9,6 +9,7 @@ import com.escmanager.enums.ElementType;
 import com.escmanager.enums.Status;
 import com.escmanager.exceptions.DaoException;
 import com.escmanager.exceptions.element.ElementAlreadyExistsException;
+import com.escmanager.exceptions.element.ElementDoesNotExistException;
 import com.escmanager.exceptions.room.RoomAlreadyExistsException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.model.Element;
@@ -102,16 +103,84 @@ public class TestDao {
 //
 //        }
 
+//        ElementService elementService = new ElementService();
+//
+//        try {
+//            Element result = elementService.addProp(4, "wood", "new chair 3", BigDecimal.valueOf(49.00));
+//            System.out.println(result);
+//
+//        } catch (DaoException | RoomDoesNotExistException | ElementAlreadyExistsException e){
+//            System.out.println(e.getMessage());
+//
+//        }
+
+//        ElementService elementService = new ElementService();
+//
+//        try {
+//            Element result = elementService.addHint(4, "dark", "new chair 3 hint", BigDecimal.valueOf(49.00));
+//            System.out.println(result);
+//
+//        } catch (DaoException | RoomDoesNotExistException | ElementAlreadyExistsException e){
+//            System.out.println(e.getMessage());
+//
+//        }
+
         ElementService elementService = new ElementService();
 
         try {
-            Element result = elementService.addProp(4, "wood", "new chair 3", BigDecimal.valueOf(49.00));
+            // Test elementService.deleteElement
+            elementService.deleteElement(6);
+
+            // Test elementService.removeElementFromRoom
+            boolean result = elementService.removeElementFromRoom(11);
             System.out.println(result);
 
-        } catch (DaoException | RoomDoesNotExistException | ElementAlreadyExistsException e){
+            // Test elementDAO.findAllByTypeAndRoomId
+            List<Element> roomProps = elementDAO.findAllByTypeAndRoomId(ElementType.PROP, 4);
+            System.out.println("Props in room 4");
+            for(Element e: roomProps) {
+                System.out.println(e);
+            }
+
+            // Ensure element 6 is not returned
+            List<Element> roomHints = elementDAO.findAllByTypeAndRoomId(ElementType.HINT, 4);
+            System.out.println("Hints in room 4");
+            for(Element e: roomHints) {
+                System.out.println(e);
+            }
+
+            // Test elementDAO.findAllByTypeAndRoomId: null roomId
+            List<Element> noRoomProps = elementDAO.findAllByTypeAndRoomId(ElementType.PROP, null);
+            System.out.println("Props with no room");
+            for(Element e: noRoomProps) {
+                System.out.println(e);
+            }
+
+            // Test elementDAO.findByTypeNameAndRoomId
+            Element element10 = elementDAO.findByTypeNameAndRoomId(ElementType.HINT, "new chair hint", 4);
+            Element element7 = elementDAO.findByTypeNameAndRoomId(ElementType.PROP, "new chair2", 4);
+            Element elementNull = elementDAO.findByTypeNameAndRoomId(ElementType.HINT, "new chair2", 4);
+            Element element11 = elementDAO.findByTypeNameAndRoomId(ElementType.PROP, "new chair 3", null);
+
+            System.out.println("Element 10: " + element10);
+            System.out.println("Element 7: " + element7);
+            System.out.println("Element null: " + elementNull);
+            System.out.println("Element 11: " + element11);
+
+
+            // Test elementService.getElementById
+            Element element1 = elementService.getElementById(1);
+            System.out.println("Element 1 from service: " + element1);
+            Element element2 = elementService.getElementById(2);
+            System.out.println("Element 2 from service: " + element2);
+            Element element11_2 = elementService.getElementById(11);
+            System.out.println("Element 11 from service: " + element11_2);
+
+        } catch (DaoException | ElementDoesNotExistException e){
             System.out.println(e.getMessage());
 
         }
+
 //        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
 //        for (EscapeRoom escapeRoom : escapeRooms) {
 //            System.out.println(escapeRoom);

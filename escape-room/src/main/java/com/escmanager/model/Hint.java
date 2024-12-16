@@ -9,7 +9,7 @@ import java.util.Date;
 public class Hint extends Element{
     private String theme;
 
-    public Hint(int id, int roomId, String name, ElementType type, BigDecimal price, Status status, Date dateCreated, Date lastUpdated, String theme) {
+    public Hint(int id, Integer roomId, String name, ElementType type, BigDecimal price, Status status, Date dateCreated, Date lastUpdated, String theme) {
         super(id, roomId, name, type, price, status, dateCreated, lastUpdated);
         this.theme = theme;
     }
