@@ -1,6 +1,9 @@
-package com.escmanager.dao;
+package com.escmanager.dao.implementation;
 
+import com.escmanager.dao.ConnectionDB;
+import com.escmanager.dao.EscapeRoomDAO;
 import com.escmanager.enums.Status;
+import com.escmanager.exceptions.DaoException;
 import com.escmanager.model.EscapeRoom;
 
 import java.sql.*;
@@ -24,9 +27,8 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
             
             return escapeRoom;
         } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - create: " + e.getMessage());
+            throw new DaoException("Failed to create Escaperoom in database", e);
         }
-        return null;
     }
 
     @Override
@@ -44,13 +46,12 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
             return escapeRoom;
         } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - update: " + e.getMessage());
+            throw new DaoException("Failed at updating Escaperoom in database", e);
         }
-        return null;
     }
 
     @Override
-    public EscapeRoom findByName(String name) {
+    public EscapeRoom  getByName(String name) {
         String query = "SELECT * FROM escaperoom WHERE name = ?";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -60,11 +61,10 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
 
             if (resultSet.next()) {
                 return new EscapeRoom(
-
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getBigDecimal("price"),
-                        Status.valueOf(resultSet.getString("status"))
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getBigDecimal("price"),
+                    Status.valueOf(resultSet.getString("status"))
                 );
             }
 
@@ -94,7 +94,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - getById: " + e.getMessage());
+            throw new DaoException("Failed at retrieving Escaperoom in database", e);
         }
         return null;
     }
@@ -117,7 +117,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("EscapeRoomImpl - getAll: " + e.getMessage());
+            throw new DaoException("Failed at retrieving Escaperooms in database", e);
         }
         return escapeRooms;
     }

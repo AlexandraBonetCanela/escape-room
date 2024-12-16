@@ -1,5 +1,6 @@
 package com.escmanager.dao;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,14 +19,18 @@ public class ConnectionDB {
     private Connection connection;
 
     public ConnectionDB() {
+
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("escape-room/src/main/resources/database.properties")) {
-            properties.load(fis);
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("database.properties")) {
+            if (is == null) {
+                throw new RuntimeException("Resource not found: database.properties");
+            }
+            properties.load(is);
             this.dbUrl = properties.getProperty("db.url");
             this.dbUsername = properties.getProperty("db.username");
             this.dbPassword = properties.getProperty("db.password");
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

@@ -1,11 +1,14 @@
 package com.escmanager.dao;
 
-import com.escmanager.model.EscapeRoom;
 import com.escmanager.model.Room;
 
-public interface RoomDAO extends DAO{
+import java.util.List;
 
-    void create(Room room);
-    void update(Room room);
+public interface RoomDAO {
 
+    Room create(Room room);
+    Room update(Room room);
+    Room findByNameAndEscaperoomId(String name, int escaperoomId);
+    Room getById(int id);
+    List<Room> getAll();
 }
