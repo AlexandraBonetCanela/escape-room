@@ -10,20 +10,17 @@ public class Ticket {
     private int quantity;
     private int escape_room_id;
     private BigDecimal total_price;
-    private Date date_reservation;
 
-    public Ticket(int id, int user_id, BigDecimal unit_price, int quantity, int escape_room_id, BigDecimal total_price, Date date_reservation) {
+    public Ticket(int id, int user_id, BigDecimal unit_price, int quantity, int escape_room_id, BigDecimal total_price) {
         this.id = id;
         this.user_id = user_id;
         this.unit_price = unit_price;
         this.quantity = quantity;
         this.escape_room_id = escape_room_id;
         this.total_price = total_price;
-        this.date_reservation = date_reservation;
     }
 
     public Ticket() {
-
     }
 
     public int getId() {
@@ -74,21 +71,14 @@ public class Ticket {
         this.total_price = total_price;
     }
 
-    public java.sql.Date getReservation_date() {
-        return (java.sql.Date) reservation_date;
-    }
-
-    public void setReservation_date(Date reservation_date) {
-        this.reservation_date = reservation_date;
-    }
-
     @Override
     public String toString() {
         return "Ticket - ," +
                 " id: " + id +
                 ", user_id: " + user_id +
+                ", escape_room_id: " + escape_room_id +
                 ", unit_price: " + unit_price +
                 ", quantity: " + quantity +
-                ", escape_room_id:" + escape_room_id;
+                ", total_price: " + total_price;
     }
 }
