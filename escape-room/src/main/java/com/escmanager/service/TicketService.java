@@ -15,7 +15,7 @@ public class TicketService {
     public static TicketService getInstance() {
         return instance;
     }
-    private TicketService() {}
+    public TicketService() {}
 
     TicketImpl ticketDao = new TicketImpl();
 
@@ -58,6 +58,10 @@ public class TicketService {
         return true;
     }
 
+    public BigDecimal getMoneyEarned() throws DaoException {
+        return ticketDao.getTotalEarned();
+    }
+
     public List<Ticket> getAllTickets() throws DaoException{
         List<Ticket> ticketList = ticketDao.getAll();
         for (Ticket ticket : ticketList){
@@ -67,3 +71,4 @@ public class TicketService {
     }
 
 }
+
