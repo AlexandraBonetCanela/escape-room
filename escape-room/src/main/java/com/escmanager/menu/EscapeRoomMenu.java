@@ -5,9 +5,11 @@ import com.escmanager.exceptions.escaperoom.EscapeRoomDoesNotExistException;
 import com.escmanager.service.EscapeRoomService;
 import java.math.BigDecimal;
 import static com.escmanager.menu.Main.scanner;
-import static com.escmanager.menu.Main.escapeRoomService;
 
 public class EscapeRoomMenu {
+
+    static EscapeRoomService escapeRoomService = EscapeRoomService.getInstance();
+
     public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
@@ -33,7 +35,7 @@ public class EscapeRoomMenu {
                     }
                     case 2 -> {
                         System.out.println("Current Escape Rooms:");
-                        EscapeRoomService.getAllEscapeRooms();
+                        escapeRoomService.getAllEscapeRooms();
                         System.out.print("Enter Escape Room ID to delete: ");
                         int id = scanner.nextInt();
                         escapeRoomService.deleteEscapeRoom(id);
@@ -42,12 +44,14 @@ public class EscapeRoomMenu {
                     case 3 -> {
                         System.out.print("Enter Escape Room ID to view inventory: ");
                         int id = scanner.nextInt();
-                        escapeRoomService.showInventory(id);
+                        //TODO: Implement inventory in controller
+                        //escapeRoomService.showInventory(id);
                     }
                     case 4 -> {
                         System.out.print("Enter Escape Room ID to view total cost: ");
                         int id = scanner.nextInt();
-                        escapeRoomService.getTotalCost(id);
+                        //TODO: Implement getTotalCost
+                        //escapeRoomService.getTotalCost(id);
                     }
                     case 5 -> backToMain = true;
 

@@ -1,14 +1,19 @@
 package com.escmanager.menu;
 
-import com.escmanager.service.RoomService;
-import com.escmanager.service.EscapeRoomService;
 import com.escmanager.enums.DifficultyLevel;
 import com.escmanager.exceptions.EscapeRoomNotFoundException;
-import com.escmanager.exceptions.RoomNotFoundException;
+import com.escmanager.exceptions.room.RoomAlreadyExistsException;
+import com.escmanager.exceptions.room.RoomDoesNotExistException;
+import com.escmanager.service.EscapeRoomService;
+import com.escmanager.service.RoomService;
+
 import static com.escmanager.menu.Main.scanner;
-import static com.escmanager.menu.Main.roomService;
 
 public class RoomMenu {
+
+    static RoomService roomService = RoomService.getInstance();
+    static EscapeRoomService escapeRoomService = EscapeRoomService.getInstance();
+
     public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
@@ -23,6 +28,8 @@ public class RoomMenu {
             try {
                 switch (option) {
                     case 1 -> {
+                        System.out.println("Current Escape Rooms:");
+                        escapeRoomService.getAllEscapeRooms();
                         System.out.print("Enter Escape Room ID: ");
                         int escapeRoomId = scanner.nextInt();
                         scanner.nextLine();
@@ -30,7 +37,8 @@ public class RoomMenu {
                         String roomName = scanner.nextLine();
                         DifficultyLevel difficultyLevel = null;
                         while (difficultyLevel == null) {
-                            System.out.print("Enter Room Difficulty Level (EASY, MEDIUM, HARD, EXTRA_HARD): ");
+                            //TODO: Suggestion: Show enums options with numbers with case
+                            System.out.print("Enter Room Difficulty Level (EASY, MEDIUM, DIFFICULT): ");
                             String difficultyInput = scanner.nextLine().toUpperCase();
                             try {
                                 difficultyLevel = DifficultyLevel.valueOf(difficultyInput);
@@ -40,11 +48,16 @@ public class RoomMenu {
                         }
                         System.out.print("Enter Room Theme: ");
                         String theme = scanner.nextLine();
+
                         roomService.addRoom(escapeRoomId, difficultyLevel, roomName, theme);
                     }
                     case 2 -> {
+                        System.out.println("Current Escape Rooms:");
+                        escapeRoomService.getAllEscapeRooms();
+                        System.out.print("Enter Escape Room ID: ");
+                        int escapeRoomId = scanner.nextInt();
                         System.out.println("Current Rooms:");
-                        roomService.ListRooms();
+                        roomService.findAllByEscaperoomId(escapeRoomId);
                         System.out.print("Enter Room ID to delete: ");
                         int roomId = scanner.nextInt();
                         roomService.deleteRoom(roomId);
@@ -53,7 +66,7 @@ public class RoomMenu {
                     case 3 -> backToMain = true;
                     default -> System.out.println("Invalid choice. Returning to main menu.");
                 }
-            } catch (EscapeRoomNotFoundException | RoomNotFoundException e) {
+            } catch (RoomDoesNotExistException | RoomAlreadyExistsException  e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
