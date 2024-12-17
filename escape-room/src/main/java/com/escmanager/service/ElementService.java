@@ -22,9 +22,11 @@ public class ElementService {
         return instance;
     }
 
-    private ElementService() {}
     ElementDAO elementDAO = new ElementImpl();
     RoomService roomService = RoomService.getInstance();
+
+    private ElementService() {
+    }
 
     public Element addProp(int roomId, String materialType, String name, BigDecimal price) throws RoomDoesNotExistException, DaoException, ElementAlreadyExistsException {
 
@@ -105,6 +107,13 @@ public class ElementService {
         roomService.getRoomById(roomId);
 
         return elementDAO.findAllByTypeAndRoomId(ElementType.HINT, roomId);
+    }
+
+    public List<Element> getProps(int roomId) throws RoomDoesNotExistException {
+
+        roomService.getRoomById(roomId);
+
+        return elementDAO.findAllByTypeAndRoomId(ElementType.PROP, roomId);
     }
 
     public void checkElementDoesNotExist(ElementType elementType, String name, int roomId) throws ElementAlreadyExistsException {

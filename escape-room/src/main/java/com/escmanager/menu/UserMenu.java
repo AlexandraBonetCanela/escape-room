@@ -1,10 +1,13 @@
 package com.escmanager.menu;
 
 import com.escmanager.service.UserService;
+
 import static com.escmanager.menu.Main.scanner;
-import static com.escmanager.menu.Main.userService;
 
 public class UserMenu {
+
+    static UserService userService = UserService.getInstance();
+
     public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
@@ -18,21 +21,22 @@ public class UserMenu {
             int option = scanner.nextInt();
             scanner.nextLine();
 
-            switch (option) {
-                case 1 -> {
-                    System.out.print("Enter User Name: ");
-                    String userName = scanner.nextLine();
-                    userService.addUser(userName);
-                }
-                case 2 -> {
-                    System.out.print("Enter User ID to delete: ");
-                    int userId = scanner.nextInt();
-                    userService.deleteUser(userId);
-                }
-                case 3 -> userService.listUsers();
-                case 4 -> backToMain = true;
-                default -> System.out.println("Invalid choice. Returning to main menu.");
-            }
+            // TODO: Fix
+//            switch (option) {
+//                case 1 -> {
+//                    System.out.print("Enter User Name: ");
+//                    String userName = scanner.nextLine();
+//                    userService.addUser(userName);
+//                }
+//                case 2 -> {
+//                    System.out.print("Enter User ID to delete: ");
+//                    int userId = scanner.nextInt();
+//                    userService.deleteUser(userId);
+//                }
+//                case 3 -> userService.listUsers();
+//                case 4 -> backToMain = true;
+//                default -> System.out.println("Invalid choice. Returning to main menu.");
+//            }
         }
     }
 }

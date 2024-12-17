@@ -1,7 +1,6 @@
 package com.escmanager.menu;
 
 
-import com.escmanager.exceptions.RoomNotFoundException;
 import com.escmanager.service.ElementService;
 
 import static com.escmanager.menu.Main.scanner;

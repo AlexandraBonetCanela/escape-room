@@ -72,4 +72,8 @@ public class EscapeRoomService {
         }
         return escapeRoomList;
     }
+
+    public EscapeRoom getById(int escaperoomId) {
+        return escapeRoomDAO.getById(escaperoomId);
+    }
 }
