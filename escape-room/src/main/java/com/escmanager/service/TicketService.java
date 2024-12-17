@@ -15,7 +15,7 @@ public class TicketService {
     public static TicketService getInstance() {
         return instance;
     }
-    public TicketService() {}
+    protected TicketService() {}
 
     TicketImpl ticketDao = new TicketImpl();
 
@@ -69,6 +69,4 @@ public class TicketService {
         }
         return ticketList;
     }
-
 }
-
