@@ -67,9 +67,6 @@ public class EscapeRoomService {
 
     public List<EscapeRoom> getAllEscapeRooms() {
         List<EscapeRoom> escapeRoomList = escapeRoomDAO.getAll();
-        for (EscapeRoom escapeRooms : escapeRoomList){
-            System.out.println(escapeRooms);
-        }
         return escapeRoomList;
     }
 

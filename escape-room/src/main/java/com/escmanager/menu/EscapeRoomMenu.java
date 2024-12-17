@@ -36,13 +36,14 @@ public class EscapeRoomMenu {
                     case 1 -> {
                         System.out.print("Enter Escape Room name: ");
                         String name = scanner.nextLine();
-                        System.out.print("Enter Escape room price");
+                        System.out.print("Enter Escape room price: ");
                         BigDecimal price = scanner.nextBigDecimal();
                         escapeRoomService.addEscapeRoom(name, price);
                     }
                     case 2 -> {
                         System.out.println("Current Escape Rooms:");
-                        escapeRoomService.getAllEscapeRooms();
+                        List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
+                        printEscapeRooms(escapeRoomList);
                         System.out.print("Enter Escape Room ID to delete: ");
                         int id = scanner.nextInt();
                         escapeRoomService.deleteEscapeRoom(id);
@@ -115,5 +116,11 @@ public class EscapeRoomMenu {
         System.out.println("Escape room info:");
         System.out.println("Escape room info:");
         System.out.println("Escape room info:");
+    }
+
+    public static void printEscapeRooms(List<EscapeRoom> escapeRoomList) {
+        for (EscapeRoom escapeRooms : escapeRoomList){
+            System.out.println(escapeRooms);
+        }
     }
 }
