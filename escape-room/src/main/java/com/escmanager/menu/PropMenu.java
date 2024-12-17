@@ -1,12 +1,16 @@
 package com.escmanager.menu;
 
-import
-import com.escmanager.service.PropService;
+
 import com.escmanager.exceptions.RoomNotFoundException;
+import com.escmanager.service.ElementService;
+
 import static com.escmanager.menu.Main.scanner;
-import static com.escmanager.menu.Main.propService;
+
 
 public class PropMenu {
+
+    static ElementService elementService = ElementService.getInstance();
+
     public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
@@ -19,33 +23,32 @@ public class PropMenu {
                     """);
             int option = scanner.nextInt();
             scanner.nextLine();
-            try {
-                switch (option) {
-                    case 1 -> {
-                        System.out.print("Enter Room ID: ");
-                        int roomId = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.print("Enter Prop Name: ");
-                        String propName = scanner.nextLine();
-                        element.addProp(roomId, propName);
-                    }
-                    case 2 -> {
-                        System.out.print("Enter Room ID: ");
-                        int roomId = scanner.nextInt();
-                        System.out.print("Enter Prop ID to delete: ");
-                        int propId = scanner.nextInt();
-                        elementService.deleteProp(roomId, propId);
-                    }
-                    case 3 -> {
-                        System.out.print("Enter Room ID: ");
-                        int roomId = scanner.nextInt();
-                        elementService.showProps(roomId);
-                    }
-                    case 4 -> backToMain = true;
-                    default -> System.out.println("Invalid choice. Returning to main menu.");
+            switch (option) {
+                case 1 -> {
+                    System.out.print("Enter Room ID: ");
+                    int roomId = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Enter Prop Name: ");
+                    String propName = scanner.nextLine();
+                    //TODO: Missing asking for materialType, price...
+                    //elementService.addProp(roomId, propName);
                 }
-            } catch (RoomNotFoundException e) {
-                System.out.println("Error: " + e.getMessage());
+                case 2 -> {
+                    System.out.print("Enter Room ID: ");
+                    int roomId = scanner.nextInt();
+                    System.out.print("Enter Prop ID to delete: ");
+                    int propId = scanner.nextInt();
+                    //TODO: Fix deleteProp
+                    //elementService.deleteProp(roomId, propId);
+                }
+                case 3 -> {
+                    System.out.print("Enter Room ID: ");
+                    int roomId = scanner.nextInt();
+                    //TODO: Fix this
+                    //elementService.showProps(roomId);
+                }
+                case 4 -> backToMain = true;
+                default -> System.out.println("Invalid choice. Returning to main menu.");
             }
         }
     }

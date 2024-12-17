@@ -1,7 +1,6 @@
 package com.escmanager.menu;
 
 import com.escmanager.enums.DifficultyLevel;
-import com.escmanager.exceptions.EscapeRoomNotFoundException;
 import com.escmanager.exceptions.room.RoomAlreadyExistsException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.service.EscapeRoomService;
