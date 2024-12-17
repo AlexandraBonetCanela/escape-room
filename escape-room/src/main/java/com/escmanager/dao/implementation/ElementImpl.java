@@ -182,7 +182,7 @@ public class ElementImpl implements ElementDAO {
 
     @Override
     public Element getById(int elementId) {
-        String query = "SELECT * FROM element WHERE id = ?";
+        String query = "SELECT * FROM element WHERE id = ? AND status = 'ACTIVE'";
         ElementBuilder elementBuilder;
         try (Connection connection = dao.getConnection();
             PreparedStatement statement = connection.prepareStatement(query)) {
@@ -294,7 +294,7 @@ public class ElementImpl implements ElementDAO {
         } else {
             tailQuery = "AND room_id IS ?";}
 
-        String query = "SELECT * FROM element WHERE type = ? AND name = ? " + tailQuery;
+        String query = "SELECT * FROM element WHERE type = ? AND status = 'ACTIVE' AND name = ? " + tailQuery;
         int elementId;
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

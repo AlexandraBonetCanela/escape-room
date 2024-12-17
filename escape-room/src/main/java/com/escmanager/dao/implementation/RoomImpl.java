@@ -66,7 +66,7 @@ public class RoomImpl implements RoomDAO {
 
     @Override
     public Room findByNameAndEscaperoomId(String name, int escaperoomId) {
-        String query = "SELECT * FROM room WHERE name = ? AND escape_room_id = ?";
+        String query = "SELECT * FROM room WHERE name = ? AND escape_room_id = ? AND status = 'ACTIVE'";
         try (Connection connection = dao.getConnection();
         PreparedStatement statement = connection.prepareStatement(query)){
 
@@ -93,7 +93,7 @@ public class RoomImpl implements RoomDAO {
 
     @Override
     public List<Room> findAllByEscaperoomId(int escaperoomId) {
-        String query = "SELECT * FROM room WHERE escape_room_id = ?";
+        String query = "SELECT * FROM room WHERE escape_room_id = ? AND status = 'ACTIVE'";
         List<Room> result = new ArrayList<>();
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){
@@ -121,7 +121,7 @@ public class RoomImpl implements RoomDAO {
 
     @Override
     public Room getById(int id) {
-        String query = "SELECT * FROM room WHERE id = ?";
+        String query = "SELECT * FROM room WHERE id = ? AND status = 'ACTIVE'";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -148,7 +148,7 @@ public class RoomImpl implements RoomDAO {
     @Override
     public List<Room> getAll() {
         List<Room> rooms = new ArrayList<>();
-        String query = "SELECT * FROM room";
+        String query = "SELECT * FROM room WHERE status = 'ACTIVE'";
         try (Connection connection = dao.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
