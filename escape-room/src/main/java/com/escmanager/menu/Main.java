@@ -15,7 +15,7 @@ public class Main {
 
         while (running) {
             System.out.println("""
-                    \n MENU
+                    \nMENU
                         1. Escape Room Management
                         2. Room Management
                         3. Hint Management

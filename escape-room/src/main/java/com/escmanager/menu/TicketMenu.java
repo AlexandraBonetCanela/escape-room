@@ -52,7 +52,7 @@ public class TicketMenu {
                     System.out.print("Enter escaperoom id: ");
                     int escape_room_id = scanner.nextInt();
                     Certificate certificate = certificateService.getCertificateById(escape_room_id);
-                    System.out.println(certificate.getName() + "\n" + certificate.getDescription());
+                    System.out.println(certificate.getName() + ": " + certificate.getDescription());
                 }
 
                 case 3 -> backToMain = true;
