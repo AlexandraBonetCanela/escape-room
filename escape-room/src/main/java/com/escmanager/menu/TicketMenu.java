@@ -24,8 +24,9 @@ public class TicketMenu {
             System.out.println(""" 
                     \nTICKET MENU
                         1. Create Ticket
-                        2. Give Certificate
-                        3. Back to Main Menu
+                        2. Ticket money earned
+                        3. Give Certificate
+                        4. Back to Main Menu
                     """);
             System.out.print("Choose one of the options: ");
             int option = scanner.nextInt();
@@ -48,14 +49,18 @@ public class TicketMenu {
                     System.out.println("The ticket has been created");
                 }
                 case 2 -> {
+                    System.out.println("\nTICKET MONEY EARNED");
+                    BigDecimal moneyEarned = ticketService.getMoneyEarned();
+                    System.out.println("Money earned: " + moneyEarned + "$");
+                }
+                case 3 -> {
                     System.out.println("\nCREATING TICKET");
                     System.out.print("Enter escaperoom id: ");
                     int escape_room_id = scanner.nextInt();
                     Certificate certificate = certificateService.getCertificateById(escape_room_id);
                     System.out.println(certificate.getName() + ": " + certificate.getDescription());
                 }
-
-                case 3 -> backToMain = true;
+                case 4 -> backToMain = true;
                 default -> System.out.println("Invalid choice. Returning to main menu.");
             }
         }
