@@ -90,14 +90,12 @@ public class TicketImpl implements TicketDAO {
     @Override
     public BigDecimal getTotalEarned() throws DaoException {
         BigDecimal totalSum = BigDecimal.ZERO;
-        String query = "SELECT total_price FROM ticket";
+        String query = "SELECT SUM(total_price) FROM ticket";
         try (Connection connection = dao.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
-            while (resultSet.next()) {
-                totalSum = totalSum.add(resultSet.getBigDecimal("total_price"));
-            }
+             totalSum = totalSum.add(resultSet.getBigDecimal("total_price"));
 
         } catch (SQLException e) {
             throw new DaoException("Failed at retrieving total price sum from database", e);
