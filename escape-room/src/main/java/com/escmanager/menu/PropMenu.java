@@ -1,5 +1,6 @@
 package com.escmanager.menu;
 
+import
 import com.escmanager.service.PropService;
 import com.escmanager.exceptions.RoomNotFoundException;
 import static com.escmanager.menu.Main.scanner;
@@ -26,19 +27,19 @@ public class PropMenu {
                         scanner.nextLine();
                         System.out.print("Enter Prop Name: ");
                         String propName = scanner.nextLine();
-                        propService.addProp(roomId, propName);
+                        element.addProp(roomId, propName);
                     }
                     case 2 -> {
                         System.out.print("Enter Room ID: ");
                         int roomId = scanner.nextInt();
                         System.out.print("Enter Prop ID to delete: ");
                         int propId = scanner.nextInt();
-                        propService.deleteProp(roomId, propId);
+                        elementService.deleteProp(roomId, propId);
                     }
                     case 3 -> {
                         System.out.print("Enter Room ID: ");
                         int roomId = scanner.nextInt();
-                        propService.showProps(roomId);
+                        elementService.showProps(roomId);
                     }
                     case 4 -> backToMain = true;
                     default -> System.out.println("Invalid choice. Returning to main menu.");

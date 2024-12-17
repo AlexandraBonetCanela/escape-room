@@ -7,19 +7,22 @@ import com.escmanager.exceptions.ticket.TicketDoesNotExistException;
 import com.escmanager.model.Ticket;
 
 import java.math.BigDecimal;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class TicketService {
 
-    TicketImpl service = new TicketImpl();
+    private static TicketService instance = new TicketService();
+    public static TicketService getInstance() {
+        return instance;
+    }
+    private TicketService() {}
+
+    TicketImpl ticketDao = new TicketImpl();
 
     public Ticket createTicket(int user_id, int escape_room_id, BigDecimal unit_price, int quantity, BigDecimal total_price)
             throws DaoException, TicketAlreadyExistException {
 
-        Ticket ticket = service.getById(user_id);
+        Ticket ticket = ticketDao.getById(user_id);
 
         if(ticket != null){
             throw new TicketAlreadyExistException("The ticket already exists");
@@ -31,7 +34,7 @@ public class TicketService {
         ticket.setUnit_price(unit_price);
         ticket.setQuantity(quantity);
         ticket.setTotal_price(total_price);
-        service.create(ticket);
+        ticketDao.create(ticket);
 
         return ticket;
     }
@@ -39,7 +42,7 @@ public class TicketService {
     public boolean updateTicket(int id, int user_id, int escape_room_id, BigDecimal unit_price, int quantity, BigDecimal total_price)
             throws DaoException, TicketDoesNotExistException {
 
-        Ticket ticket = service.getById(id);
+        Ticket ticket = ticketDao.getById(id);
 
         if(ticket == null){
             throw new TicketDoesNotExistException("The ticket doesn't exist");
@@ -50,13 +53,13 @@ public class TicketService {
         ticket.setUnit_price(unit_price);
         ticket.setQuantity(quantity);
         ticket.setTotal_price(total_price);
-        service.update(ticket);
+        ticketDao.update(ticket);
 
         return true;
     }
 
     public List<Ticket> getAllTickets() throws DaoException{
-        List<Ticket> ticketList = service.getAll();
+        List<Ticket> ticketList = ticketDao.getAll();
         for (Ticket ticket : ticketList){
             System.out.println(ticket);
         }

@@ -16,7 +16,13 @@ import java.util.List;
 public class EscapeRoomService {
 
     EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
-    RoomService roomService = new RoomService();
+    RoomService roomService = RoomService.getInstance();
+
+    private static EscapeRoomService instance = new EscapeRoomService();
+    public static EscapeRoomService getInstance() {
+        return instance;
+    }
+    private EscapeRoomService() {}
 
     public EscapeRoom addEscapeRoom(String name, BigDecimal price) throws EscapeRoomAlreadyExistException {
 

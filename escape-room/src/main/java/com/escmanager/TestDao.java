@@ -35,7 +35,7 @@ public class TestDao {
   //      Room room = roomDAO.findByNameAndEscaperoomId("Library of Secrets", 2);
   //      System.out.println(room);
 
-           RoomService roomService = new RoomService();
+           RoomService roomService = RoomService.getInstance();
 
    //         try{
     //            Room room = roomService.addRoom(1, DifficultyLevel.EASY, "Library of Curses", "themename");
@@ -103,7 +103,7 @@ public class TestDao {
 //
 //        }
 
-//        ElementService elementService = new ElementService();
+//        ElementService elementService = ElementService.getInstance();
 //
 //        try {
 //            Element result = elementService.addProp(4, "wood", "new chair 3", BigDecimal.valueOf(49.00));
@@ -114,7 +114,7 @@ public class TestDao {
 //
 //        }
 
-//        ElementService elementService = new ElementService();
+//        ElementService elementService = ElementService.getInstance();
 //
 //        try {
 //            Element result = elementService.addHint(4, "dark", "new chair 3 hint", BigDecimal.valueOf(49.00));
@@ -126,7 +126,7 @@ public class TestDao {
 //        }
 //
 
-        EscapeRoomService escapeRoomService = new EscapeRoomService();
+        EscapeRoomService escapeRoomService = EscapeRoomService.getInstance();
         try {
             EscapeRoom escapeRoom = escapeRoomService.addEscapeRoom("Test escape room", BigDecimal.valueOf(999));
             Room room1 = roomService.addRoom(escapeRoom.getId(), DifficultyLevel.EASY, "The revelation room", "dark");

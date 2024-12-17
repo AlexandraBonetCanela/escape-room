@@ -12,6 +12,12 @@ import java.util.List;
 
 public class UserService {
 
+    private static UserService instance = new UserService();
+    public static UserService getInstance() {
+        return instance;
+    }
+    private UserService() {}
+
     UserDAO userDAO = new UserImpl();
 
     public User addUser(String email) throws UserAlreadyExistException, DaoException {

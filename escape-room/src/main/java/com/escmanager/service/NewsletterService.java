@@ -8,6 +8,12 @@ import java.util.ArrayList;
 
 public class NewsletterService implements Observable {
 
+    private static NewsletterService instance = new NewsletterService();
+    public static NewsletterService getInstance() {
+        return instance;
+    }
+    private NewsletterService () {}
+
     private ArrayList<Observer> observers = new ArrayList<>();
     private Newsletter newsletter;
     NewsletterDAO newsletterDAO = new NewsletterImpl();

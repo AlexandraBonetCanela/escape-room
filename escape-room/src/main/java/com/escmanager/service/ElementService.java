@@ -17,15 +17,14 @@ import java.util.List;
 
 public class ElementService {
 
-    ElementDAO elementDAO = new ElementImpl();
-    RoomService roomService = new RoomService();
-
     private static ElementService instance = new ElementService();
     public static ElementService getInstance() {
         return instance;
     }
 
     private ElementService() {}
+    ElementDAO elementDAO = new ElementImpl();
+    RoomService roomService = RoomService.getInstance();
 
     public Element addProp(int roomId, String materialType, String name, BigDecimal price) throws RoomDoesNotExistException, DaoException, ElementAlreadyExistsException {
 

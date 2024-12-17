@@ -13,8 +13,15 @@ import java.util.List;
 
 public class RoomService {
 
+    private static RoomService instance = new RoomService();
+    public static RoomService getInstance() {
+        return instance;
+    }
+    private RoomService() {}
+
     RoomDAO roomDAO = new RoomImpl();
     ElementService elementService = ElementService.getInstance();
+
 
     public Room addRoom(int escapeRoomId, DifficultyLevel difficultyLevel, String name, String theme) throws RoomAlreadyExistsException, DaoException {
 

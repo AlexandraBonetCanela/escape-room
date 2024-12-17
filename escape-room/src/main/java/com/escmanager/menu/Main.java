@@ -9,7 +9,7 @@ public class Main {
     public static final  NotificationService notificationService = new NotificationService();
     public static final  EscapeRoomService escapeRoomService = new EscapeRoomService(notificationService);
     public static final  RoomService roomService = new RoomService();
-    public static final  HintService hintService = new HintService();
+    public  ElementService elementService = new ElementService();
     public static final  PropService propService = new PropService();
     public static final  UserService userService = new UserService(notificationService);
     public static final  TicketService ticketService = new TicketService(notificationService);
