@@ -20,6 +20,13 @@ public class ElementService {
     ElementDAO elementDAO = new ElementImpl();
     RoomService roomService = new RoomService();
 
+    private static ElementService instance = new ElementService();
+    public static ElementService getInstance() {
+        return instance;
+    }
+
+    private ElementService() {}
+
     public Element addProp(int roomId, String materialType, String name, BigDecimal price) throws RoomDoesNotExistException, DaoException, ElementAlreadyExistsException {
 
         roomService.getRoomById(roomId);
@@ -64,10 +71,10 @@ public class ElementService {
         return elementDAO.create(hint);
     }
 
-//    public boolean removeAllElementsFromRoom(int roomId) throws RoomDoesNotExistException {
-//        roomService.getRoomById(roomId);
-////        elementDAO.(roomId);
-//    }
+    public boolean removeAllElementsFromRoom(int roomId) throws RoomDoesNotExistException {
+        elementDAO.removeAllElementsFromRoom(roomId);
+        return true;
+    }
 
     public boolean removeElementFromRoom(int elementId) throws ElementDoesNotExistException {
 

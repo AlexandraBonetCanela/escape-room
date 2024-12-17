@@ -92,6 +92,34 @@ public class RoomImpl implements RoomDAO {
     }
 
     @Override
+    public List<Room> findAllByEscaperoomId(int escaperoomId) {
+        String query = "SELECT * FROM room WHERE escape_room_id = ?";
+        List<Room> result = new ArrayList<>();
+        try (Connection connection = dao.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)){
+
+            statement.setInt(1, escaperoomId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Room r = new Room(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("theme"),
+                        DifficultyLevel.valueOf(resultSet.getString("difficulty_level")),
+                        resultSet.getInt("element_quantity"),
+                        resultSet.getInt("escape_room_id"),
+                        Status.valueOf(resultSet.getString("status"))
+                );
+                result.add(r);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Failed to find room with escaperoom id " + escaperoomId, e);
+        }
+        return result;
+    }
+
+    @Override
     public Room getById(int id) {
         String query = "SELECT * FROM room WHERE id = ?";
         try (Connection connection = dao.getConnection();

@@ -11,4 +11,5 @@ public interface ElementDAO extends DAO{
     Element update(Element element);
     List<Element> findAllByTypeAndRoomId(ElementType elementType, Integer roomId);
     Element findByTypeNameAndRoomId(ElementType type, String name, Integer roomId);
+    boolean removeAllElementsFromRoom(int roomId);
 }

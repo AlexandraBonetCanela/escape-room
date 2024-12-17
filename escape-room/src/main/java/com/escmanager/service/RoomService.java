@@ -14,6 +14,7 @@ import java.util.List;
 public class RoomService {
 
     RoomDAO roomDAO = new RoomImpl();
+    ElementService elementService = ElementService.getInstance();
 
     public Room addRoom(int escapeRoomId, DifficultyLevel difficultyLevel, String name, String theme) throws RoomAlreadyExistsException, DaoException {
 
@@ -38,10 +39,20 @@ public class RoomService {
 
         Room room = getRoomById(roomId);
 
+        elementService.removeAllElementsFromRoom(roomId);
+
         room.setStatus(Status.INACTIVE);
         roomDAO.update(room);
 
         return true;
+    }
+
+    public List<Room> findAllByEscaperoomId(int escaperoomId) throws DaoException{
+        List<Room> roomList = roomDAO.findAllByEscaperoomId(escaperoomId);
+        for (Room room: roomList){
+            System.out.println(room);
+        }
+        return roomList;
     }
 
     public List<Room> getAllRooms() throws DaoException{

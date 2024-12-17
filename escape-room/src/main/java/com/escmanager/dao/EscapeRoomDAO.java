@@ -6,6 +6,6 @@ public interface EscapeRoomDAO extends DAO{
 
     EscapeRoom create(EscapeRoom escapeRoom);
     EscapeRoom update(EscapeRoom escapeRoom);
-    EscapeRoom getByName(String name);
+    EscapeRoom findByName(String name);
 
 }

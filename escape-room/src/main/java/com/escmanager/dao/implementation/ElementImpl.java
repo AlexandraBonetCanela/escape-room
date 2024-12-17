@@ -69,6 +69,21 @@ public class ElementImpl implements ElementDAO {
         }
     }
 
+    public boolean removeAllElementsFromRoom(int roomId){
+        String query = "UPDATE element SET room_id = NULL WHERE room_Id = ?";
+
+        try (Connection connection = dao.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+
+            statement.setInt(1, roomId);
+            statement.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Failed at detaching elements from room in database", e);
+        }
+    }
+
     @Override
     public Element findByTypeNameAndRoomId(ElementType type, String name, Integer roomId) {
         try {

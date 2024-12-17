@@ -10,13 +10,13 @@ import com.escmanager.enums.Status;
 import com.escmanager.exceptions.DaoException;
 import com.escmanager.exceptions.element.ElementAlreadyExistsException;
 import com.escmanager.exceptions.element.ElementDoesNotExistException;
+import com.escmanager.exceptions.escaperoom.EscapeRoomAlreadyExistException;
+import com.escmanager.exceptions.escaperoom.EscapeRoomDoesNotExistException;
 import com.escmanager.exceptions.room.RoomAlreadyExistsException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
-import com.escmanager.model.Element;
-import com.escmanager.model.Hint;
-import com.escmanager.model.Prop;
-import com.escmanager.model.Room;
+import com.escmanager.model.*;
 import com.escmanager.service.ElementService;
+import com.escmanager.service.EscapeRoomService;
 import com.escmanager.service.RoomService;
 
 import java.math.BigDecimal;
@@ -124,63 +124,24 @@ public class TestDao {
 //            System.out.println(e.getMessage());
 //
 //        }
+//
 
-        ElementService elementService = new ElementService();
-
+        EscapeRoomService escapeRoomService = new EscapeRoomService();
         try {
-            // Test elementService.deleteElement
-            elementService.deleteElement(6);
+            EscapeRoom escapeRoom = escapeRoomService.addEscapeRoom("Test escape room", BigDecimal.valueOf(999));
+            Room room1 = roomService.addRoom(escapeRoom.getId(), DifficultyLevel.EASY, "The revelation room", "dark");
+            Room room2 = roomService.addRoom(escapeRoom.getId(), DifficultyLevel.DIFFICULT, "The revelation room 2", "dark");
 
-            // Test elementService.removeElementFromRoom
-            boolean result = elementService.removeElementFromRoom(11);
-            System.out.println(result);
+            ElementService elementService = ElementService.getInstance();
+            Element element1 = elementService.addHint(room1.getId(), "dark", "Hint 1", new BigDecimal(24));
+            Element element2 = elementService.addProp(room1.getId(), "skin", "The book of wonders", new BigDecimal(500));
+            Element element3 = elementService.addHint(room2.getId(), "dark", "Hint 2", new BigDecimal(300));
 
-            // Test elementDAO.findAllByTypeAndRoomId
-            List<Element> roomProps = elementDAO.findAllByTypeAndRoomId(ElementType.PROP, 4);
-            System.out.println("Props in room 4");
-            for(Element e: roomProps) {
-                System.out.println(e);
-            }
-
-            // Ensure element 6 is not returned
-            List<Element> roomHints = elementDAO.findAllByTypeAndRoomId(ElementType.HINT, 4);
-            System.out.println("Hints in room 4");
-            for(Element e: roomHints) {
-                System.out.println(e);
-            }
-
-            // Test elementDAO.findAllByTypeAndRoomId: null roomId
-            List<Element> noRoomProps = elementDAO.findAllByTypeAndRoomId(ElementType.PROP, null);
-            System.out.println("Props with no room");
-            for(Element e: noRoomProps) {
-                System.out.println(e);
-            }
-
-            // Test elementDAO.findByTypeNameAndRoomId
-            Element element10 = elementDAO.findByTypeNameAndRoomId(ElementType.HINT, "new chair hint", 4);
-            Element element7 = elementDAO.findByTypeNameAndRoomId(ElementType.PROP, "new chair2", 4);
-            Element elementNull = elementDAO.findByTypeNameAndRoomId(ElementType.HINT, "new chair2", 4);
-            Element element11 = elementDAO.findByTypeNameAndRoomId(ElementType.PROP, "new chair 3", null);
-
-            System.out.println("Element 10: " + element10);
-            System.out.println("Element 7: " + element7);
-            System.out.println("Element null: " + elementNull);
-            System.out.println("Element 11: " + element11);
-
-
-            // Test elementService.getElementById
-            Element element1 = elementService.getElementById(1);
-            System.out.println("Element 1 from service: " + element1);
-            Element element2 = elementService.getElementById(2);
-            System.out.println("Element 2 from service: " + element2);
-            Element element11_2 = elementService.getElementById(11);
-            System.out.println("Element 11 from service: " + element11_2);
-
-        } catch (DaoException | ElementDoesNotExistException e){
-            System.out.println(e.getMessage());
-
+            escapeRoomService.deleteEscapeRoom(escapeRoom.getId());
+        } catch (EscapeRoomDoesNotExistException |EscapeRoomAlreadyExistException | RoomAlreadyExistsException | RoomDoesNotExistException |
+                 ElementAlreadyExistsException e) {
+            throw new RuntimeException(e);
         }
-
 //        List<EscapeRoom> escapeRooms = escapeRoomDAO.getAll();
 //        for (EscapeRoom escapeRoom : escapeRooms) {
 //            System.out.println(escapeRoom);
