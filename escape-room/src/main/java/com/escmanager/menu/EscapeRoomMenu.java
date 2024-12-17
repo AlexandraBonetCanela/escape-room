@@ -25,8 +25,7 @@ public class EscapeRoomMenu {
                     1. Create Escape Room
                     2. Delete Escape Room
                     3. View Escape Room Inventory
-                    4. View Total Cost of Escape Room
-                    5. Back to Main Menu
+                    4. Back to Main Menu
                     """);
             int option = scanner.nextInt();
             scanner.nextLine();
@@ -54,13 +53,7 @@ public class EscapeRoomMenu {
                         int id = scanner.nextInt();
                         printInventory(id);
                     }
-                    case 4 -> {
-                        System.out.print("Enter Escape Room ID to view total cost: ");
-                        int id = scanner.nextInt();
-                        //TODO: Implement getTotalCost
-                        //escapeRoomService.getTotalCost(id);
-                    }
-                    case 5 -> backToMain = true;
+                    case 4 -> backToMain = true;
 
                     default -> System.out.println("Invalid choice. Returning to main menu.");
                 }
