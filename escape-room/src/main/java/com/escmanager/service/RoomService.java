@@ -13,7 +13,15 @@ import java.util.List;
 
 public class RoomService {
 
+    private static RoomService instance = new RoomService();
+    public static RoomService getInstance() {
+        return instance;
+    }
+    private RoomService() {}
+
     RoomDAO roomDAO = new RoomImpl();
+    ElementService elementService = ElementService.getInstance();
+
 
     public Room addRoom(int escapeRoomId, DifficultyLevel difficultyLevel, String name, String theme) throws RoomAlreadyExistsException, DaoException {
 
@@ -36,16 +44,22 @@ public class RoomService {
 
     public boolean deleteRoom(int roomId) throws RoomDoesNotExistException, DaoException {
 
-        Room room = roomDAO.getById(roomId);
+        Room room = getRoomById(roomId);
 
-        if(room == null){
-            throw new RoomDoesNotExistException("Room with id " + roomId + " does not exist");
-        }
+        elementService.removeAllElementsFromRoom(roomId);
 
         room.setStatus(Status.INACTIVE);
         roomDAO.update(room);
 
         return true;
+    }
+
+    public List<Room> findAllByEscaperoomId(int escaperoomId) throws DaoException{
+        List<Room> roomList = roomDAO.findAllByEscaperoomId(escaperoomId);
+        for (Room room: roomList){
+            System.out.println(room);
+        }
+        return roomList;
     }
 
     public List<Room> getAllRooms() throws DaoException{
@@ -54,5 +68,16 @@ public class RoomService {
             System.out.println(room);
         }
         return roomList;
+    }
+
+    public Room getRoomById(int roomId) throws RoomDoesNotExistException, DaoException {
+
+        Room room = roomDAO.getById(roomId);
+
+        if(room == null){
+            throw new RoomDoesNotExistException("Room with id " + roomId + " does not exist");
+        }
+
+        return room;
     }
 }

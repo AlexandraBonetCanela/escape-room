@@ -1,10 +1,15 @@
 package com.escmanager.menu;
 
+import com.escmanager.service.EscapeRoomService;
 import com.escmanager.service.TicketService;
 
 import static com.escmanager.menu.Main.*;
 
 public class TicketMenu {
+
+    static EscapeRoomService escapeRoomService = EscapeRoomService.getInstance();
+    static TicketService ticketService = TicketService.getInstance();
+
     public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
@@ -23,8 +28,9 @@ public class TicketMenu {
                     int userId = scanner.nextInt();
                     escapeRoomService.getAllEscapeRooms();
                     System.out.print("Enter Escaperoom ID: ");
-                    int userId = scanner.nextInt();
-                    ticketService.createTicket(userId);
+                    // TODO: Fix
+//                    int userId = scanner.nextInt();
+//                    ticketService.createTicket(userId);
                 }
                 case 2 -> backToMain = true;
                 default -> System.out.println("Invalid choice. Returning to main menu.");
