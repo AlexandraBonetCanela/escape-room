@@ -38,8 +38,9 @@ public class RoomMenu {
                         System.out.print("Enter Escape Room ID: ");
                         int escapeRoomId = scanner.nextInt();
                         scanner.nextLine();
-                        System.out.print("Enter Room Name: ");
-                        String roomName = scanner.nextLine();
+
+                        String roomName = MenuUtils.getNonEmptyString("Name");
+
                         DifficultyLevel difficultyLevel = null;
                         while (difficultyLevel == null) {
                             System.out.print("""

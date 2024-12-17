@@ -1,7 +1,11 @@
 package com.escmanager.menu;
 
 
+import com.escmanager.model.Room;
 import com.escmanager.service.ElementService;
+import com.escmanager.service.RoomService;
+
+import java.util.List;
 
 import static com.escmanager.menu.Main.scanner;
 
@@ -9,6 +13,8 @@ import static com.escmanager.menu.Main.scanner;
 public class PropMenu {
 
     static ElementService elementService = ElementService.getInstance();
+    static RoomService roomService = RoomService.getInstance();
+    static RoomMenu roomMenu = new RoomMenu();
 
     public static void showMenu() {
         boolean backToMain = false;
@@ -24,6 +30,9 @@ public class PropMenu {
             scanner.nextLine();
             switch (option) {
                 case 1 -> {
+                    System.out.println("Select a room: ");
+                    List<Room> roomList = roomService.getAllRooms();
+                    roomMenu.printRooms(roomList);
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
                     scanner.nextLine();

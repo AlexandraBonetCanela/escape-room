@@ -51,6 +51,7 @@ public class EscapeRoomMenu {
                     case 3 -> {
                         System.out.print("Enter Escape Room ID to view inventory: ");
                         int id = scanner.nextInt();
+                        scanner.nextLine();
                         printInventory(id);
                     }
                     case 4 -> backToMain = true;
