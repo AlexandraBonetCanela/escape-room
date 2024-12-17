@@ -73,7 +73,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket - ," +
+        return "Ticket -" +
                 " id: " + id +
                 ", user_id: " + user_id +
                 ", escape_room_id: " + escape_room_id +
