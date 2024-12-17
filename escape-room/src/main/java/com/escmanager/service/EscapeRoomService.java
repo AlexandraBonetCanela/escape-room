@@ -47,7 +47,7 @@ public class EscapeRoomService {
         EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
 
         if(escapeRoom == null){
-            throw new EscapeRoomDoesNotExistException("Escaperoom with id " + id + " does not exists");
+            throw new EscapeRoomDoesNotExistException("Escaperoom with id " + id + " does not exist");
         }
 
         List<Room> rooms = roomService.findAllByEscaperoomId(id);

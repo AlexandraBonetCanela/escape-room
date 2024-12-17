@@ -3,9 +3,9 @@ package com.escmanager.service;
 import com.escmanager.dao.UserDAO;
 import com.escmanager.dao.implementation.UserImpl;
 import com.escmanager.exceptions.DaoException;
-import com.escmanager.exceptions.UserAlreadyExistException;
-import com.escmanager.exceptions.UserAlreadyRegisteredException;
-import com.escmanager.exceptions.UserDoesNotExistException;
+import com.escmanager.exceptions.user.UserAlreadyExistException;
+import com.escmanager.exceptions.user.UserAlreadyRegisteredException;
+import com.escmanager.exceptions.user.UserDoesNotExistException;
 import com.escmanager.model.User;
 
 import java.util.List;

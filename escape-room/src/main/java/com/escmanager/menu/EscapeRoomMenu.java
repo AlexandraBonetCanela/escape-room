@@ -55,6 +55,7 @@ public class EscapeRoomMenu {
                     }
                     case 4 -> backToMain = true;
 
+
                     default -> System.out.println("Invalid choice. Returning to main menu.");
                 }
             } catch (EscapeRoomDoesNotExistException | EscapeRoomAlreadyExistException e) {
@@ -64,13 +65,14 @@ public class EscapeRoomMenu {
     }
 
     private static void printInventory(int escaperoomId) {
+        System.out.println("\n");
         System.out.println("Escape room info:");
         EscapeRoom escapeRoom = escapeRoomService.getById(escaperoomId);
         System.out.println("\t- ID:\t" + escapeRoom.getId());
         System.out.println("\t- Name:\t" + escapeRoom.getName());
         System.out.println("\t- Price:\t" + escapeRoom.getPrice());
+        System.out.println();
 
-        System.out.println("\n");
         List<Room> rooms = RoomService.getInstance().findAllByEscaperoomId(escaperoomId);
         for(Room room: rooms) {
             System.out.println("Room info:");
@@ -81,24 +83,46 @@ public class EscapeRoomMenu {
             System.out.println("\t- Total elements:\t" + room.getElementQuantity());
 
             System.out.println("\t- Hints:");
-
             try {
                 List<Element> hints = ElementService.getInstance().getHints(room.getId());
+                if(hints.isEmpty()) {
+                    System.out.println("\t\t(No hints)");
+                }
+                else {
+                    System.out.println("\t\tID\tPrice\tName\tTheme");
+                }
                 for(Element element: hints) {
                     Hint hint = (Hint) element;
-                    System.out.println("\t\t- ID:\t" + hint.getId());
-                    System.out.println("\t\t- Name:\t" + hint.getName());
-                    System.out.println("\t\t- Price:\t" + hint.getPrice());
-                    System.out.println("\t\t- Theme:\t" + hint.getTheme());
+                    System.out.print("\t\t");
+                    System.out.print(hint.getId());
+                    System.out.print("\t");
+                    System.out.print(hint.getPrice());
+                    System.out.print("\t");
+                    System.out.print(hint.getName());
+                    System.out.print("\t");
+                    System.out.print(hint.getTheme());
+                    System.out.println();
                 }
 
                 List<Element> props = ElementService.getInstance().getProps(room.getId());
+                System.out.println("\t- Props:");
+                if(props.isEmpty()) {
+                    System.out.println("\t\t(No props)");
+                }
+                else {
+                    System.out.println("\t\tID\tPrice\tName\tMaterial type");
+                }
                 for(Element element: props) {
                     Prop prop = (Prop) element;
-                    System.out.println("\t\t- ID:\t" + prop.getId());
-                    System.out.println("\t\t- Name:\t" + prop.getName());
-                    System.out.println("\t\t- Price:\t" + prop.getPrice());
-                    System.out.println("\t\t- Material type:\t" + prop.getMaterialType());
+                    System.out.print("\t\t");
+                    System.out.print(prop.getId());
+                    System.out.print("\t");
+                    System.out.print(prop.getPrice());
+                    System.out.print("\t");
+                    System.out.print(prop.getName());
+                    System.out.print("\t");
+                    System.out.print(prop.getMaterialType());
+                    System.out.println();
                 }
 
             } catch (RoomDoesNotExistException e) {

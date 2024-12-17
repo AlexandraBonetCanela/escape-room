@@ -17,7 +17,8 @@ public class RoomService {
     public static RoomService getInstance() {
         return instance;
     }
-    private RoomService() {}
+    private RoomService() {
+    }
 
     RoomDAO roomDAO = new RoomImpl();
     ElementService elementService = ElementService.getInstance();
@@ -56,17 +57,11 @@ public class RoomService {
 
     public List<Room> findAllByEscaperoomId(int escaperoomId) throws DaoException{
         List<Room> roomList = roomDAO.findAllByEscaperoomId(escaperoomId);
-        for (Room room: roomList){
-            System.out.println(room);
-        }
         return roomList;
     }
 
     public List<Room> getAllRooms() throws DaoException{
         List<Room> roomList = roomDAO.getAll();
-        for (Room room: roomList){
-            System.out.println(room);
-        }
         return roomList;
     }
 

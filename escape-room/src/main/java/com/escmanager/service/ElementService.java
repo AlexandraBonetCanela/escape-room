@@ -23,14 +23,13 @@ public class ElementService {
     }
 
     ElementDAO elementDAO = new ElementImpl();
-    RoomService roomService = RoomService.getInstance();
 
     private ElementService() {
     }
 
     public Element addProp(int roomId, String materialType, String name, BigDecimal price) throws RoomDoesNotExistException, DaoException, ElementAlreadyExistsException {
 
-        roomService.getRoomById(roomId);
+        RoomService.getInstance().getRoomById(roomId);
 
         checkElementDoesNotExist(ElementType.PROP, name, roomId);
 
@@ -50,7 +49,7 @@ public class ElementService {
 
     public Element addHint(int roomId, String theme, String name, BigDecimal price) throws RoomDoesNotExistException, ElementAlreadyExistsException {
 
-        roomService.getRoomById(roomId);
+        RoomService.getInstance().getRoomById(roomId);
 
         Element element = elementDAO.findByTypeNameAndRoomId(ElementType.HINT, name, roomId);
 
@@ -104,14 +103,14 @@ public class ElementService {
 
     public List<Element> getHints(int roomId) throws RoomDoesNotExistException {
 
-        roomService.getRoomById(roomId);
+        RoomService.getInstance().getRoomById(roomId);
 
         return elementDAO.findAllByTypeAndRoomId(ElementType.HINT, roomId);
     }
 
     public List<Element> getProps(int roomId) throws RoomDoesNotExistException {
 
-        roomService.getRoomById(roomId);
+        RoomService.getInstance().getRoomById(roomId);
 
         return elementDAO.findAllByTypeAndRoomId(ElementType.PROP, roomId);
     }
