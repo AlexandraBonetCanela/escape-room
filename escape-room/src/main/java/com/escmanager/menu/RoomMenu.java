@@ -20,6 +20,10 @@ public class RoomMenu {
 
     public static void showMenu() {
         boolean backToMain = false;
+        final int ADD_ROOM_MENU = 1;
+        final int DELETE_ROOM_MENU = 2;
+        final int MAIN_MENU = 3;
+
         while (!backToMain) {
             System.out.println("""
                     Room Management. Choose one of the options:
@@ -31,7 +35,7 @@ public class RoomMenu {
             scanner.nextLine();
             try {
                 switch (option) {
-                    case 1 -> {
+                    case ADD_ROOM_MENU -> {
                         System.out.println("Current Escape Rooms:");
                         List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
                         EscapeRoomMenu.printEscapeRooms(escapeRoomList);
@@ -71,7 +75,7 @@ public class RoomMenu {
                         }
                         System.out.print("Room successfully added to Escape Room:  " + escapeRoomId);
                     }
-                    case 2 -> {
+                    case DELETE_ROOM_MENU -> {
                         System.out.println("Current Escape Rooms:");
                         List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
                         EscapeRoomMenu.printEscapeRooms(escapeRoomList);
@@ -85,7 +89,7 @@ public class RoomMenu {
                         roomService.deleteRoom(roomId);
                         System.out.println("Room deleted successfully.");
                     }
-                    case 3 -> backToMain = true;
+                    case MAIN_MENU -> backToMain = true;
                     default -> System.out.println("Invalid choice. Returning to main menu.");
                 }
             } catch (RoomDoesNotExistException e) {

@@ -21,8 +21,8 @@ public class UserMenu {
                         1. Add User
                         2. Register user
                         3. Update user
-                        3. List All Users
-                        4. Back to Main Menu
+                        4. List All Users
+                        5. Back to Main Menu
                     """);
             System.out.print("Choose one of the following options: ");
             int option = scanner.nextInt();

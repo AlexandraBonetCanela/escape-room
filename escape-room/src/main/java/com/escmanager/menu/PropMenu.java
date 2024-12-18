@@ -18,6 +18,11 @@ public class PropMenu {
 
     public static void showMenu() {
         boolean backToMain = false;
+        final int ADD_PROP = 1;
+        final int DELETE_PROP = 2;
+        final int SHOW_PROPS = 3;
+        final int MAIN_MENU = 4;
+
         while (!backToMain) {
             System.out.println("""
                     Prop Management. Choose one of the options:
@@ -29,7 +34,7 @@ public class PropMenu {
             int option = scanner.nextInt();
             scanner.nextLine();
             switch (option) {
-                case 1 -> {
+                case ADD_PROP -> {
                     System.out.println("Select a room: ");
                     List<Room> roomList = roomService.getAllRooms();
                     roomMenu.printRooms(roomList);
@@ -41,7 +46,7 @@ public class PropMenu {
                     //TODO: Missing asking for materialType, price...
                     //elementService.addProp(roomId, propName);
                 }
-                case 2 -> {
+                case DELETE_PROP -> {
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
                     System.out.print("Enter Prop ID to delete: ");
@@ -49,13 +54,13 @@ public class PropMenu {
                     //TODO: Fix deleteProp
                     //elementService.deleteProp(roomId, propId);
                 }
-                case 3 -> {
+                case SHOW_PROPS -> {
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
                     //TODO: Fix this
                     //elementService.showProps(roomId);
                 }
-                case 4 -> backToMain = true;
+                case MAIN_MENU -> backToMain = true;
                 default -> System.out.println("Invalid choice. Returning to main menu.");
             }
         }

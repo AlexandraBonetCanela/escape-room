@@ -61,7 +61,7 @@ public class UserService {
         User user = userDAO.getByEmail(email);
 
         if(!user.isRegistered()){
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistException("User does not exist");
         }
         user.setName(name);
         user.setEmail(email);
@@ -77,7 +77,7 @@ public class UserService {
         User user = userDAO.getByEmail(email);
 
         if(!user.isRegistered()){
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistException("User does not exist");
         }
 
         user.setName(updateUser.getName());

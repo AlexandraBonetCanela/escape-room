@@ -1,10 +1,5 @@
 package com.escmanager.menu;
 
-import com.escmanager.exceptions.UserAlreadyExistException;
-import com.escmanager.exceptions.UserAlreadyRegisteredException;
-import com.escmanager.exceptions.UserDoesNotExistException;
-import com.escmanager.exceptions.UserNotFoundException;
-import com.escmanager.exceptions.ticket.TicketAlreadyExistException;
 
 import java.util.Scanner;
 
@@ -12,9 +7,18 @@ public class Main {
 
     public static final  Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws TicketAlreadyExistException, UserNotFoundException, UserAlreadyExistException, UserDoesNotExistException, UserAlreadyRegisteredException {
+    public static void main(String[] args) {
 
         boolean running = true;
+
+        final int ESCAPE_ROOM_MENU = 1;
+        final int ROOM_MENU = 2;
+        final int HINT_MENU = 3;
+        final int PROP_MENU = 4;
+        final int USER_MENU = 5;
+        final int TICKET_CERTIFICATE_MENU = 6;
+        final int SALES_REPORT_MENU = 7;
+        final int EXIT = 8;
 
         while (running) {
             System.out.println("""
@@ -33,14 +37,14 @@ public class Main {
             scanner.nextLine();
 
             switch (option) {
-                case 1 -> EscapeRoomMenu.showMenu();
-                case 2 -> RoomMenu.showMenu();
-                case 3 -> HintMenu.showMenu();
-                case 4 -> PropMenu.showMenu();
-                case 5 -> UserMenu.showMenu();
-                case 6 -> TicketMenu.showMenu();
-                case 7 -> SalesMenu.showMenu();
-                case 8 -> {
+                case ESCAPE_ROOM_MENU -> EscapeRoomMenu.showMenu();
+                case ROOM_MENU -> RoomMenu.showMenu();
+                case HINT_MENU -> HintMenu.showMenu();
+                case PROP_MENU -> PropMenu.showMenu();
+                case USER_MENU -> UserMenu.showMenu();
+                case TICKET_CERTIFICATE_MENU -> TicketMenu.showMenu();
+                case SALES_REPORT_MENU -> SalesMenu.showMenu();
+                case EXIT -> {
                     System.out.println("Exiting Escape Room Manager. Goodbye!");
                     running = false;
                 }

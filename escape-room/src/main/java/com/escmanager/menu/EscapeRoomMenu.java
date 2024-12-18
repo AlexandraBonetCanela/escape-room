@@ -17,8 +17,16 @@ public class EscapeRoomMenu {
 
     static EscapeRoomService escapeRoomService = EscapeRoomService.getInstance();
 
+
+
     public static void showMenu() {
+
+        final int CREATE_ESCAPEROOM = 1;
+        final int DELETE_ESCAPEROOM = 2;
+        final int VIEW_ESCPAEROOM_INVENTORY = 3;
+        final int MAIN_MENU = 4;
         boolean backToMain = false;
+
         while (!backToMain) {
             System.out.println("""
                     Escape Room Management. Choose an option:
@@ -32,14 +40,14 @@ public class EscapeRoomMenu {
 
             try {
                 switch (option) {
-                    case 1 -> {
+                    case CREATE_ESCAPEROOM -> {
                         System.out.print("Enter Escape Room name: ");
                         String name = scanner.nextLine();
                         System.out.print("Enter Escape room price: ");
                         BigDecimal price = scanner.nextBigDecimal();
                         escapeRoomService.addEscapeRoom(name, price);
                     }
-                    case 2 -> {
+                    case DELETE_ESCAPEROOM -> {
                         System.out.println("Current Escape Rooms:");
                         List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
                         printEscapeRooms(escapeRoomList);
@@ -48,13 +56,16 @@ public class EscapeRoomMenu {
                         escapeRoomService.deleteEscapeRoom(id);
                         System.out.println("Room deleted successfully.");
                     }
-                    case 3 -> {
+                    case VIEW_ESCPAEROOM_INVENTORY -> {
+                        System.out.println("Current Escape Rooms:");
+                        List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
+                        printEscapeRooms(escapeRoomList);
                         System.out.print("Enter Escape Room ID to view inventory: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         printInventory(id);
                     }
-                    case 4 -> backToMain = true;
+                    case MAIN_MENU -> backToMain = true;
 
 
                     default -> System.out.println("Invalid choice. Returning to main menu.");
@@ -107,6 +118,7 @@ public class EscapeRoomMenu {
 
                 List<Element> props = ElementService.getInstance().getProps(room.getId());
                 System.out.println("\t- Props:");
+
                 if(props.isEmpty()) {
                     System.out.println("\t\t(No props)");
                 }
