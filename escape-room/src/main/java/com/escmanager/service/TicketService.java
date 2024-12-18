@@ -2,9 +2,8 @@ package com.escmanager.service;
 
 import com.escmanager.dao.implementation.TicketImpl;
 import com.escmanager.exceptions.DaoException;
-import com.escmanager.exceptions.UserNotFoundException;
-import com.escmanager.exceptions.ticket.TicketAlreadyExistException;
 import com.escmanager.exceptions.ticket.TicketDoesNotExistException;
+import com.escmanager.exceptions.user.UserDoesNotExistException;
 import com.escmanager.model.Ticket;
 
 import java.math.BigDecimal;
@@ -21,12 +20,12 @@ public class TicketService {
     TicketImpl ticketDao = new TicketImpl();
 
     public Ticket createTicket(int user_id, int escape_room_id, BigDecimal unit_price, int quantity, BigDecimal total_price)
-            throws DaoException, TicketAlreadyExistException, UserNotFoundException {
+            throws DaoException, UserDoesNotExistException {
 
         Ticket ticket = ticketDao.getById(user_id);
 
         if(ticket == null){
-            throw new UserNotFoundException("The user with the id: " + user_id + " couldn't be found");
+            throw new UserDoesNotExistException("The user with the id: " + user_id + " couldn't be found");
         }
 
         ticket = new Ticket();

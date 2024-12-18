@@ -1,11 +1,8 @@
 package com.escmanager.menu;
 
-import com.escmanager.exceptions.UserNotFoundException;
-import com.escmanager.exceptions.ticket.TicketAlreadyExistException;
+import com.escmanager.exceptions.user.UserDoesNotExistException;
 import com.escmanager.model.Certificate;
-import com.escmanager.model.Ticket;
 import com.escmanager.service.CertificateService;
-import com.escmanager.service.EscapeRoomService;
 import com.escmanager.service.TicketService;
 
 import java.math.BigDecimal;
@@ -14,11 +11,10 @@ import static com.escmanager.menu.Main.*;
 
 public class TicketMenu {
 
-    static EscapeRoomService escapeRoomService = EscapeRoomService.getInstance();
     static TicketService ticketService = TicketService.getInstance();
     static CertificateService certificateService = CertificateService.getInstance();
 
-    public static void showMenu() throws TicketAlreadyExistException, UserNotFoundException {
+    public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
             System.out.println(""" 
@@ -45,7 +41,11 @@ public class TicketMenu {
                     int quantity = scanner.nextInt();
                     BigDecimal quantityBigDecimal = new BigDecimal(quantity);
                     BigDecimal total_price = unit_price.multiply(quantityBigDecimal);
-                    ticketService.createTicket(user_id, escape_room_id, unit_price, quantity, total_price);
+                    try {
+                        ticketService.createTicket(user_id, escape_room_id, unit_price, quantity, total_price);
+                    } catch (UserDoesNotExistException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("The ticket has been created");
                 }
                 case 2 -> {
