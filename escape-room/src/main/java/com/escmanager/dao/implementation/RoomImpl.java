@@ -35,7 +35,7 @@ public class RoomImpl implements RoomDAO {
 
             statement.executeUpdate();
 
-            return findByNameAndEscaperoomId(room.getName(), room.getEscaperoomId());
+            return getByNameAndEscaperoomId(room.getName(), room.getEscaperoomId());
         } catch (SQLException e) {
             throw new DaoException("Failed to create room in database", e);
         }
@@ -58,7 +58,7 @@ public class RoomImpl implements RoomDAO {
 
             statement.executeUpdate();
 
-            return findByNameAndEscaperoomId(room.getName(), room.getEscaperoomId());
+            return getByNameAndEscaperoomId(room.getName(), room.getEscaperoomId());
         } catch (SQLException e) {
             throw new DaoException("Failed at updating room in database", e);
         }
@@ -92,7 +92,7 @@ public class RoomImpl implements RoomDAO {
     }
 
     @Override
-    public List<Room> findAllByEscaperoomId(int escaperoomId) {
+    public List<Room> getAllByEscaperoomId(int escaperoomId) {
         String query = "SELECT * FROM room WHERE escape_room_id = ?";
         List<Room> result = new ArrayList<>();
         try (Connection connection = dao.getConnection();
