@@ -1,5 +1,8 @@
 package com.escmanager.menu;
 
+import com.escmanager.exceptions.UserAlreadyExistException;
+import com.escmanager.exceptions.UserAlreadyRegisteredException;
+import com.escmanager.exceptions.UserDoesNotExistException;
 import com.escmanager.exceptions.UserNotFoundException;
 import com.escmanager.exceptions.ticket.TicketAlreadyExistException;
 
@@ -9,7 +12,7 @@ public class Main {
 
     public static final  Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws TicketAlreadyExistException, UserNotFoundException {
+    public static void main(String[] args) throws TicketAlreadyExistException, UserNotFoundException, UserAlreadyExistException, UserDoesNotExistException, UserAlreadyRegisteredException {
 
         boolean running = true;
 
