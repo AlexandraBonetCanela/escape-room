@@ -8,7 +8,7 @@ public interface TicketDAO extends DAO{
 
     Ticket create(Ticket ticket);
     Ticket update(Ticket ticket);
-    Ticket findByName(String name);
+    Ticket getByName(String name);
     BigDecimal getTotalEarned();
-
+  
 }

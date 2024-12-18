@@ -8,7 +8,6 @@ public interface RoomDAO extends DAO<Room>{
 
     Room create(Room room);
     Room update(Room room);
-    Room findByNameAndEscaperoomId(String name, int escaperoomId);
-    List<Room> findAllByEscaperoomId(int escaperoomId);
+    Room getByNameAndEscaperoomId(String name, int escaperoomId);
 
 }
