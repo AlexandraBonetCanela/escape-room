@@ -15,8 +15,6 @@ import static com.escmanager.menu.Main.scanner;
 public class PropMenu {
 
     static ElementService elementService = ElementService.getInstance();
-    static RoomService roomService = RoomService.getInstance();
-    static RoomMenu roomMenu = new RoomMenu();
 
     public static void showMenu() {
         boolean backToMain = false;

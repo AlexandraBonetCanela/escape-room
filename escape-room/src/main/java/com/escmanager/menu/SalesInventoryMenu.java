@@ -24,20 +24,19 @@ public class SalesInventoryMenu {
             int option = scanner.nextInt();
             scanner.nextLine();
 
-                switch (option) {
-                    case SALES -> {
-                        System.out.println("\nTICKET MONEY EARNED");
-                        BigDecimal moneyEarned = ticketService.getMoneyEarned();
-                        System.out.println("Money earned: " + moneyEarned + "$");
-                    }
-                    case INVENTORY-> {
-                        //TODO:
-                    }
-                    case MAIN_MENU -> backToMain = true;
-
-                    default -> System.out.println("Invalid choice. Returning to main menu.");
+            switch (option) {
+                case SALES -> {
+                    System.out.println("\nTICKET MONEY EARNED");
+                    BigDecimal moneyEarned = ticketService.getMoneyEarned();
+                    System.out.println("Money earned: " + moneyEarned + "$");
                 }
+                case INVENTORY-> {
+                    //TODO:
+                }
+                case MAIN_MENU -> backToMain = true;
 
+                default -> System.out.println("Invalid choice. Returning to main menu.");
+            }
         }
     }
 }

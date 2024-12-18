@@ -46,8 +46,7 @@ public class EscapeRoomMenu {
                         escapeRoomService.addEscapeRoom(name, price);
                     }
                     case DELETE_ESCAPEROOM -> {
-                        System.out.println("Current Escape Rooms:");
-                        printEscapeRooms(escapeRoomService.getAllEscapeRooms());
+                        MenuUtils.showAllEscapeRooms();
                         System.out.print("Enter Escape Room ID to delete: ");
                         int id = scanner.nextInt();
                         escapeRoomService.deleteEscapeRoom(id);
