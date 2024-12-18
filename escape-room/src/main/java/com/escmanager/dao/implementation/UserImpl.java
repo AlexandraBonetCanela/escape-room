@@ -41,6 +41,7 @@ public class UserImpl implements UserDAO {
             statement.setString(2, user.getEmail());
             statement.setBoolean(3, user.isRegistered());
             statement.setBoolean(4, user.isNotifications());
+            statement.setInt(5, user.getId());
             statement.executeUpdate();
             return user;
 
@@ -51,7 +52,7 @@ public class UserImpl implements UserDAO {
 
     @Override
     public User getByEmail(String email) {
-        String query = "SELECT * FROM user WHERE email = ?";
+        String query = "SELECT id, name, email, is_registered, notifications FROM user WHERE email = ?";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 

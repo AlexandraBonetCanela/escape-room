@@ -54,6 +54,10 @@ public class CertificateService {
         return certificate;
     }
 
+    public Certificate getCertificateById(int id) {
+        return (Certificate) certificateDAO.getById(id);
+    }
+
     public List<Certificate> getAllCertificates() {
         List<Certificate> certificateList = certificateDAO.getAll();
         for (Certificate certificate : certificateList){

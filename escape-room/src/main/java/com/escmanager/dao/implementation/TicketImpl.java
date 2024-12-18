@@ -5,6 +5,7 @@ import com.escmanager.dao.TicketDAO;
 import com.escmanager.exceptions.DaoException;
 import com.escmanager.model.Ticket;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class TicketImpl implements TicketDAO {
     }
 
     @Override
-    public Ticket findByName(String name) {
+    public Ticket getByName(String name) {
         String query = "SELECT * FROM ticket WHERE name = ?";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){
@@ -84,6 +85,24 @@ public class TicketImpl implements TicketDAO {
             throw new DaoException("Failed to find ticket with name " + name, e);
         }
         return null;
+    }
+
+    @Override
+    public BigDecimal getTotalEarned() throws DaoException {
+        BigDecimal totalSum = BigDecimal.ZERO;
+        String query = "SELECT total_price FROM ticket";
+        try (Connection connection = dao.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()){
+                totalSum = totalSum.add(resultSet.getBigDecimal("total_price"));
+            }
+
+        } catch (SQLException e) {
+            throw new DaoException("Failed at retrieving total price sum from database", e);
+        }
+        return totalSum;
     }
 
     @Override
