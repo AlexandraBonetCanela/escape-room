@@ -24,7 +24,7 @@ public class UserService {
 
         User user = userDAO.getByEmail(email);
 
-        if(user == null) {
+        if(user != null) {
             throw new UserAlreadyExistException();
         }
         user = new User();
@@ -69,7 +69,6 @@ public class UserService {
         user.setNotifications(notifications);
         user = userDAO.update(user);
 
-        System.out.println("The user has been updated");
         return user;
     }
 
