@@ -49,7 +49,6 @@ public class UserMenu {
                     System.out.print("Enter actual user email: ");
                     String email = scanner.nextLine();
                     User user = userService.getUser(email);
-                    System.out.println(user);
                     System.out.print("Enter new user email: ");
                     String newEmail = scanner.nextLine();
                     user.setEmail(newEmail);
@@ -59,7 +58,7 @@ public class UserMenu {
                     if (user.isRegistered()){
                         System.out.print("The user is already registered. Do you want to unregister him? (true/false): ");
                         boolean registered = scanner.nextBoolean();
-                        user.setRegistered(registered);
+                        user.setRegistered(!registered);
                     } else {
                         System.out.print("The user is not registered, do you want to register him? (true/false): ");
                         boolean registered = scanner.nextBoolean();
@@ -74,10 +73,8 @@ public class UserMenu {
                         boolean notifications = scanner.nextBoolean();
                         user.setNotifications(notifications);
                     }
-                    System.out.println(user);
                     userService.updateUserObject(email, user);
                     System.out.println("The user with the email " + email + ", has been updated.");
-                    System.out.println(user);
                 }
                 case 4 -> userService.getAllUsers();
                 case 5 -> backToMain = true;
