@@ -1,18 +1,24 @@
 package com.escmanager.menu;
 
+import com.escmanager.exceptions.UserAlreadyExistException;
+import com.escmanager.exceptions.UserAlreadyRegisteredException;
+import com.escmanager.exceptions.UserDoesNotExistException;
+import com.escmanager.exceptions.UserNotFoundException;
+import com.escmanager.exceptions.ticket.TicketAlreadyExistException;
+
 import java.util.Scanner;
 
 public class Main {
 
     public static final  Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TicketAlreadyExistException, UserNotFoundException, UserAlreadyExistException, UserDoesNotExistException, UserAlreadyRegisteredException {
 
         boolean running = true;
 
         while (running) {
             System.out.println("""
-                    \n Escape Room Manager. Choose one of the following options:
+                    \nMENU
                         1. Escape Room Management
                         2. Room Management
                         3. Hint Management
@@ -21,7 +27,8 @@ public class Main {
                         6. Ticket & Certification Management
                         7. Sales & Reports
                         8. Exit
-                        """);
+                    """);
+            System.out.print("Choose one of the following options: ");
             int option = scanner.nextInt();
             scanner.nextLine();
 
