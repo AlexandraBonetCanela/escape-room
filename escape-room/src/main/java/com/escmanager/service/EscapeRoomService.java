@@ -26,7 +26,7 @@ public class EscapeRoomService {
 
     public EscapeRoom addEscapeRoom(String name, BigDecimal price) throws EscapeRoomAlreadyExistException {
 
-        EscapeRoom escapeRoom = escapeRoomDAO.findByName(name);
+        EscapeRoom escapeRoom = escapeRoomDAO.getByName(name);
 
         if(escapeRoom != null){
             throw new EscapeRoomAlreadyExistException("Escaperoom with name " + name + " already exists");
