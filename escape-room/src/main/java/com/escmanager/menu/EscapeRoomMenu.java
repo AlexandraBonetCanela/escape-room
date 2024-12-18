@@ -24,8 +24,7 @@ public class EscapeRoomMenu {
 
         final int CREATE_ESCAPEROOM = 1;
         final int DELETE_ESCAPEROOM = 2;
-        final int VIEW_ESCPAEROOM_INVENTORY = 3;
-        final int MAIN_MENU = 4;
+        final int MAIN_MENU = 3;
         boolean backToMain = false;
 
         while (!backToMain) {
@@ -33,8 +32,7 @@ public class EscapeRoomMenu {
                     Escape Room Management. Choose an option:
                     1. Create Escape Room
                     2. Delete Escape Room
-                    3. View Escape Room Inventory
-                    4. Back to Main Menu
+                    3. Back to Main Menu
                     """);
             int option = scanner.nextInt();
             scanner.nextLine();
@@ -54,14 +52,6 @@ public class EscapeRoomMenu {
                         int id = scanner.nextInt();
                         escapeRoomService.deleteEscapeRoom(id);
                         System.out.println("Room deleted successfully.");
-                    }
-                    case VIEW_ESCPAEROOM_INVENTORY -> {
-                        System.out.println("Current Escape Rooms:");
-                        printEscapeRooms(escapeRoomService.getAllEscapeRooms());
-                        System.out.print("Enter Escape Room ID to view inventory: ");
-                        int id = scanner.nextInt();
-                        scanner.nextLine();
-                        printInventory(id);
                     }
                     case MAIN_MENU -> backToMain = true;
 
@@ -93,15 +83,14 @@ public class EscapeRoomMenu {
 
             System.out.println("\t- Hints:");
             try {
-                List<Element> hints = ElementService.getInstance().getHints(room.getId());
+                List<Hint> hints = ElementService.getInstance().getHints(room.getId());
                 if(hints.isEmpty()) {
                     System.out.println("\t\t(No hints)");
                 }
                 else {
                     System.out.println("\t\tID\tPrice\tName\tTheme");
                 }
-                for(Element element: hints) {
-                    Hint hint = (Hint) element;
+                for(Hint hint: hints) {
                     System.out.print("\t\t");
                     System.out.print(hint.getId());
                     System.out.print("\t");
@@ -113,7 +102,7 @@ public class EscapeRoomMenu {
                     System.out.println();
                 }
 
-                List<Element> props = ElementService.getInstance().getProps(room.getId());
+                List<Prop> props = ElementService.getInstance().getProps(room.getId());
                 System.out.println("\t- Props:");
 
                 if(props.isEmpty()) {
@@ -122,8 +111,7 @@ public class EscapeRoomMenu {
                 else {
                     System.out.println("\t\tID\tPrice\tName\tMaterial type");
                 }
-                for(Element element: props) {
-                    Prop prop = (Prop) element;
+                for(Prop prop: props) {
                     System.out.print("\t\t");
                     System.out.print(prop.getId());
                     System.out.print("\t");

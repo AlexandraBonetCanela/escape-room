@@ -17,7 +17,7 @@ public class Main {
         final int PROP_MENU = 4;
         final int USER_MENU = 5;
         final int TICKET_CERTIFICATE_MENU = 6;
-        final int SALES_REPORT_MENU = 7;
+        final int SALES_INVENTORY_MENU = 7;
         final int EXIT = 8;
 
         while (running) {
@@ -29,7 +29,7 @@ public class Main {
                         4. Prop Management
                         5. User Management
                         6. Ticket & Certification Management
-                        7. Sales & Reports
+                        7. Sales & Inventory
                         8. Exit
                     """);
             System.out.print("Choose one of the following options: ");
@@ -43,7 +43,7 @@ public class Main {
                 case PROP_MENU -> PropMenu.showMenu();
                 case USER_MENU -> UserMenu.showMenu();
                 case TICKET_CERTIFICATE_MENU -> TicketMenu.showMenu();
-                case SALES_REPORT_MENU -> SalesMenu.showMenu();
+                case SALES_INVENTORY_MENU -> SalesInventoryMenu.showMenu();
                 case EXIT -> {
                     System.out.println("Exiting Escape Room Manager. Goodbye!");
                     running = false;
