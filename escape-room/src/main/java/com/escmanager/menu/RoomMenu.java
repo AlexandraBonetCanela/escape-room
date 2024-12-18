@@ -4,7 +4,6 @@ import com.escmanager.enums.DifficultyLevel;
 import com.escmanager.exceptions.DaoException;
 import com.escmanager.exceptions.room.RoomAlreadyExistsException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
-import com.escmanager.model.EscapeRoom;
 import com.escmanager.model.Room;
 import com.escmanager.service.EscapeRoomService;
 import com.escmanager.service.RoomService;
@@ -36,9 +35,7 @@ public class RoomMenu {
             try {
                 switch (option) {
                     case ADD_ROOM_MENU -> {
-                        System.out.println("Current Escape Rooms:");
-                        List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
-                        EscapeRoomMenu.printEscapeRooms(escapeRoomList);
+                        MenuUtils.showAllEscapeRooms();
                         System.out.print("Enter Escape Room ID: ");
                         int escapeRoomId = scanner.nextInt();
                         scanner.nextLine();
@@ -76,9 +73,7 @@ public class RoomMenu {
                         System.out.print("Room successfully added to Escape Room:  " + escapeRoomId);
                     }
                     case DELETE_ROOM_MENU -> {
-                        System.out.println("Current Escape Rooms:");
-                        List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
-                        EscapeRoomMenu.printEscapeRooms(escapeRoomList);
+                        MenuUtils.showAllEscapeRooms();
                         System.out.print("Enter Escape Room ID: ");
                         int escapeRoomId = scanner.nextInt();
                         System.out.println("Current Rooms:");
@@ -109,8 +104,6 @@ public class RoomMenu {
             System.out.print("\t");
             System.out.print(room.getDifficulty());
             System.out.print("\n");
-
-
         }
     }
 }

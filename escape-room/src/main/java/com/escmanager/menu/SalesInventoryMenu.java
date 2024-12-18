@@ -1,15 +1,11 @@
 package com.escmanager.menu;
 
-import com.escmanager.exceptions.escaperoom.EscapeRoomAlreadyExistException;
-import com.escmanager.exceptions.escaperoom.EscapeRoomDoesNotExistException;
-
 import java.math.BigDecimal;
 
 import static com.escmanager.menu.Main.scanner;
-import static com.escmanager.menu.MenuUtils.getNonEmptyString;
 import static com.escmanager.menu.TicketMenu.ticketService;
 
-public class SalesMenu {
+public class SalesInventoryMenu {
 
     public static void showMenu() {
 

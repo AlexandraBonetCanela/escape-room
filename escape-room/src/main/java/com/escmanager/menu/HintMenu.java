@@ -54,6 +54,11 @@ public class HintMenu {
                 case REMOVE_HINT -> {
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
+                    try {
+                        elementService.getHints(roomId);
+                    } catch (RoomDoesNotExistException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.print("Enter Hint ID to remove: ");
                     int hintId = scanner.nextInt();
                     try {
@@ -87,7 +92,7 @@ public class HintMenu {
         }
     }
     public static void printHints(List<Hint> hintList) {
-        System.out.println("ID\tName\tTheme\tDifficulty");
+        System.out.println("ID\tName\tTheme\tPrice");
         for (Hint hint : hintList){
             System.out.print(hint.getId());
             System.out.print("\t");
