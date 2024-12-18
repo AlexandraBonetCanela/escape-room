@@ -51,7 +51,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
     }
 
     @Override
-    public EscapeRoom findByName(String name) {
+    public EscapeRoom getByName(String name) {
         String query = "SELECT * FROM escaperoom WHERE name = ? AND status = 'ACTIVE'";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
