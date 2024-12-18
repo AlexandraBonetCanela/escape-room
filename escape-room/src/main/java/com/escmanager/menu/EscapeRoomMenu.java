@@ -7,6 +7,7 @@ import com.escmanager.model.*;
 import com.escmanager.service.ElementService;
 import com.escmanager.service.EscapeRoomService;
 import com.escmanager.service.RoomService;
+import static com.escmanager.menu.MenuUtils.getNonEmptyString;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -41,16 +42,14 @@ public class EscapeRoomMenu {
             try {
                 switch (option) {
                     case CREATE_ESCAPEROOM -> {
-                        System.out.print("Enter Escape Room name: ");
-                        String name = scanner.nextLine();
+                        String name = getNonEmptyString("EscapeRoom name");
                         System.out.print("Enter Escape room price: ");
                         BigDecimal price = scanner.nextBigDecimal();
                         escapeRoomService.addEscapeRoom(name, price);
                     }
                     case DELETE_ESCAPEROOM -> {
                         System.out.println("Current Escape Rooms:");
-                        List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
-                        printEscapeRooms(escapeRoomList);
+                        printEscapeRooms(escapeRoomService.getAllEscapeRooms());
                         System.out.print("Enter Escape Room ID to delete: ");
                         int id = scanner.nextInt();
                         escapeRoomService.deleteEscapeRoom(id);
@@ -58,15 +57,13 @@ public class EscapeRoomMenu {
                     }
                     case VIEW_ESCPAEROOM_INVENTORY -> {
                         System.out.println("Current Escape Rooms:");
-                        List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
-                        printEscapeRooms(escapeRoomList);
+                        printEscapeRooms(escapeRoomService.getAllEscapeRooms());
                         System.out.print("Enter Escape Room ID to view inventory: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         printInventory(id);
                     }
                     case MAIN_MENU -> backToMain = true;
-
 
                     default -> System.out.println("Invalid choice. Returning to main menu.");
                 }
