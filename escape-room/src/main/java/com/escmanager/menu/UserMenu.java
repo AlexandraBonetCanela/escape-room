@@ -1,8 +1,9 @@
 package com.escmanager.menu;
 
-import com.escmanager.exceptions.UserAlreadyExistException;
-import com.escmanager.exceptions.UserAlreadyRegisteredException;
-import com.escmanager.exceptions.UserDoesNotExistException;
+
+import com.escmanager.exceptions.user.UserAlreadyExistException;
+import com.escmanager.exceptions.user.UserAlreadyRegisteredException;
+import com.escmanager.exceptions.user.UserDoesNotExistException;
 import com.escmanager.model.User;
 import com.escmanager.service.UserService;
 
@@ -12,7 +13,7 @@ public class UserMenu {
 
     static UserService userService = UserService.getInstance();
 
-    public static void showMenu() throws UserAlreadyExistException, UserAlreadyRegisteredException, UserDoesNotExistException {
+    public static void showMenu() {
         boolean backToMain = false;
         while (!backToMain) {
             System.out.println("""
@@ -32,7 +33,11 @@ public class UserMenu {
                     System.out.println("\nADD USER");
                     System.out.print("Enter user email: ");
                     String email = scanner.nextLine();
-                    userService.addUser(email);
+                    try {
+                        userService.addUser(email);
+                    } catch (UserAlreadyExistException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("The user has been added to the database");
                 }
                 case 2 -> {
@@ -41,7 +46,11 @@ public class UserMenu {
                     String email = scanner.nextLine();
                     System.out.print("Enter user name: ");
                     String name = scanner.nextLine();
-                    userService.registerUser(email, name);
+                    try {
+                        userService.registerUser(email, name);
+                    } catch (UserAlreadyRegisteredException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("The user has been registered");
                 }
                 case 3 -> {
@@ -73,7 +82,11 @@ public class UserMenu {
                         boolean notifications = scanner.nextBoolean();
                         user.setNotifications(notifications);
                     }
-                    userService.updateUserObject(email, user);
+                    try {
+                        userService.updateUserObject(email, user);
+                    } catch (UserDoesNotExistException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("The user with the email " + email + ", has been updated.");
                 }
                 case 4 -> userService.getAllUsers();
