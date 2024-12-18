@@ -52,10 +52,9 @@ public class UserMenu {
                 }
                 case REGISTER_USER -> {
                     System.out.println("\nREGISTER USER");
-                    System.out.print("Enter user email: ");
-                    String email = scanner.nextLine();
+                    String email = getNonEmptyString("user email");
                     System.out.print("Enter user name: ");
-                    String name = scanner.nextLine();
+                    String name = getNonEmptyString("user name");
                     try {
                         userService.registerUser(email, name);
                     } catch (UserAlreadyRegisteredException e) {
