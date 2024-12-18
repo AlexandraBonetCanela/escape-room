@@ -44,7 +44,7 @@ public class EscapeRoomService {
 
     public boolean deleteEscapeRoom(int id) throws EscapeRoomDoesNotExistException {
 
-        EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
+        EscapeRoom escapeRoom = escapeRoomDAO.getById(id);
 
         if(escapeRoom == null){
             throw new EscapeRoomDoesNotExistException("Escaperoom with id " + id + " does not exist");
