@@ -15,21 +15,25 @@ public class TicketMenu {
     static CertificateService certificateService = CertificateService.getInstance();
 
     public static void showMenu() {
+
         boolean backToMain = false;
+        final int CREATE_TICKET = 1;
+        final int GIVE_CERTIFICATE = 2;
+        final int MAIN_MENU = 3;
+
         while (!backToMain) {
             System.out.println(""" 
                     \nTICKET MENU
                         1. Create Ticket
-                        2. Ticket money earned
-                        3. Give Certificate
-                        4. Back to Main Menu
+                        2. Give Certificate
+                        3. Back to Main Menu
                     """);
             System.out.print("Choose one of the options: ");
             int option = scanner.nextInt();
             scanner.nextLine();
 
             switch (option) {
-                case 1 -> {
+                case CREATE_TICKET -> {
                     System.out.println("\nCREATING TICKET");
                     System.out.print("Enter user ID: ");
                     int user_id = scanner.nextInt();
@@ -48,19 +52,14 @@ public class TicketMenu {
                     }
                     System.out.println("The ticket has been created");
                 }
-                case 2 -> {
-                    System.out.println("\nTICKET MONEY EARNED");
-                    BigDecimal moneyEarned = ticketService.getMoneyEarned();
-                    System.out.println("Money earned: " + moneyEarned + "$");
-                }
-                case 3 -> {
+                case GIVE_CERTIFICATE -> {
                     System.out.println("\nCREATING TICKET");
                     System.out.print("Enter escaperoom id: ");
                     int escape_room_id = scanner.nextInt();
                     Certificate certificate = certificateService.getCertificateById(escape_room_id);
                     System.out.println(certificate.getName() + ": " + certificate.getDescription());
                 }
-                case 4 -> backToMain = true;
+                case MAIN_MENU -> backToMain = true;
                 default -> System.out.println("Invalid choice. Returning to main menu.");
             }
         }
