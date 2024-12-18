@@ -25,7 +25,7 @@ public class RoomService {
 
     public Room addRoom(int escapeRoomId, DifficultyLevel difficultyLevel, String name, String theme) throws RoomAlreadyExistsException, DaoException {
 
-        Room room = roomDAO.getByNameAndEscaperoomId(name, escapeRoomId);
+        Room room = roomDAO.getByNameAndEscapeRoomId(name, escapeRoomId);
 
         if(room != null){
             throw new RoomAlreadyExistsException("Room with name " + name + " already exists");
@@ -55,7 +55,7 @@ public class RoomService {
     }
 
     public List<Room> findAllByEscaperoomId(int escaperoomId) throws DaoException{
-        List<Room> roomList = roomDAO.findAllByEscaperoomId(escaperoomId);
+        List<Room> roomList = roomDAO.getAllByEscapeRoomId(escaperoomId);
         for (Room room: roomList){
             System.out.println(room);
         }

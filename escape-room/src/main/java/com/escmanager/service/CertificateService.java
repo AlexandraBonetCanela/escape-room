@@ -14,6 +14,7 @@ public class CertificateService {
     public static CertificateService getInstance() {
         return instance;
     }
+
     private CertificateService() {}
 
     CertificateDAO certificateDAO = new CertificateImpl();

@@ -54,7 +54,7 @@ public class TicketMenu {
                     System.out.println("Money earned: " + moneyEarned + "$");
                 }
                 case 3 -> {
-                    System.out.println("\nCREATING TICKET");
+                    System.out.println("\nGIVE CERTIFICATE");
                     System.out.print("Enter escaperoom id: ");
                     int escape_room_id = scanner.nextInt();
                     Certificate certificate = certificateService.getCertificateById(escape_room_id);

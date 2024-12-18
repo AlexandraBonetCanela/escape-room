@@ -15,7 +15,7 @@ import java.util.List;
 
 public class EscapeRoomService {
 
-    EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
+
     RoomService roomService = RoomService.getInstance();
 
     private static EscapeRoomService instance = new EscapeRoomService();
@@ -23,6 +23,8 @@ public class EscapeRoomService {
         return instance;
     }
     private EscapeRoomService() {}
+
+    EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
 
     public EscapeRoom addEscapeRoom(String name, BigDecimal price) throws EscapeRoomAlreadyExistException {
 
@@ -44,7 +46,7 @@ public class EscapeRoomService {
 
     public boolean deleteEscapeRoom(int id) throws EscapeRoomDoesNotExistException {
 
-        EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
+        EscapeRoom escapeRoom = escapeRoomDAO.getById(id);
 
         if(escapeRoom == null){
             throw new EscapeRoomDoesNotExistException("Escaperoom with id " + id + " does not exists");

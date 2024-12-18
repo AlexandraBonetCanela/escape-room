@@ -22,11 +22,12 @@ public class ElementService {
         return instance;
     }
 
-    ElementDAO elementDAO = new ElementImpl();
     RoomService roomService = RoomService.getInstance();
 
     private ElementService() {
     }
+
+    ElementDAO elementDAO = new ElementImpl();
 
     public Element addProp(int roomId, String materialType, String name, BigDecimal price) throws RoomDoesNotExistException, DaoException, ElementAlreadyExistsException {
 
