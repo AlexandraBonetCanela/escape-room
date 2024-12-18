@@ -12,6 +12,12 @@ import java.util.List;
 
 public class UserService {
 
+    private static UserService instance = new UserService();
+    public static UserService getInstance() {
+        return instance;
+    }
+    private UserService() {}
+
     UserDAO userDAO = new UserImpl();
 
     public User addUser(String email) throws UserAlreadyExistException, DaoException {
@@ -65,6 +71,32 @@ public class UserService {
 
         System.out.println("The user has been updated");
         return user;
+    }
+
+    public User updateUserObject(String email, User updateUser) throws DaoException, UserDoesNotExistException {
+
+        User user = userDAO.getByEmail(email);
+
+        if(!user.isRegistered()){
+            throw new UserDoesNotExistException();
+        }
+
+        user.setName(updateUser.getName());
+        user.setEmail(updateUser.getEmail());
+        user.setRegistered(updateUser.isRegistered());
+        user.setNotifications(updateUser.isNotifications());
+        user = userDAO.update(user);
+
+        System.out.println("The user has been updated");
+        return user;
+    }
+
+    public User getUser(String email) {
+        User user = userDAO.getByEmail(email);
+        if (user == null) {
+            System.out.println("User not found with the email " + email);
+        }
+        return userDAO.getByEmail(email);
     }
 
     public List<User> getAllUsers(){

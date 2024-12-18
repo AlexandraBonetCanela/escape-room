@@ -25,7 +25,7 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
             statement.setString(3, String.valueOf(escapeRoom.getStatus()));
             statement.executeUpdate();
             
-            return escapeRoom;
+            return findByName(escapeRoom.getName());
         } catch (SQLException e) {
             throw new DaoException("Failed to create Escaperoom in database", e);
         }
@@ -44,14 +44,14 @@ public class EscapeRoomImpl implements EscapeRoomDAO {
             statement.setInt(4, escapeRoom.getId());
             statement.executeUpdate();
 
-            return escapeRoom;
+            return findByName(escapeRoom.getName());
         } catch (SQLException e) {
             throw new DaoException("Failed at updating Escaperoom in database", e);
         }
     }
 
     @Override
-    public EscapeRoom  getByName(String name) {
+    public EscapeRoom findByName(String name) {
         String query = "SELECT * FROM escaperoom WHERE name = ?";
         try (Connection connection = dao.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

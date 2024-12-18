@@ -10,6 +10,12 @@ import java.util.List;
 
 public class CertificateService {
 
+    private static CertificateService instance = new CertificateService();
+    public static CertificateService getInstance() {
+        return instance;
+    }
+    private CertificateService() {}
+
     CertificateDAO certificateDAO = new CertificateImpl();
 
     public Certificate generateCertificate(String name, String description, int escape_room_id)
@@ -46,6 +52,10 @@ public class CertificateService {
         certificateDAO.update(certificate);
 
         return certificate;
+    }
+
+    public Certificate getCertificateById(int id) {
+        return (Certificate) certificateDAO.getById(id);
     }
 
     public List<Certificate> getAllCertificates() {

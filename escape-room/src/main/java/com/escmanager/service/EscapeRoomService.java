@@ -5,8 +5,10 @@ import com.escmanager.dao.implementation.EscapeRoomImpl;
 import com.escmanager.enums.Status;
 import com.escmanager.exceptions.escaperoom.EscapeRoomAlreadyExistException;
 import com.escmanager.exceptions.escaperoom.EscapeRoomDoesNotExistException;
-import com.escmanager.model.Certificate;
+import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.model.EscapeRoom;
+import com.escmanager.model.Room;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -14,10 +16,17 @@ import java.util.List;
 public class EscapeRoomService {
 
     EscapeRoomDAO escapeRoomDAO = new EscapeRoomImpl();
+    RoomService roomService = RoomService.getInstance();
+
+    private static EscapeRoomService instance = new EscapeRoomService();
+    public static EscapeRoomService getInstance() {
+        return instance;
+    }
+    private EscapeRoomService() {}
 
     public EscapeRoom addEscapeRoom(String name, BigDecimal price) throws EscapeRoomAlreadyExistException {
 
-        EscapeRoom escapeRoom = escapeRoomDAO.getByName(name);
+        EscapeRoom escapeRoom = escapeRoomDAO.findByName(name);
 
         if(escapeRoom != null){
             throw new EscapeRoomAlreadyExistException("Escaperoom with name " + name + " already exists");
@@ -25,6 +34,7 @@ public class EscapeRoomService {
 
         escapeRoom = new EscapeRoom();
         escapeRoom.setName(name);
+        escapeRoom.setStatus(Status.ACTIVE);
         escapeRoom.setPrice(price);
 
         escapeRoom = escapeRoomDAO.create(escapeRoom);
@@ -39,6 +49,16 @@ public class EscapeRoomService {
         if(escapeRoom == null){
             throw new EscapeRoomDoesNotExistException("Escaperoom with id " + id + " does not exists");
         }
+
+        List<Room> rooms = roomService.findAllByEscaperoomId(id);
+            rooms.forEach(a -> {
+                try {
+                    roomService.deleteRoom(a.getId());
+                } catch (RoomDoesNotExistException e) {
+                    //
+                }
+            });
+
         escapeRoom.setStatus(Status.INACTIVE);
         escapeRoomDAO.update(escapeRoom);
 
@@ -51,5 +71,9 @@ public class EscapeRoomService {
             System.out.println(escapeRooms);
         }
         return escapeRoomList;
+    }
+
+    public EscapeRoom getById(int escaperoomId) {
+        return escapeRoomDAO.getById(escaperoomId);
     }
 }
