@@ -17,8 +17,7 @@ public class RoomService {
     public static RoomService getInstance() {
         return instance;
     }
-    private RoomService() {
-    }
+    private RoomService() {}
 
     RoomDAO roomDAO = new RoomImpl();
     ElementService elementService = ElementService.getInstance();

@@ -14,7 +14,7 @@ public class CertificateService {
     public static CertificateService getInstance() {
         return instance;
     }
-    private CertificateService() {}
+    protected CertificateService() {}
 
     CertificateDAO certificateDAO = new CertificateImpl();
 
@@ -46,9 +46,9 @@ public class CertificateService {
         }
 
         certificate.setId(1);
-        certificate.setName("name");
-        certificate.setDescription("description");
-        certificate.setEscape_room_id(1);
+        certificate.setName(name);
+        certificate.setDescription(description);
+        certificate.setEscape_room_id(escape_room_id);
         certificateDAO.update(certificate);
 
         return certificate;

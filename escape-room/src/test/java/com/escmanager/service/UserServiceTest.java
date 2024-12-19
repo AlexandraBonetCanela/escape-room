@@ -24,7 +24,7 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    void test_addUser_UserDoesNotExists() {
+    void test_addUser_UserDoesNotExists() throws UserAlreadyExistException {
 
         String email = "jose@gmail.com";
         when(userDAO.getByEmail(email)).thenReturn(null);
@@ -34,43 +34,33 @@ class UserServiceTest {
         createUser.setId(1);
         when(userDAO.create(any(User.class))).thenReturn(createUser);
 
-        User result = null;
-        try {
-            result = userService.addUser(email);
-        } catch (UserAlreadyExistException e) {
-            throw new RuntimeException(e);
-        }
+        User result = userService.addUser(email);
 
         assertNotNull(result);
-        assertEquals(result.getEmail(), email);
-        assertEquals(result.getId(), 1);
+        assertEquals(email, result.getEmail());
+        assertEquals(1, result.getId());
         verify(userDAO).getByEmail(email);
         verify(userDAO).create(any(User.class));
     }
 
     @Test
-    void test_addUser_UserAlreadyExists() {
+    void test_addUser_UserAlreadyExists() throws UserAlreadyExistException {
 
         String email = "jose@gmail.com";
         User existingUser = new User();
         existingUser.setEmail(email);
         when(userDAO.getByEmail(email)).thenReturn(existingUser);
 
-        User result = null;
-        try {
-            result = userService.addUser(email);
-        } catch (UserAlreadyExistException e) {
-            throw new RuntimeException(e);
-        }
+        User result = userService.addUser(email);
 
         assertNotNull(result);
-        assertEquals(result.getEmail(), email);
+        assertEquals(email, result.getEmail());
         verify(userDAO).getByEmail(email);
         verify(userDAO, never()).create(any(User.class));
     }
 
     @Test
-    void test_registerUser_UserDoesNotExists() {
+    void test_registerUser_UserDoesNotExists() throws UserAlreadyRegisteredException {
         String email = "jose@gmail.com";
         String name = "Jose Manuel";
         when(userDAO.getByEmail(email)).thenReturn(null);
@@ -81,23 +71,18 @@ class UserServiceTest {
         createUser.setRegistered(true);
         when(userDAO.create(any(User.class))).thenReturn(createUser);
 
-        User result = null;
-        try {
-            result = userService.registerUser(email, name);
-        } catch (UserAlreadyRegisteredException e) {
-            throw new RuntimeException(e);
-        }
+        User result = userService.registerUser(email, name);
 
         assertNotNull(result);
-        assertEquals(result.getEmail(), email);
-        assertEquals(result.getName(), name);
+        assertEquals(email, result.getEmail());
+        assertEquals(name, result.getName());
         assertTrue(result.isRegistered());
         verify(userDAO).getByEmail(email);
         verify(userDAO).create(any(User.class));
     }
 
     @Test
-    void test_registerUser_UserAlreadyExists() {
+    void test_registerUser_UserAlreadyExists() throws UserAlreadyRegisteredException {
         String email = "jose@gmail.com";
         String name = "Jose Manuel";
 
@@ -112,16 +97,11 @@ class UserServiceTest {
         registeredUser.setRegistered(true);
         when(userDAO.update(any(User.class))).thenReturn(registeredUser);
 
-        User result = null;
-        try {
-            result = userService.registerUser(email, name);
-        } catch (UserAlreadyRegisteredException e) {
-            throw new RuntimeException(e);
-        }
+        User result = userService.registerUser(email, name);
 
         assertNotNull(result);
-        assertEquals(result.getEmail(), email);
-        assertEquals(result.getName(), name);
+        assertEquals(email, result.getEmail());
+        assertEquals(name, result.getName());
         assertTrue(result.isRegistered());
         verify(userDAO).getByEmail(email);
         verify(userDAO).update(any(User.class));
