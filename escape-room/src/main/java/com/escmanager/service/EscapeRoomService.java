@@ -44,10 +44,10 @@ public class EscapeRoomService {
 
     public boolean deleteEscapeRoom(int id) throws EscapeRoomDoesNotExistException {
 
-        EscapeRoom escapeRoom = (EscapeRoom) escapeRoomDAO.getById(id);
+        EscapeRoom escapeRoom = escapeRoomDAO.getById(id);
 
         if(escapeRoom == null){
-            throw new EscapeRoomDoesNotExistException("Escaperoom with id " + id + " does not exists");
+            throw new EscapeRoomDoesNotExistException("Escaperoom with id " + id + " does not exist");
         }
 
         List<Room> rooms = roomService.findAllByEscaperoomId(id);
@@ -67,9 +67,6 @@ public class EscapeRoomService {
 
     public List<EscapeRoom> getAllEscapeRooms() {
         List<EscapeRoom> escapeRoomList = escapeRoomDAO.getAll();
-        for (EscapeRoom escapeRooms : escapeRoomList){
-            System.out.println(escapeRooms);
-        }
         return escapeRoomList;
     }
 

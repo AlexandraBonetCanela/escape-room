@@ -1,59 +1,74 @@
 package com.escmanager.menu;
 
-import com.escmanager.exceptions.UserAlreadyExistException;
-import com.escmanager.exceptions.UserAlreadyRegisteredException;
-import com.escmanager.exceptions.UserDoesNotExistException;
+
+import com.escmanager.exceptions.user.UserAlreadyExistException;
+import com.escmanager.exceptions.user.UserAlreadyRegisteredException;
+import com.escmanager.exceptions.user.UserDoesNotExistException;
 import com.escmanager.model.User;
 import com.escmanager.service.UserService;
 
-import static com.escmanager.menu.Main.scanner;
+import java.util.List;
+
+import static com.escmanager.menu.Menu.scanner;
+import static com.escmanager.menu.MenuUtils.getNonEmptyString;
 
 public class UserMenu {
 
     static UserService userService = UserService.getInstance();
 
-    public static void showMenu() throws UserAlreadyExistException, UserAlreadyRegisteredException, UserDoesNotExistException {
+    public static void showMenu() {
+
         boolean backToMain = false;
+        final int ADD_USER = 1;
+        final int REGISTER_USER = 2;
+        final int UPDATE_USER = 3;
+        final int LIST_ALL_USERS = 4;
+        final int MAIN_MENU = 5;
+
         while (!backToMain) {
             System.out.println("""
                     \nUSER MENU
                         1. Add User
                         2. Register user
                         3. Update user
-                        3. List All Users
-                        4. Back to Main Menu
+                        4. List All Users
+                        5. Back to Main Menu
                     """);
             System.out.print("Choose one of the following options: ");
             int option = scanner.nextInt();
             scanner.nextLine();
 
             switch (option) {
-                case 1 -> {
+                case ADD_USER -> {
                     System.out.println("\nADD USER");
                     System.out.print("Enter user email: ");
                     String email = scanner.nextLine();
-                    userService.addUser(email);
+                    try {
+                        userService.addUser(email);
+                    } catch (UserAlreadyExistException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("The user has been added to the database");
                 }
-                case 2 -> {
+                case REGISTER_USER -> {
                     System.out.println("\nREGISTER USER");
-                    System.out.print("Enter user email: ");
-                    String email = scanner.nextLine();
+                    String email = getNonEmptyString("user email");
                     System.out.print("Enter user name: ");
-                    String name = scanner.nextLine();
-                    userService.registerUser(email, name);
+                    String name = getNonEmptyString("user name");
+                    try {
+                        userService.registerUser(email, name);
+                    } catch (UserAlreadyRegisteredException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("The user has been registered");
                 }
-                case 3 -> {
+                case UPDATE_USER -> {
                     System.out.println("\nUPDATE USER");
-                    System.out.print("Enter actual user email: ");
-                    String email = scanner.nextLine();
+                    String email = getNonEmptyString("actual user email");
                     User user = userService.getUser(email);
-                    System.out.print("Enter new user email: ");
-                    String newEmail = scanner.nextLine();
+                    String newEmail = getNonEmptyString("new user email");
                     user.setEmail(newEmail);
-                    System.out.print("Enter new user name: ");
-                    String newName = scanner.nextLine();
+                    String newName = getNonEmptyString("new user name");
                     user.setName(newName);
                     if (user.isRegistered()){
                         System.out.print("The user is already registered. Do you want to unregister him? (true/false): ");
@@ -73,13 +88,22 @@ public class UserMenu {
                         boolean notifications = scanner.nextBoolean();
                         user.setNotifications(notifications);
                     }
-                    userService.updateUserObject(email, user);
+                    try {
+                        userService.updateUserObject(email, user);
+                    } catch (UserDoesNotExistException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("The user with the email " + email + ", has been updated.");
                 }
-                case 4 -> userService.getAllUsers();
-                case 5 -> backToMain = true;
+                case LIST_ALL_USERS -> printUsers(userService.getAllUsers());
+                case MAIN_MENU -> backToMain = true;
                 default -> System.out.println("Invalid choice. Returning to main menu.");
             }
+        }
+    }
+    private static void printUsers (List<User> userList){
+        for (User user : userList){
+            System.out.println(user);
         }
     }
 }

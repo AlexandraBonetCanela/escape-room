@@ -1,4 +1,4 @@
-package com.escmanager.exceptions;
+package com.escmanager.exceptions.certificate;
 
 public class CertificateAlreadyExistException extends Exception {
 

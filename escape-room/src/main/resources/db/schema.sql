@@ -108,3 +108,49 @@ CREATE TABLE IF NOT EXISTS newsletter_to_user (
     CONSTRAINT fk_ntu_user_id FOREIGN KEY (user_id) REFERENCES user(id),
     PRIMARY KEY (user_id, newsletter_id)
 );
+
+CREATE OR REPLACE VIEW inventory AS
+SELECT
+    'Escaperoom' AS type,
+    CONCAT('ID: ', e.id) AS reference,
+    e.name AS name,
+    e.price AS price,
+    NULL AS details
+FROM
+    escaperoom e
+WHERE
+    e.status = 'ACTIVE'
+
+UNION ALL
+
+SELECT
+    'Room' AS type,
+    CONCAT('ID: ', r.id, ', ESCAPEROOM ID: ' , r.escape_room_id) AS reference,
+    r.name AS name,
+    NULL AS price,
+    CONCAT ('Theme: ', r.theme, ', Difficulty level:', r.difficulty_level) AS details
+FROM
+    room r
+WHERE
+    r.status = 'ACTIVE'
+
+UNION ALL
+
+SELECT
+    'Element' AS type,
+     CONCAT('ID: ', el.id, ', ROOM ID: ' , el.room_id) AS reference,
+    el.name AS name,
+    el.price AS price,
+    CASE
+        WHEN el.type = 'PROP' THEN CONCAT('TYPE: ', el.type, ', Material Type: ' , pr.material_type)
+        WHEN el.type = 'HINT' THEN CONCAT('TYPE: ', el.type, ', Theme: ', h.theme)
+        ELSE NULL
+    END AS details
+FROM
+    element el
+LEFT JOIN
+    prop pr ON el.id = pr.element_id
+LEFT JOIN
+    hint h ON el.id = h.element_id
+WHERE
+    el.status = 'ACTIVE';

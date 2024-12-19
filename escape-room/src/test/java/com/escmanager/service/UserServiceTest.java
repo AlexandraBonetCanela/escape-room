@@ -1,8 +1,8 @@
 package com.escmanager.service;
 
 import com.escmanager.dao.UserDAO;
-import com.escmanager.exceptions.UserAlreadyExistException;
-import com.escmanager.exceptions.UserAlreadyRegisteredException;
+import com.escmanager.exceptions.user.UserAlreadyExistException;
+import com.escmanager.exceptions.user.UserAlreadyRegisteredException;
 import com.escmanager.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -3,9 +3,9 @@ package com.escmanager.service;
 import com.escmanager.dao.UserDAO;
 import com.escmanager.dao.implementation.UserImpl;
 import com.escmanager.exceptions.DaoException;
-import com.escmanager.exceptions.UserAlreadyExistException;
-import com.escmanager.exceptions.UserAlreadyRegisteredException;
-import com.escmanager.exceptions.UserDoesNotExistException;
+import com.escmanager.exceptions.user.UserAlreadyExistException;
+import com.escmanager.exceptions.user.UserAlreadyRegisteredException;
+import com.escmanager.exceptions.user.UserDoesNotExistException;
 import com.escmanager.model.User;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class UserService {
         User user = userDAO.getByEmail(email);
 
         if(!user.isRegistered()){
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistException("User does not exist");
         }
         user.setName(name);
         user.setEmail(email);
@@ -77,7 +77,7 @@ public class UserService {
         User user = userDAO.getByEmail(email);
 
         if(!user.isRegistered()){
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistException("User does not exist");
         }
 
         user.setName(updateUser.getName());
@@ -99,10 +99,6 @@ public class UserService {
     }
 
     public List<User> getAllUsers(){
-        List<User> userList = userDAO.getAll();
-        for (User user : userList){
-            System.out.println(user);
-        }
-        return userList;
+        return (List<User>) userDAO.getAll();
     }
 }

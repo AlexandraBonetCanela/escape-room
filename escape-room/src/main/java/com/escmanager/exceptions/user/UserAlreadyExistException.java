@@ -1,4 +1,4 @@
-package com.escmanager.exceptions;
+package com.escmanager.exceptions.user;
 
 public class UserAlreadyExistException extends Exception {
     public UserAlreadyExistException() {

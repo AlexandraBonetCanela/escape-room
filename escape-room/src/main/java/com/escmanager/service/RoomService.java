@@ -55,19 +55,11 @@ public class RoomService {
     }
 
     public List<Room> findAllByEscaperoomId(int escaperoomId) throws DaoException{
-        List<Room> roomList = roomDAO.getAllByEscaperoomId(escaperoomId);
-        for (Room room: roomList){
-            System.out.println(room);
-        }
-        return roomList;
+        return roomDAO.getAllByEscaperoomId(escaperoomId);
     }
 
     public List<Room> getAllRooms() throws DaoException{
-        List<Room> roomList = roomDAO.getAll();
-        for (Room room: roomList){
-            System.out.println(room);
-        }
-        return roomList;
+        return roomDAO.getAll();
     }
 
     public Room getRoomById(int roomId) throws RoomDoesNotExistException, DaoException {
@@ -77,7 +69,6 @@ public class RoomService {
         if(room == null){
             throw new RoomDoesNotExistException("Room with id " + roomId + " does not exist");
         }
-
         return room;
     }
 }

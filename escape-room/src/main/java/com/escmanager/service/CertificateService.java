@@ -2,8 +2,8 @@ package com.escmanager.service;
 
 import com.escmanager.dao.CertificateDAO;
 import com.escmanager.dao.implementation.CertificateImpl;
-import com.escmanager.exceptions.CertificateAlreadyExistException;
-import com.escmanager.exceptions.CertificateDoesNotExistException;
+import com.escmanager.exceptions.certificate.CertificateAlreadyExistException;
+import com.escmanager.exceptions.certificate.CertificateDoesNotExistException;
 import com.escmanager.model.Certificate;
 
 import java.util.List;

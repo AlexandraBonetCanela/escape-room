@@ -11,8 +11,11 @@ import com.escmanager.exceptions.element.ElementDoesNotExistException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.model.Element;
 import com.escmanager.builder.PropBuilder;
+import com.escmanager.model.Hint;
+import com.escmanager.model.Prop;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ElementService {
@@ -23,14 +26,13 @@ public class ElementService {
     }
 
     ElementDAO elementDAO = new ElementImpl();
-    RoomService roomService = RoomService.getInstance();
 
     private ElementService() {
     }
 
     public Element addProp(int roomId, String materialType, String name, BigDecimal price) throws RoomDoesNotExistException, DaoException, ElementAlreadyExistsException {
 
-        roomService.getRoomById(roomId);
+        RoomService.getInstance().getRoomById(roomId);
 
         checkElementDoesNotExist(ElementType.PROP, name, roomId);
 
@@ -50,7 +52,7 @@ public class ElementService {
 
     public Element addHint(int roomId, String theme, String name, BigDecimal price) throws RoomDoesNotExistException, ElementAlreadyExistsException {
 
-        roomService.getRoomById(roomId);
+        RoomService.getInstance().getRoomById(roomId);
 
         Element element = elementDAO.findByTypeNameAndRoomId(ElementType.HINT, name, roomId);
 
@@ -96,24 +98,34 @@ public class ElementService {
         return true;
     }
 
-//    public List<Element> getRoomElements(int roomId) throws RoomDoesNotExistException {
-//
-//        return;
-//    }
+    public List<Hint> getHints(int roomId) throws RoomDoesNotExistException {
 
+        RoomService.getInstance().getRoomById(roomId);
 
-    public List<Element> getHints(int roomId) throws RoomDoesNotExistException {
+        List<Element> elementList =  elementDAO.findAllByTypeAndRoomId(ElementType.HINT, roomId);
+        List<Hint> hintList = new ArrayList<>();
 
-        roomService.getRoomById(roomId);
-
-        return elementDAO.findAllByTypeAndRoomId(ElementType.HINT, roomId);
+        for (Element element: elementList){
+            Hint hint = (Hint) element;
+            hintList.add(hint);
+        }
+        return hintList;
     }
 
-    public List<Element> getProps(int roomId) throws RoomDoesNotExistException {
+    public List<Prop> getProps(int roomId) throws RoomDoesNotExistException {
 
-        roomService.getRoomById(roomId);
+        RoomService.getInstance().getRoomById(roomId);
 
-        return elementDAO.findAllByTypeAndRoomId(ElementType.PROP, roomId);
+        List<Element> elementList =  elementDAO.findAllByTypeAndRoomId(ElementType.PROP, roomId);
+
+        List<Prop> propList = new ArrayList<>();
+
+        for (Element element: elementList){
+            Prop prop = (Prop) element;
+            propList.add(prop);
+        }
+        return propList;
+
     }
 
     public void checkElementDoesNotExist(ElementType elementType, String name, int roomId) throws ElementAlreadyExistsException {
