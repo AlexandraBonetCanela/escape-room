@@ -123,5 +123,27 @@ public class UserImpl implements UserDAO {
         }
         return user;
     }
+
+    public List<User> getAllSubscribers(){
+        List<User> user = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE notifications = 1";
+        try (Connection connection = dao.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                user.add(new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getBoolean("is_registered"),
+                        resultSet.getBoolean("notifications")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Failed at retrieving rooms in database", e);
+        }
+        return user;
+    }
 }
 
