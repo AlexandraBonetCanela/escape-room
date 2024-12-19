@@ -9,7 +9,7 @@ import com.escmanager.service.UserService;
 
 import java.util.List;
 
-import static com.escmanager.menu.Main.scanner;
+import static com.escmanager.menu.Menu.scanner;
 import static com.escmanager.menu.MenuUtils.getNonEmptyString;
 
 public class UserMenu {

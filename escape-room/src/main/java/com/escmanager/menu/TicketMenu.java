@@ -7,7 +7,7 @@ import com.escmanager.service.TicketService;
 
 import java.math.BigDecimal;
 
-import static com.escmanager.menu.Main.*;
+import static com.escmanager.menu.Menu.*;
 
 public class TicketMenu {
 

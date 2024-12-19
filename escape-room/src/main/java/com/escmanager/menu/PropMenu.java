@@ -5,11 +5,10 @@ import com.escmanager.exceptions.element.ElementAlreadyExistsException;
 import com.escmanager.exceptions.element.ElementDoesNotExistException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.service.ElementService;
-import com.escmanager.service.RoomService;
 
 import java.math.BigDecimal;
 
-import static com.escmanager.menu.Main.scanner;
+import static com.escmanager.menu.Menu.scanner;
 
 
 public class PropMenu {

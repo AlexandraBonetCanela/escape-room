@@ -10,7 +10,7 @@ import com.escmanager.service.RoomService;
 
 import java.util.List;
 
-import static com.escmanager.menu.Main.scanner;
+import static com.escmanager.menu.Menu.scanner;
 
 public class RoomMenu {
 

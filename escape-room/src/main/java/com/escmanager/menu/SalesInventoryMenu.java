@@ -2,7 +2,7 @@ package com.escmanager.menu;
 
 import java.math.BigDecimal;
 
-import static com.escmanager.menu.Main.scanner;
+import static com.escmanager.menu.Menu.scanner;
 import static com.escmanager.menu.TicketMenu.ticketService;
 
 public class SalesInventoryMenu {
