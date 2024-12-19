@@ -4,9 +4,11 @@ package com.escmanager.menu;
 import com.escmanager.exceptions.element.ElementAlreadyExistsException;
 import com.escmanager.exceptions.element.ElementDoesNotExistException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
+import com.escmanager.model.Prop;
 import com.escmanager.service.ElementService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static com.escmanager.menu.Menu.scanner;
 
@@ -42,10 +44,12 @@ public class PropMenu {
                     scanner.nextLine();
                     String propName = MenuUtils.getNonEmptyString("prop Name");
                     String propMaterialType = MenuUtils.getNonEmptyString("type of material");
+                    System.out.println("Enter Prop price: ");
                     BigDecimal propPrice = scanner.nextBigDecimal();
                     scanner.nextLine();
                     try {
                         elementService.addProp(roomId, propMaterialType, propName, propPrice);
+                        System.out.println("Prop successfully added!");
                     } catch (RoomDoesNotExistException | ElementAlreadyExistsException e) {
                         System.out.println(e.getMessage());
                     }
@@ -75,7 +79,7 @@ public class PropMenu {
                     int roomId = scanner.nextInt();
                     scanner.nextLine();
                     try {
-                        elementService.getProps(roomId);
+                        printProps(elementService.getProps(roomId));
                     } catch (RoomDoesNotExistException e) {
                         System.out.println(e.getMessage());
                     }
@@ -93,6 +97,20 @@ public class PropMenu {
                 case MAIN_MENU -> backToMain = true;
                 default -> System.out.println("Invalid choice. Returning to main menu.");
             }
+        }
+    }
+
+    public static void printProps (List<Prop> propList) {
+        System.out.println("ID\tName\tMaterial\tPrice");
+        for (Prop prop : propList) {
+            System.out.print(prop.getId());
+            System.out.print("\t");
+            System.out.print(prop.getName());
+            System.out.print("\t");
+            System.out.print(prop.getMaterialType());
+            System.out.print("\t");
+            System.out.print(prop.getPrice());
+            System.out.print("\n");
         }
     }
 }

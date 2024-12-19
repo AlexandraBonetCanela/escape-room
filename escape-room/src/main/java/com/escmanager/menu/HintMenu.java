@@ -47,6 +47,7 @@ public class HintMenu {
                     String hintTheme = MenuUtils.getNonEmptyString("theme");
                     try {
                         elementService.addHint(roomId, hintTheme, hintName, hintPrice);
+                        System.out.println("Hint successfully added!");
                     } catch (RoomDoesNotExistException | ElementAlreadyExistsException e) {
                         System.out.println(e.getMessage());
                     }
