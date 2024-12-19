@@ -5,7 +5,6 @@ import com.escmanager.exceptions.DaoException;
 import com.escmanager.exceptions.room.RoomAlreadyExistsException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.model.Room;
-import com.escmanager.service.EscapeRoomService;
 import com.escmanager.service.RoomService;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import static com.escmanager.menu.Menu.scanner;
 public class RoomMenu {
 
     static RoomService roomService = RoomService.getInstance();
-    static EscapeRoomService escapeRoomService = EscapeRoomService.getInstance();
 
     public static void showMenu() {
         boolean backToMain = false;
@@ -78,7 +76,7 @@ public class RoomMenu {
                         int escapeRoomId = scanner.nextInt();
                         System.out.println("Current Rooms:");
                         List<Room> roomList = roomService.findAllByEscaperoomId(escapeRoomId);
-                        printRooms(roomList);
+                        MenuUtils.printRooms(roomList);
                         System.out.print("Enter Room ID to delete: ");
                         int roomId = scanner.nextInt();
                         roomService.deleteRoom(roomId);
@@ -93,17 +91,5 @@ public class RoomMenu {
         }
     }
 
-    public static void printRooms(List<Room> roomList) {
-        System.out.println("ID\tName\tTheme\tDifficulty");
-        for (Room room : roomList){
-            System.out.print(room.getId());
-            System.out.print("\t");
-            System.out.print(room.getName());
-            System.out.print("\t");
-            System.out.print(room.getTheme());
-            System.out.print("\t");
-            System.out.print(room.getDifficulty());
-            System.out.print("\n");
-        }
-    }
+
 }

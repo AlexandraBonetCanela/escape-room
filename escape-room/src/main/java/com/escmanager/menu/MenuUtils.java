@@ -26,12 +26,28 @@ public class MenuUtils {
     public static void showAllRooms(){
         System.out.println("Select a room: ");
         List<Room> roomList = roomService.getAllRooms();
-        RoomMenu.printRooms(roomList);
+        printRooms(roomList);
+
+    }
+    public static void printRooms(List<Room> roomList) {
+        System.out.println("ID\tName\tTheme\tDifficulty");
+        for (Room room : roomList){
+            System.out.print(room.getId());
+            System.out.print("\t");
+            System.out.print(room.getName());
+            System.out.print("\t");
+            System.out.print(room.getTheme());
+            System.out.print("\t");
+            System.out.print(room.getDifficulty());
+            System.out.print("\n");
+        }
     }
 
     public static void showAllEscapeRooms(){
         System.out.println("Current Escape Rooms:");
         List<EscapeRoom> escapeRoomList = escapeRoomService.getAllEscapeRooms();
-        EscapeRoomMenu.printEscapeRooms(escapeRoomList);
+        for (EscapeRoom escapeRooms : escapeRoomList){
+            System.out.println(escapeRooms);
+        }
     }
 }
