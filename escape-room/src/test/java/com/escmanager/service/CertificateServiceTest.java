@@ -5,6 +5,7 @@ import com.escmanager.dao.implementation.CertificateImpl;
 import com.escmanager.exceptions.CertificateAlreadyExistException;
 import com.escmanager.exceptions.CertificateDoesNotExistException;
 import com.escmanager.model.Certificate;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,7 +27,6 @@ public class CertificateServiceTest {
     private CertificateService certificateService;
 
     @BeforeEach
-    @SuppressWarnings("unchecked")
     public void setUp() {
         certificateDAO = Mockito.mock(CertificateDAO.class);
         certificateService = new CertificateService();
@@ -34,7 +34,6 @@ public class CertificateServiceTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testGenerateCertificate_Success() throws CertificateAlreadyExistException {
 
         String name = "TestingCertificate";
@@ -84,11 +83,10 @@ public class CertificateServiceTest {
 
         when(certificateDAO.getById(certificateId)).thenReturn(certificate);
 
-
         Certificate updatedCertificate = certificateService.updateCertificate(certificateId, name, description, escapeRoomId);
 
         assertNotNull(updatedCertificate);
-        assertEquals("Updated Certificate", updatedCertificate.getName());
+        assertEquals(name, updatedCertificate.getName());
         assertEquals(description, updatedCertificate.getDescription());
         assertEquals(escapeRoomId, updatedCertificate.getEscape_room_id());
 

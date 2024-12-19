@@ -46,9 +46,9 @@ public class CertificateService {
         }
 
         certificate.setId(1);
-        certificate.setName("name");
-        certificate.setDescription("description");
-        certificate.setEscape_room_id(1);
+        certificate.setName(name);
+        certificate.setDescription(description);
+        certificate.setEscape_room_id(escape_room_id);
         certificateDAO.update(certificate);
 
         return certificate;
