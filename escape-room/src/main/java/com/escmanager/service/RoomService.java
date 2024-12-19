@@ -55,7 +55,7 @@ public class RoomService {
     }
 
     public List<Room> findAllByEscaperoomId(int escaperoomId) throws DaoException{
-        List<Room> roomList = roomDAO.findAllByEscaperoomId(escaperoomId);
+        List<Room> roomList = roomDAO.getAllByEscaperoomId(escaperoomId);
         for (Room room: roomList){
             System.out.println(room);
         }
