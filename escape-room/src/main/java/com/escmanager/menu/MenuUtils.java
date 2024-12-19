@@ -6,7 +6,7 @@ import com.escmanager.model.Room;
 import java.util.List;
 
 import static com.escmanager.menu.EscapeRoomMenu.escapeRoomService;
-import static com.escmanager.menu.Main.scanner;
+import static com.escmanager.menu.Menu.scanner;
 import static com.escmanager.menu.RoomMenu.roomService;
 
 public class MenuUtils {

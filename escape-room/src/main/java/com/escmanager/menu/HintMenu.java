@@ -10,7 +10,7 @@ import com.escmanager.service.ElementService;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static com.escmanager.menu.Main.scanner;
+import static com.escmanager.menu.Menu.scanner;
 
 public class HintMenu {
 
