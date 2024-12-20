@@ -69,7 +69,6 @@ CREATE TABLE IF NOT EXISTS ticket (
     quantity INT UNSIGNED NOT NULL,
     total_price DECIMAL(10,2) CHECK(total_price >= 0) NOT NULL,
     date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    date_reservation DATETIME NOT NULL,
     escape_room_id INT UNSIGNED NOT NULL,
     CONSTRAINT fk_ticket_escape_room_id FOREIGN KEY (escape_room_id) REFERENCES escaperoom(id),
     CONSTRAINT fk_ticket_user_id FOREIGN KEY (user_id) REFERENCES user(id)

@@ -5,12 +5,14 @@ import com.escmanager.exceptions.element.ElementAlreadyExistsException;
 import com.escmanager.exceptions.element.ElementDoesNotExistException;
 import com.escmanager.exceptions.room.RoomDoesNotExistException;
 import com.escmanager.model.Hint;
+import com.escmanager.model.Room;
 import com.escmanager.service.ElementService;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static com.escmanager.menu.Menu.scanner;
+import static com.escmanager.menu.RoomMenu.roomService;
 
 public class HintMenu {
 
@@ -37,6 +39,12 @@ public class HintMenu {
             scanner.nextLine();
             switch (option) {
                 case ADD_HINT -> {
+                    MenuUtils.showAllEscapeRooms();
+                    System.out.print("Enter Escape Room ID: ");
+                    int escapeRoomId = scanner.nextInt();
+                    System.out.println("Current Rooms:");
+                    List<Room> roomList = roomService.findAllByEscaperoomId(escapeRoomId);
+                    MenuUtils.printRooms(roomList);
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
                     scanner.nextLine();
@@ -53,8 +61,15 @@ public class HintMenu {
                     }
                 }
                 case REMOVE_HINT -> {
+                    MenuUtils.showAllEscapeRooms();
+                    System.out.print("Enter Escape Room ID: ");
+                    int escapeRoomId = scanner.nextInt();
+                    System.out.println("Current Rooms:");
+                    List<Room> roomList = roomService.findAllByEscaperoomId(escapeRoomId);
+                    MenuUtils.printRooms(roomList);
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
+                    scanner.nextLine();
                     try {
                         elementService.getHints(roomId);
                     } catch (RoomDoesNotExistException e) {

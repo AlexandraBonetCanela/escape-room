@@ -43,14 +43,16 @@ public class EscapeRoomMenu {
                         String name = getNonEmptyString("EscapeRoom name");
                         System.out.print("Enter Escape room price: ");
                         BigDecimal price = scanner.nextBigDecimal();
-                        escapeRoomService.addEscapeRoom(name, price);
+                        EscapeRoom escaperoom =escapeRoomService.addEscapeRoom(name, price);
+                        System.out.println("EscapeRoom successfully created!");
+                        System.out.println(escaperoom.toString() + "\n");
                     }
                     case DELETE_ESCAPEROOM -> {
                         MenuUtils.showAllEscapeRooms();
                         System.out.print("Enter Escape Room ID to delete: ");
                         int id = scanner.nextInt();
                         escapeRoomService.deleteEscapeRoom(id);
-                        System.out.println("Room deleted successfully.");
+                        System.out.println("EscapeRoom deleted successfully. \n");
                     }
                     case MAIN_MENU -> backToMain = true;
 

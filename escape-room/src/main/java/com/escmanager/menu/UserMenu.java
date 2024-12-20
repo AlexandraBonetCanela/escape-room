@@ -53,7 +53,6 @@ public class UserMenu {
                 case REGISTER_USER -> {
                     System.out.println("\nREGISTER USER");
                     String email = getNonEmptyString("user email");
-                    System.out.print("Enter user name: ");
                     String name = getNonEmptyString("user name");
                     try {
                         userService.registerUser(email, name);

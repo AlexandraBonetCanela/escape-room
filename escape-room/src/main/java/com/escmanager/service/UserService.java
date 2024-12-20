@@ -86,7 +86,6 @@ public class UserService {
         user.setNotifications(updateUser.isNotifications());
         user = userDAO.update(user);
 
-        System.out.println("The user has been updated");
         return user;
     }
 
